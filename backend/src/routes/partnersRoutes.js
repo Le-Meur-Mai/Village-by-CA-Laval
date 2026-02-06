@@ -20,4 +20,3 @@ partnersRouteur.get('/:id', (req, res) => {
 
 // Export du routeur
 export default partnersRouteur;
-
