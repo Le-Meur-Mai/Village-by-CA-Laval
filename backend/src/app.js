@@ -6,6 +6,8 @@ import partnersRoutes from './routes/partnersRoutes.js';
 import startupsRoutes from './routes/startupsRoutes.js';
 import locationsRoutes from './routes/locationsRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 
 // Lance la méthode express pour créer une application
 const app = express();
@@ -36,6 +38,8 @@ app.use('/partenaires', partnersRoutes);
 app.use('/startups', startupsRoutes);
 app.use('/locations', locationsRoutes);
 app.use('/contact', contactRoutes);
+app.use('/auth', authRoutes);
+app.use('/admin', adminRoutes);
 
 // On exporte notre app
 export default app;
