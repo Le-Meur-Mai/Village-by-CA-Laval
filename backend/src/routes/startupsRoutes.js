@@ -1,5 +1,7 @@
 // Importe le package express
 import express from 'express'
+// Importe les controlleurs associés à cette route
+import startupsCtrl from '../controllers/startupsCtrl.js'
 
 /*
 Créer un router avec le module express.Router, permet de définir les routes
@@ -8,15 +10,9 @@ dans des fichiers séparés
 const startupsRouteur = express.Router();
 
 // Définitions des différentes routes et méthodes
-startupsRouteur.get('/', (req, res) => {
-  res.json({message: 'Page startups'});
-});
+startupsRouteur.get('/', startupsCtrl.getAllStartups);
 
-startupsRouteur.get('/:id', (req, res) => {
-  // Enregistre l'id dans la variable id
-  const id = req.params.id;
-  res.json({startupID: id});
-});
+startupsRouteur.get('/:id', startupsCtrl.getStartupByID);
 
 // Export du routeur
 export default startupsRouteur;
