@@ -17,6 +17,8 @@ services:
       # lui aura les node_modules mais comme on ne les a pas dans nos fichiers en local
       # il va essayer de les écraser pour se synchroniser sur nos fichiers
       # et que pour empêcher ça on crée un volume qui protege nos node_modules
+      - ./backend/prisma:/backend/prisma
+
     depends_on:
       - db
       # Le backend démarre après la base de données mySQL
