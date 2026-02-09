@@ -12,7 +12,7 @@ model User {
   isAdmin   Boolean
   name      String   @db.VarChar(50)
   email     String   @unique @db.VarChar(100)
-  password  String   @db.VarChar(40)
+  password  String   @db.VarChar(255)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   quotes    Quote[]
