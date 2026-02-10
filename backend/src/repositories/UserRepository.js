@@ -8,7 +8,7 @@ export default class UserRepository {
     return user;
   }
 
-  async findFullObjectUserById(id) {
+  async findUserById(id) {
     const user = await this.prisma.user.findUnique({
       where: {id},
       include : {
