@@ -1,0 +1,73 @@
+export default class QuoteRepository {
+  constructor(prisma) {
+    this.prisma = prisma;
+  }
+
+  async createQuote(data) {
+    const { userId, ...quoteData } = data;
+    // on va destructurer l'objet data en mettant de cote le userId,
+    // et le reste de la data dans quoteData grace a l'operateur Rest de js
+    const quote = await this.prisma.quote.create({
+      data: {
+        ...quoteData,
+        user: {
+        connect: {id: userId}
+        }
+      },
+      include: {
+        user: true
+      }
+    });
+    return quote;
+  }
+
+  async findQuoteById(id) {
+    const quote = await this.prisma.quote.findUnique({
+      where: {id},
+      include: {
+        user: true
+      }
+    });
+    return quote;
+  }
+
+  async findQuotesByUser(id) {
+    const quotes = await this.prisma.quote.findMany({
+      where: {userId: id},
+      include: {
+        user: true
+      }
+    });
+    return quotes;
+  }
+
+  async getAllQuotes() {
+  const quotes = await this.prisma.quote.findMany({
+    include: {
+      user: true
+    }
+  });
+  return quotes;
+  }
+
+  async updateQuote(id, data) {
+    const quote = await this.prisma.quote.update({
+      where: {id},
+      data,
+      include: {
+        user: true
+      }
+    });
+    return quote;
+  }
+
+  async deleteQuote(id) {
+    const quote = await this.prisma.quote.delete({
+      where: {id},
+      include: {
+        user: true
+      }
+    });
+    return quote;
+  }
+}
