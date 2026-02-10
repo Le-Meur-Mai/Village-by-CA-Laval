@@ -2,13 +2,14 @@ import BaseModel from "./BaseModel.js";
 import validator from "validator";
 
 export default class User extends BaseModel {
-  constructor({name, email, password, quotes = []}) {
+  constructor({name, email, password, quotes = [], startUp = null}) {
     super();
     this.name = name;
     this.isAdmin = false;
     this.email = email;
     this.password = password;
     this.quotes = quotes;
+    this.startUp = startUp;
   }
 
   set name(value) {
