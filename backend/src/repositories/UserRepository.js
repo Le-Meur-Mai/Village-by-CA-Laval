@@ -4,7 +4,12 @@ export default class UserRepository {
   }
 
   async createUser(data) {
-    const user = await this.prisma.user.create({data});
+    const user = await this.prisma.user.create({
+      data,
+    include: {
+      quotes: true,
+      startUp: true
+    }});
     return user;
   }
 
