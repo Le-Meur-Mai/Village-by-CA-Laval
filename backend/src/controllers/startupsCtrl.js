@@ -1,4 +1,4 @@
-// Création des fonctions pour les routes Startups
+// Fonctions pour les routes Startups
 
 const getAllStartups = (req, res) => {
   res.json({message: 'Page Startups'});

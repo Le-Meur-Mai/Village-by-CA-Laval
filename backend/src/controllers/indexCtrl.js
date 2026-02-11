@@ -1,4 +1,4 @@
-// Création des fonctions pour la route index
+// Fonctions pour la route index
 
 const getIndex = (req, res) => {
   res.json({message: 'Page Index'});

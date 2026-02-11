@@ -1,4 +1,4 @@
-// Création des fonctions pour les routes Partenaires
+// Fonctions pour les routes Partenaires
 
 const getAllPartners = (req, res) => {
   res.json({message: 'Page Partenaires'});
