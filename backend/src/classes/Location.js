@@ -63,11 +63,22 @@ export default class Location extends BaseModel {
   }
 
   set pictures(value) {
-    if (Array.isArray(value) !== true) {
-      throw new TypeError("StartUps must be an array.");
-    }
-    this._pictures = value;
+  if (!Array.isArray(value)) {
+    throw new TypeError("Pictures must be an array.");
   }
+
+  for (const pic of value) {
+    if (typeof pic !== "object" || pic === null) {
+      throw new TypeError("Each picture must be an object.");
+    }
+    if (!pic.name || !pic.path) {
+      throw new Error("Each picture must have a name and a path.");
+    }
+  }
+
+  this._pictures = value;
+}
+
 
   get pictures() {
     return this._pictures;
