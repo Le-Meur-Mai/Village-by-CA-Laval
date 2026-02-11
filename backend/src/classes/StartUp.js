@@ -2,7 +2,7 @@ import BaseModel from "./BaseModel.js";
 
 export default class StartUp extends BaseModel {
   constructor({name, description = "", isAlumni = false, website = "",
-    userId, descriptionPrictureId, logoId, user = null,
+    userId, descriptionPictureId, logoId, user = null,
     descriptionPicture = null, logo = null, types = []}) {
     super();
     this.name = name;
@@ -11,7 +11,7 @@ export default class StartUp extends BaseModel {
     this.website = website;
 
     this.userId = userId;
-    this.descriptionPrictureId = descriptionPrictureId;
+    this.descriptionPictureId = descriptionPictureId;
     this.logoId = logoId;
 
     this.user = user;
