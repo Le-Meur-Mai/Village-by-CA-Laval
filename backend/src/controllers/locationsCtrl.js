@@ -1,4 +1,4 @@
-// Création des fonctions pour les routes locations
+// Fonctions pour les routes locations
 
 const getAllLocations = (req, res) => {
   res.json({message: 'Page Locations'});
