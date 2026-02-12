@@ -13,7 +13,7 @@ export default class UserRepository {
     return user;
   }
 
-  async findUserById(id) {
+  async getUserById(id) {
     const user = await this.prisma.user.findUnique({
       where: {id},
       include : {
