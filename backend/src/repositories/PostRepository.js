@@ -4,20 +4,8 @@ export default class PostRepository {
   }
 
   async createPost(data) {
-    const {picture, ...postData} = data;
     const post = await this.prisma.post.create({
-      data: {
-      ...postData,
-      // creer une image dans la table picture si la propriete picture a ete renseignee sinon ne fait rien
-      ...(picture && {
-        picture: {
-          create: {
-            name: picture.name,
-            path: picture.path
-          }
-        }
-      })
-      },
+      data,
       include: {
         picture: true
       }
@@ -35,7 +23,7 @@ export default class PostRepository {
     return post;
   }
 
-  async getAllPost() {
+  async getAllPost() { 
     const posts = await this.prisma.post.findMany({
       include: {
         picture: true

@@ -5,24 +5,14 @@ export default class StartUpRepository{
   }
 
   async createStartUp(data) {
-    const {descriptionPictureId, logoId, userId, types, ...dataStartUp} = data;
+    const {types, ...dataStartUp} = data;
     const newStartUp = this.prisma.startUp.create({
       data: {
         ...dataStartUp,
-        descriptionPicture: {
-          connect:{ id: descriptionPictureId }
-        },
-        logo: {
-          connect: { id: logoId }
-        },
-        user: {
-          connect: { id: userId }
-        },
-        types: {
-          connect: types?.map(type => ({
-            id: type.id
-          }))
-        }
+        types: types ? 
+        {
+          connect: types?.map(id => ({ id }))
+        } : undefined
       },
       include: {
         descriptionPicture: true,
@@ -60,9 +50,16 @@ export default class StartUpRepository{
   }
 
   async updateStartUp(id, data) {
+    const {types, ...dataStartUp} = data;
     const startUp = this.prisma.startUp.update({
       where: { id },
-      data,
+      data: {
+        ...dataStartUp,
+        types: types ? 
+          {
+            connect: types.map(id => ({ id }))
+          } : undefined
+      },
       include: {
         descriptionPicture: true,
         logo: true,
@@ -71,7 +68,6 @@ export default class StartUpRepository{
       }
     });
     return startUp;
-
   }
 
   async deleteStartUp(id) {
