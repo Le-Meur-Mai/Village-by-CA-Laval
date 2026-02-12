@@ -4,12 +4,10 @@ export default class LocationRepository {
   }
 
   async createLocation(data) {
-    const {pictures, ...dataLocation} = data;
+    const {picturesIds, ...dataLocation} = data;
     const location = await this.prisma.location.create({
       data: {
         ...dataLocation,
-        // Cree des nouvelles images dans la table picture car la relation
-        // est specifiee dans le schema.prisma
         pictures: {
           connect: pictures.map(id => ({ id }))
         }

@@ -4,8 +4,6 @@ export default class PartnerRepository {
   }
 
   async createPartner(data) {
-    const { logoId, ...partnerData } = data;
-
     const partner = await this.prisma.partner.create({
       data,
       include: {
