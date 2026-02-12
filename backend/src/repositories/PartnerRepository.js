@@ -4,6 +4,8 @@ export default class PartnerRepository {
   }
 
   async createPartner(data) {
+    const { logoId, ...partnerData } = data;
+
     const partner = await this.prisma.partner.create({
       data,
       include: {
@@ -13,6 +15,7 @@ export default class PartnerRepository {
     return partner;
   }
 
+  async getPartnerById(id) {
   async getPartnerById(id) {
     const partner = await this.prisma.partner.findUnique({
       where: {id},
