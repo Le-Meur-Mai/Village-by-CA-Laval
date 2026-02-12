@@ -4,16 +4,8 @@ export default class QuoteRepository {
   }
 
   async createQuote(data) {
-    const { userId, ...quoteData } = data;
-    // on va destructurer l'objet data en mettant de cote le userId,
-    // et le reste de la data dans quoteData grace a l'operateur Rest de js
     const quote = await this.prisma.quote.create({
-      data: {
-        ...quoteData,
-        user: {
-        connect: {id: userId}
-        }
-      },
+      data,
       include: {
         user: true
       }
