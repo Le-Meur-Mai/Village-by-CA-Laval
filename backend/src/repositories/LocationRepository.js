@@ -8,14 +8,14 @@ export default class LocationRepository {
     const location = await this.prisma.location.create({
       data: {
         ...dataLocation,
+        // Cree des nouvelles images dans la table picture car la relation
+        // est specifiee dans le schema.prisma
         pictures: {
           create: pictures?.map(pic => ({
             name: pic.name,
             path: pic.path
           }))
         }
-        // ca cree des nouvelles images dans la table picture car la relation
-        // est specifiee dans le schema.prisma
       },
       include: {
         pictures: true

@@ -25,7 +25,7 @@ export default class PostRepository {
     return post;
   }
 
-  async findPostById(id) {
+  async getPostById(id) {
     const post = await this.prisma.post.findUnique({
       where: {id},
       include: {

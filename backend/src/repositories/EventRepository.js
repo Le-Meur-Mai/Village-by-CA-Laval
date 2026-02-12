@@ -8,7 +8,7 @@ export default class EventRepository {
     return event;
   }
 
-  async findEventById(id) {
+  async getEventById(id) {
     const event = await this.prisma.event.findUnique({
       where: {id}
     });

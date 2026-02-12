@@ -21,7 +21,7 @@ export default class QuoteRepository {
     return quote;
   }
 
-  async findQuoteById(id) {
+  async getQuoteById(id) {
     const quote = await this.prisma.quote.findUnique({
       where: {id},
       include: {
