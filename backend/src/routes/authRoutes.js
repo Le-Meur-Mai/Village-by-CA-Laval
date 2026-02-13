@@ -16,7 +16,8 @@ authRouteur.get('/profil', (req, res) => {
   res.json({message: 'Page profil'});
 });
 
-authRouteur.get('/profil/update', (req, res) => {
+authRouteur.patch('/profil/update', (req, res) => {
+  // if (verifiaction admin || vérification user = jwt actif)
   res.json({message: 'Mise à jour du profil'});
 });
 
@@ -24,11 +25,18 @@ authRouteur.get('/profil/:id', (req, res) => {
   res.json({message: 'Détail de la quote du user'});
 });
 
+authRouteur.post('/profil', (req, res) => {
+  // if (verifiaction admin || vérification user = jwt actif)
+  res.json({message: 'Création de nouvelle quote'});
+});
+
 authRouteur.patch('/profil/:id', (req, res) => {
+  // if (verifiaction admin || vérification user = jwt actif)
   res.json({message: 'Modification de la quote du user'});
 });
 
 authRouteur.delete('/profil/:id', (req, res) => {
+  // if (verifiaction admin || vérification user = jwt actif)
   res.json({message: 'Suppression de la quote du user'});
 });
 
