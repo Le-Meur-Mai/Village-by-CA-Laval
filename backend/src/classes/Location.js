@@ -1,4 +1,5 @@
 import BaseModel from "./BaseModel.js";
+import * as Errors from "../errors/errorsHandler.js"
 
 export default class Location extends BaseModel {
   constructor({title, description, price, size, pictures = []}) {
@@ -12,10 +13,10 @@ export default class Location extends BaseModel {
 
   set title(value) {
     if (typeof value !== "string") {
-      throw new TypeError("Title must be a string.");
+      throw new Errors.ValidationError("Title must be a string.");
     }
     else if (value.length > 100) {
-      throw new Error("The length of the title is too long.");
+      throw new Errors.ValidationError("The length of the title is too long.");
     }
     this._title = value;
   }
@@ -26,20 +27,20 @@ export default class Location extends BaseModel {
 
   set description(value) {
     if (typeof value !== "string") {
-      throw new TypeError("Description must be a string.");
+      throw new Errors.ValidationError("Description must be a string.");
     }
     else if (value.length > 800) {
-      throw new Error("The length of the description is too long.");
+      throw new Errors.ValidationError("The length of the description is too long.");
     }
     this._description = value;
   }
 
   set price(value) {
     if (typeof value !== "number") {
-      throw new TypeError("Price must be a number.");
+      throw new Errors.ValidationError("Price must be a number.");
     }
     else if (value < 0) {
-      throw Error("Price must be positive");
+      throw Errors.ValidationError("Price must be positive");
     }
     this._price = value;
   }
@@ -50,10 +51,10 @@ export default class Location extends BaseModel {
 
   set size(value) {
     if (typeof value !== "number") {
-      throw new TypeError("Size must be a number.");
+      throw new Errors.ValidationError("Size must be a number.");
     }
     else if (value < 0) {
-      throw Error("Size must be positive");
+      throw Errors.ValidationError("Size must be positive");
     }
     this._size = value;
   }
@@ -64,15 +65,15 @@ export default class Location extends BaseModel {
 
   set pictures(value) {
   if (!Array.isArray(value)) {
-    throw new TypeError("Pictures must be an array.");
+    throw new Errors.ValidationError("Pictures must be an array.");
   }
 
   for (const pic of value) {
     if (typeof pic !== "object" || pic === null) {
-      throw new TypeError("Each picture must be an object.");
+      throw new Errors.ValidationError("Each picture must be an object.");
     }
     if (!pic.name || !pic.path) {
-      throw new Error("Each picture must have a name and a path.");
+      throw new Errors.ValidationError("Each picture must have a name and a path.");
     }
   }
 
