@@ -4,18 +4,13 @@ export default class LocationRepository {
   }
 
   async createLocation(data) {
-    const {pictures, ...dataLocation} = data;
+    const {picturesIds, ...dataLocation} = data;
     const location = await this.prisma.location.create({
       data: {
         ...dataLocation,
         pictures: {
-          create: pictures?.map(pic => ({
-            name: pic.name,
-            path: pic.path
-          }))
+          connect: picturesIds.map(id => ({ id }))
         }
-        // ca cree des nouvelles images dans la table picture car la relation
-        // est specifiee dans le schema.prisma
       },
       include: {
         pictures: true
@@ -23,4 +18,49 @@ export default class LocationRepository {
     });
     return location;
   }
+
+  async getLocationById(id) {
+    const location = await this.prisma.location.findUnique({
+      where: { id },
+      include: {
+        pictures: true
+      }
+    });
+    return location;
+  }
+
+  async getAllLocations() {
+    const allLocations = await this.prisma.location.findMany({
+      include: {
+        pictures: true
+      }
+    });
+    return allLocations;
+  }
+
+  async updateLocation(id, data) {
+    const {picturesIds, ...dataLocation} = data;
+    const updatedLocation = await this.prisma.location.update({
+      where: { id },
+      data: {
+        ...dataLocation,
+        pictures: picturesIds.map(id => ({ id }))
+      },
+      include: {
+        pictures: true
+      }
+    });
+    return updatedLocation;
+  }
+
+  async deleteLocation(id) {
+    const deletedLocation = await this.prisma.location.delete({
+      where: { id },
+      include: {
+        pictures: true
+      }
+    });
+    return deletedLocation;
+  }
+
 }

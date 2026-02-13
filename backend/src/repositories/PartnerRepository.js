@@ -3,16 +3,9 @@ export default class PartnerRepository {
     this.prisma = prisma;
   }
 
-  async createPartnerDefault(data) {
-    const { logoId, ...partnerData } = data;
-
+  async createPartner(data) {
     const partner = await this.prisma.partner.create({
-      data: {
-        ...partnerData,
-        logo: {
-          connect: {id: logoId}
-        }
-      },
+      data,
       include: {
         logo: true
       }
@@ -20,26 +13,7 @@ export default class PartnerRepository {
     return partner;
   }
 
-  async createPartnerCustom(data) {
-    const { logo, ...partnerData } = data;
-    const partner = await this.prisma.partner.create({
-      data: {
-        ...partnerData,
-        logo: {
-          create: {
-            name: logo.name,
-            path: logo.path
-          }
-        }
-      },
-      include: {
-        logo: true
-      }
-    });
-    return partner;
-  }
-
-  async findPartnerById(id) {
+  async getPartnerById(id) {
     const partner = await this.prisma.partner.findUnique({
       where: {id},
       include: {

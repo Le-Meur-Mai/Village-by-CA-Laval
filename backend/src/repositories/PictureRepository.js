@@ -8,7 +8,7 @@ export default class PictureRepository {
     return picture;
   }
 
-  async findPictureById(id) {
+  async getPictureById(id) {
     const picture = await this.prisma.picture.findUnique({
       where: {id},
       include: {
