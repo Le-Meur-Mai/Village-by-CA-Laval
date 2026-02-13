@@ -4,12 +4,12 @@ export default class LocationRepository {
   }
 
   async createLocation(data) {
-    const {picturesIds, ...dataLocation} = data;
+    const {pictures, ...dataLocation} = data;
     const location = await this.prisma.location.create({
       data: {
         ...dataLocation,
         pictures: {
-          connect: picturesIds.map(id => ({ id }))
+          connect: pictures.map(id => ({ id }))
         }
       },
       include: {
@@ -39,12 +39,12 @@ export default class LocationRepository {
   }
 
   async updateLocation(id, data) {
-    const {picturesIds, ...dataLocation} = data;
+    const {pictures, ...dataLocation} = data;
     const updatedLocation = await this.prisma.location.update({
       where: { id },
       data: {
         ...dataLocation,
-        pictures: picturesIds.map(id => ({ id }))
+        pictures: pictures.map(id => ({ id }))
       },
       include: {
         pictures: true
