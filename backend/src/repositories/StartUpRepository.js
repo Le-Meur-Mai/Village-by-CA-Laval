@@ -11,11 +11,7 @@ export default class StartUpRepository{
         ...dataStartUp,
         types: types ? 
         {
-<<<<<<< HEAD
           connect: types.map(id => ({ id }))
-=======
-          connect: types?.map(id => ({ id }))
->>>>>>> de7cba3 (fix: corrected relations with pictureRepository, creating an easier relationship with picture creation and deletion)
         } : undefined
       },
       include: {

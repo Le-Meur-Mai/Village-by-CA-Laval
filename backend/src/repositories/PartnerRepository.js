@@ -14,7 +14,6 @@ export default class PartnerRepository {
   }
 
   async getPartnerById(id) {
-  async getPartnerById(id) {
     const partner = await this.prisma.partner.findUnique({
       where: {id},
       include: {
