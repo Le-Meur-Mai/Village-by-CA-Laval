@@ -4,7 +4,7 @@ export default class LocationRepository {
   }
 
   async createLocation(data) {
-    const {picturesIds, ...dataLocation} = data;
+    const {pictures, ...dataLocation} = data;
     const location = await this.prisma.location.create({
       data: {
         ...dataLocation,
