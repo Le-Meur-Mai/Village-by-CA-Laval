@@ -15,6 +15,7 @@ export default class UserServices {
 
   async createUser(data) {
     try {
+      // Crée une nouvelle instance pour vérifier la conformité des données
       new User(data);
       // Importer fonction de hachage et remplacer le mdp de data
       return await this.repo.createUser(data);
@@ -56,6 +57,18 @@ export default class UserServices {
       const newUser = {...existingUser, ...data};
       new User(newUser);
       return await this.repo.updateUser(id, data);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async deleteUser(id) {
+    try {
+      const user = await this.repo.getUserById(id);
+      if(!user) {
+        throw new Errors.NotFoundError('User not found');
+      }
+      return await this.repo.deleteUser(id);
     } catch (error) {
       throw error;
     }
