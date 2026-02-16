@@ -1,4 +1,5 @@
 import BaseModel from "./BaseModel.js";
+import * as Errors from "../errors/errorsHandler.js"
 
 export default class Quote extends BaseModel {
   constructor({firstName, lastName, description, userId, user = null}) {
@@ -12,10 +13,10 @@ export default class Quote extends BaseModel {
 
   set firstName(value) {
     if (typeof value !== "string") {
-      throw new TypeError("First Name must be a string.");
+      throw new Errors.ValidationError("First Name must be a string.");
     }
     else if (value.length > 20) {
-      throw new Error("The length of the first name is too long.");
+      throw new Errors.ValidationError("The length of the first name is too long.");
     }
     this._firstName = value;
   }
@@ -26,10 +27,10 @@ export default class Quote extends BaseModel {
 
   set lastName(value) {
     if (typeof value !== "string") {
-      throw new TypeError("Last name must be a string.");
+      throw new Errors.ValidationError("Last name must be a string.");
     }
     else if (value.length > 20) {
-      throw new Error("The length of the last name is too long.");
+      throw new Errors.ValidationError("The length of the last name is too long.");
     }
     this._lastName = value;
   }
@@ -40,10 +41,10 @@ export default class Quote extends BaseModel {
 
   set description(value) {
     if (typeof value !== "string") {
-      throw new TypeError("Description must be a string.");
+      throw new Errors.ValidationError("Description must be a string.");
     }
     else if (value.length > 200) {
-      throw new Error("The length of the description is too long.");
+      throw new Errors.ValidationError("The length of the description is too long.");
     }
     this._description = value;
   }
@@ -54,10 +55,10 @@ export default class Quote extends BaseModel {
 
   set userId(value) {
     if (typeof value !== "string") {
-      throw new TypeError("UserId must be a string.");
+      throw new Errors.ValidationError("UserId must be a string.");
     }
     else if (value.length !== 36) {
-      throw new Error("UserId don't have the correct length.");
+      throw new Errors.ValidationError("UserId don't have the correct length.");
     }
     this._userId = value;
   }

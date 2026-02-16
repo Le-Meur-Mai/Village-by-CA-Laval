@@ -4,8 +4,14 @@ export default class TypeRepository{
   }
 
   async createType(data) {
+    const {startUps, ...dataType} = data;
     const newType = await this.prisma.type.create({
-      data,
+      data: {
+        ...dataType,
+        startUps: startUps ? {
+          connect: startUps.map(id => ({ id }))
+        } : undefined
+      },
       include: {
         startUps: true
       }
@@ -29,9 +35,15 @@ export default class TypeRepository{
   }
   
   async updateType(id, data) {
+    const {startUps, ...dataType} = data;
     const type = await this.prisma.type.update({
       where: {id: id},
-      data,
+      data: {
+        ...dataType,
+        startUps: startUps ? {
+          connect: startUps.map(id => ({ id }))
+        } : undefined
+      },
       include: {
         startUps: true
       }

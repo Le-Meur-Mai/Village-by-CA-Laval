@@ -1,4 +1,5 @@
 import BaseModel from "./BaseModel.js";
+import * as Errors from "../errors/errorsHandler.js"
 
 export default class Picture extends BaseModel {
   constructor({name, path, locations = [], logoPartner = [], descriptionPicture = [], logoStartUp = [], post = null}) {
@@ -14,10 +15,10 @@ export default class Picture extends BaseModel {
 
   set name(value) {
     if (typeof value !== "string") {
-      throw new TypeError("Name must be a string.");
+      throw new Errors.ValidationError("Name must be a string.");
     }
     else if (value.length > 100) {
-      throw new Error("The length of the name is too long.");
+      throw new Errors.ValidationError("The length of the name is too long.");
     }
     this._name = value;
   }
@@ -28,10 +29,10 @@ export default class Picture extends BaseModel {
 
   set path(value) {
     if (typeof value !== "string") {
-      throw new TypeError("Path must be a string.");
+      throw new Errors.ValidationError("Path must be a string.");
     }
     else if (value.length > 200) {
-      throw new Error("The length of the path is too long.");
+      throw new Errors.ValidationError("The length of the path is too long.");
     }
     this._path = value;
   }
@@ -42,7 +43,7 @@ export default class Picture extends BaseModel {
 
   set locations(value) {
     if (Array.isArray(value) !== true) {
-      throw new TypeError("Locations must be an array.");
+      throw new Errors.ValidationError("Locations must be an array.");
     }
     this._locations = value;
   }
@@ -53,7 +54,7 @@ export default class Picture extends BaseModel {
 
   set logoPartner(value) {
     if (Array.isArray(value) !== true) {
-      throw new TypeError("LogoPartner must be an array.");
+      throw new Errors.ValidationError("LogoPartner must be an array.");
     }
     this._logoPartner = value;
   }
@@ -64,7 +65,7 @@ export default class Picture extends BaseModel {
 
   set descriptionPicture(value) {
     if (Array.isArray(value) !== true) {
-      throw new TypeError("DescriptionPicture must be an array.");
+      throw new Errors.ValidationError("DescriptionPicture must be an array.");
     }
     this._descriptionPicture = value;
   }
@@ -75,7 +76,7 @@ export default class Picture extends BaseModel {
 
   set logoStartUp(value) {
     if (Array.isArray(value) !== true) {
-      throw new TypeError("LogoStartUp must be an array.");
+      throw new Errors.ValidationError("LogoStartUp must be an array.");
     }
     this._logoStartUp = value;
   }
