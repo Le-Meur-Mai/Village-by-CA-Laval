@@ -42,4 +42,3 @@ authRouteur.delete('/profil/:id', (req, res) => {
 
 // Export du routeur
 export default authRouteur;
-
