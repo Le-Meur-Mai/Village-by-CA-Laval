@@ -13,6 +13,7 @@ export default class UserServices {
     this.repo = new UserRepository(prisma);
   }
 
+  // POST Création d'un user
   async createUser(data) {
     try {
       // Crée une nouvelle instance pour vérifier la conformité des données
@@ -24,6 +25,7 @@ export default class UserServices {
     }
   }
 
+  // GET retourne un user grâce à son id
   async getUserById(id) {
     try {
       const user = await this.repo.getUserById(id);
@@ -36,6 +38,7 @@ export default class UserServices {
     }
   }
 
+  // GET Retourne tous les users existants
   async getAllUsers() {
     try {
       return await this.repo.getAllUsers();
@@ -44,6 +47,7 @@ export default class UserServices {
     }
   }
 
+  // PATCH mise à jour d'un user
   async updateUser(id, data) {
     try {
       // Vérifie que le User existe
@@ -62,6 +66,7 @@ export default class UserServices {
     }
   }
 
+  // DELETE Supression d'un user
   async deleteUser(id) {
     try {
       const user = await this.repo.getUserById(id);
