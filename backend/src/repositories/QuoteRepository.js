@@ -23,7 +23,7 @@ export default class QuoteRepository {
     return quote;
   }
 
-  async findQuotesByUser(id) {
+  async getQuotesByUser(id) {
     const quotes = await this.prisma.quote.findMany({
       where: {userId: id},
       include: {
