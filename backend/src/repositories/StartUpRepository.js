@@ -6,7 +6,7 @@ export default class StartUpRepository{
 
   async createStartUp(data, client = this.prisma) {
     const {types, ...dataStartUp} = data;
-    const newStartUp = client.startUp.create({
+    const newStartUp = await client.startUp.create({
       data: {
         ...dataStartUp,
         types: types ? 
@@ -25,7 +25,7 @@ export default class StartUpRepository{
   }
 
   async getStartUpById(id, client = this.prisma) {
-    const startUp = client.startUp.findUnique({
+    const startUp = await client.startUp.findUnique({
       where: { id },
       include: {
         descriptionPicture: true,
@@ -38,7 +38,7 @@ export default class StartUpRepository{
   }
 
   async getAllStartUps(client = this.prisma) {
-    const allStartUps = client.startUp.findMany({
+    const allStartUps = await client.startUp.findMany({
       include: {
         descriptionPicture: true,
         logo: true,
@@ -51,7 +51,7 @@ export default class StartUpRepository{
 
   async updateStartUp(id, data, client = this.prisma) {
     const {types, ...dataStartUp} = data;
-    const startUp = client.startUp.update({
+    const startUp = await client.startUp.update({
       where: { id },
       data: {
         ...dataStartUp,
@@ -71,7 +71,7 @@ export default class StartUpRepository{
   }
 
   async deleteStartUp(id, client = this.prisma) {
-    const startUp = client.startUp.delete({
+    const startUp = await client.startUp.delete({
       where: { id },
       include: {
         descriptionPicture: true,
