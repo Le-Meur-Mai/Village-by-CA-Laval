@@ -3,9 +3,10 @@ export default class LocationRepository {
     this.prisma = prisma;
   }
 
-  async createLocation(data) {
+  // Méthode create, utilise soit le client prisma, soit la transaction fournie
+  async createLocation(data, client = this.prisma) {
     const {pictures, ...dataLocation} = data;
-    const location = await this.prisma.location.create({
+    const location = await client.location.create({
       data: {
         ...dataLocation,
         pictures: {
@@ -19,8 +20,8 @@ export default class LocationRepository {
     return location;
   }
 
-  async getLocationById(id) {
-    const location = await this.prisma.location.findUnique({
+  async getLocationById(id, client = this.prisma) {
+    const location = await client.location.findUnique({
       where: { id },
       include: {
         pictures: true
@@ -38,9 +39,9 @@ export default class LocationRepository {
     return allLocations;
   }
 
-  async updateLocation(id, data) {
+  async updateLocation(id, data, client = this.prisma) {
     const {pictures, ...dataLocation} = data;
-    const updatedLocation = await this.prisma.location.update({
+    const updatedLocation = await client.location.update({
       where: { id },
       data: {
         ...dataLocation,
@@ -53,8 +54,8 @@ export default class LocationRepository {
     return updatedLocation;
   }
 
-  async deleteLocation(id) {
-    const deletedLocation = await this.prisma.location.delete({
+  async deleteLocation(id, client = this.prisma) {
+    const deletedLocation = await client.location.delete({
       where: { id },
       include: {
         pictures: true
