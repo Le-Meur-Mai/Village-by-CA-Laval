@@ -3,8 +3,8 @@ export default class PostRepository {
     this.prisma = prisma;
   }
 
-  async createPost(data) {
-    const post = await this.prisma.post.create({
+  async createPost(data, client = this.prisma) {
+    const post = await client.post.create({
       data,
       include: {
         picture: true
@@ -13,8 +13,8 @@ export default class PostRepository {
     return post;
   }
 
-  async getPostById(id) {
-    const post = await this.prisma.post.findUnique({
+  async getPostById(id, client = this.prisma) {
+    const post = await client.post.findUnique({
       where: {id},
       include: {
         picture: true
@@ -23,8 +23,8 @@ export default class PostRepository {
     return post;
   }
 
-  async getAllPost() { 
-    const posts = await this.prisma.post.findMany({
+  async getAllPost(client = this.prisma) { 
+    const posts = await client.post.findMany({
       include: {
         picture: true
       }
@@ -32,8 +32,8 @@ export default class PostRepository {
     return posts;
   }
 
-  async updatePost(id, data) {
-    const post = await this.prisma.post.update({
+  async updatePost(id, data, client = this.prisma) {
+    const post = await client.post.update({
       where: {id},
       data,
       include: {
@@ -43,8 +43,8 @@ export default class PostRepository {
     return post;
   }
 
-  async deletePost(id) {
-    const post = await this.prisma.post.delete({
+  async deletePost(id, client = this.prisma) {
+    const post = await client.post.delete({
       where: {id},
       include: {
         picture: true
