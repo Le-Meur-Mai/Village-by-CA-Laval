@@ -18,40 +18,31 @@ export default class LocationServices{
   }
 
   async createLocation(data) {
-    // Création de l'ID de l'image
-    const createdPictures = [];
     try {
-      // Vérifie que le nombre d'image est correct
-      if(!data.pictures || data.pictures.length < 1 || data.pictures.length > 5) {
-        throw new Errors.ValidationError('You must have between 1 and 5 pictures');
-      } else {
-        // Pour chaque image dans data.pictures, on crée une nouvelle image
-        for (const picture of data.pictures) {
-          new Picture(picture);
-          const newPicture = await this.pictureRepo.createPicture(picture);
-          // On l'ajoute dans le tableau createdPictures
-          createdPictures.push(newPicture);
+      /* 
+      Création d'une transaction Prisma : si une transaction échoue, les autres
+      s'annulent 
+      */
+      return prisma.$transaction(async (tx) => {
+        if(!data.pictures || data.pictures.length < 1 || data.pictures.length > 5) {
+          throw new Errors.ValidationError('You must have between 1 and 5 pictures');
+        } else {
+          // Pour chaque image dans data.pictures, on crée une nouvelle image
+          const createdPictures = await Promise.all(
+            data.pictures.map(picture => {
+              new Picture(picture);
+              return this.pictureRepo.createPicture(picture, tx);
+            })
+          )
+          // Remplace les données de data.pictures par le tableau d'images créées
+          data.pictures = createdPictures;
+
+          // Crée une nouvelle instance pour vérifier la conformité des données
+          new Location(data);
+          return await this.repo.createLocation(data, tx);
         }
-        // Remplace les données de data.pictures par le tableau d'images créées
-        data.pictures = createdPictures;
-      }
+      })
     } catch (error) {
-      // On supprime les images créé s'il y a une erreur
-      for (const picture in createdPictures) {
-        await this.pictureRepo.deletePicture(picture.id);
-      }
-      throw error;
-    }
-    // Création de la location
-    try {
-      // Crée une nouvelle instance pour vérifier la conformité des données
-      new Location(data);
-      return await this.repo.createLocation(data);
-    } catch (error) {
-      // Suppression des images
-      for (const picture in createdPictures) {
-        await this.pictureRepo.deletePicture(picture.id);
-      }
       throw error;
     }
   }
@@ -75,67 +66,60 @@ export default class LocationServices{
       throw error;
     }
   }
- 
- async updateLocation(id, data) {
-   // Tableau contenant les nouvelles images crées de la place
-   const createdPictures = [];
+
+  async updateLocation(id, data) {
     try {
-      // vérification si la location existe dans la bdd
-      const existingLocation = await this.repo.getLocationById(id);
-      if(!existingLocation) {
-        throw new Errors.NotFoundError('Location not found');
-      }
-
-      const updatedPictures = [];
-      const sendPictures = data.pictures;
-      const oldPictures = existingLocation.pictures;
-      const newPictures = [];
-      // On vérifie les images déjà présente dans la base de données
-      for (const picture of sendPictures) {
-        if (picture.id) {
-          updatedPictures.push(picture);
-        } else {
-          newPictures.push(picture);
-        } 
-      }
-      // On vérifie si les anciennes images sont envoyées, sinon on les supprimes
-      for (const picture of oldPictures) {
-        /* 
-        La méthode some retourne false si l'id de la picture ne correspond pas à
-        un id existant dans updatedPictures
-        */
-        if(!updatedPictures.some(p => p.id === picture.id)){
-          await this.pictureRepo.deletePicture(picture.id);
+      return prisma.$transaction(async (tx) => {
+        const existingLocation = await this.repo.getLocationById(id, tx);
+        if(!existingLocation) {
+          throw new Errors.NotFoundError('Location not found');
         }
-      }
-      // On crée les nouvelles images dans la base de données
-      for (const picture of newPictures) {
-        new Picture(picture);
-        const newPicture = await this.pictureRepo.createPicture(picture);
-        createdPictures.push(newPicture);
-      }
-      // On ajoute les nouvelles images dans updatedPictures
-      for (const picture of createdPictures) {
-        updatedPictures.push(picture);
-      }
 
-      data.pictures = updatedPictures;
+        const oldPictures = existingLocation.pictures;
+        const updatedPictures = []
+        const sendPictures = []
 
-      // On remplace les anciennes données par les nouvelles
-      const newLocation = {...existingLocation, ...data};
-      new Location(newLocation);
+        // Trie les images existantes des nouvelles
+        for (const picture of data.pictures) {
+          if(picture.id) {
+            updatedPictures.push(picture);
+          } else {
+            sendPictures.push(picture);
+          }
+        }
+        // Supprime les anciennes images
+        await Promise.all(
+          oldPictures
+            /* 
+            On filtre les images supprimées dans un tableau avant de le parcourir avec map
+            La méthode some retourne false si l'id de la picture ne correspond pas 
+            à un id existant dans updatedPictures
+            */
+            .filter(oldPic => !updatedPictures.some(p => p.id == oldPic.id))
+            .map(picture => this.pictureRepo.deletePicture(picture.id, tx))
+        );
+        // Crée les nouvelles images avec Promise.all qui va lancer les promesses en parallèle
+        const createdPictures = await Promise.all(
+          sendPictures.map(picture => {
+            new Picture(picture);
+            return this.pictureRepo.createPicture(picture, tx);
+          })
+        )
 
-      // On crée la nouvelle location
-      return await this.repo.updateLocation(id, data);
+        updatedPictures.push(...createdPictures);
+        data.pictures = updatedPictures;
 
+        // On remplace les anciennes données par les nouvelles
+        const newLocation = {...existingLocation, ...data};
+        new Location(newLocation);
+
+        return await this.repo.updateLocation(id, data, tx);
+      })
     } catch (error) {
-      // On supprime les nouvelles images crées
-      for (const picture of createdPictures) {
-        await this.pictureRepo.deletePicture(picture.id);
-      }
       throw error;
     }
   }
+
 
   async deleteLocation(id) {
     try {
@@ -144,26 +128,17 @@ export default class LocationServices{
       s'annulent 
       */
       return prisma.$transaction(async (tx) => {
-        const location = await tx.location.findUnique({
-          where: { id },
-          include: { pictures: true }
-        });
+        const location = await this.repo.getLocationById(id, tx);
         if(!location) {
           throw new Errors.NotFoundError('Location not found');
         }
-        
         // Suppression des images
         await tx.picture.deleteMany({
           where: { locationId: id }
         });
-
         // Suppression de la location
-        return tx.location.delete({
-          where: { id }
-        });
-
+        return await this.repo.deleteLocation(id, tx);
       })
-
     } catch (error) {
       throw error;
     }

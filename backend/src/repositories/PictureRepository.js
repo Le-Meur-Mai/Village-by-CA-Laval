@@ -3,13 +3,13 @@ export default class PictureRepository {
     this.prisma = prisma;
   }
 
-  async createPicture(data) {
-    const picture = await this.prisma.picture.create({data});
+  async createPicture(data, client = this.prisma) {
+    const picture = await client.picture.create({data});
     return picture;
   }
 
-  async getPictureById(id) {
-    const picture = await this.prisma.picture.findUnique({
+  async getPictureById(id, client = this.prisma) {
+    const picture = await client.picture.findUnique({
       where: {id},
       include: {
         logoPartner: true,
@@ -35,8 +35,8 @@ export default class PictureRepository {
     return pictures;
   }
 
-  async updatePicture(id, data) {
-    const picture = await this.prisma.picture.update({
+  async updatePicture(id, data, client = this.prisma) {
+    const picture = await client.picture.update({
       where: {id},
       data,
       include: {
@@ -50,8 +50,8 @@ export default class PictureRepository {
     return picture;
   }
 
-  async deletePicture(id) {
-    const picture = await this.prisma.picture.delete({
+  async deletePicture(id, client = this.prisma) {
+    const picture = await client.picture.delete({
       where: {id},
       include: {
         logoPartner: true,
