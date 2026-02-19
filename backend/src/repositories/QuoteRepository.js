@@ -3,8 +3,8 @@ export default class QuoteRepository {
     this.prisma = prisma;
   }
 
-  async createQuote(data) {
-    const quote = await this.prisma.quote.create({
+  async createQuote(data, client = this.prisma) {
+    const quote = await client.quote.create({
       data,
       include: {
         user: true
@@ -13,8 +13,8 @@ export default class QuoteRepository {
     return quote;
   }
 
-  async getQuoteById(id) {
-    const quote = await this.prisma.quote.findUnique({
+  async getQuoteById(id, client = this.prisma) {
+    const quote = await client.quote.findUnique({
       where: {id},
       include: {
         user: true
@@ -23,8 +23,8 @@ export default class QuoteRepository {
     return quote;
   }
 
-  async getQuotesByUser(id) {
-    const quotes = await this.prisma.quote.findMany({
+  async getQuotesByUser(id, client = this.prisma) {
+    const quotes = await client.quote.findMany({
       where: {userId: id},
       include: {
         user: true
@@ -33,8 +33,8 @@ export default class QuoteRepository {
     return quotes;
   }
 
-  async getAllQuotes() {
-  const quotes = await this.prisma.quote.findMany({
+  async getAllQuotes(client = this.prisma) {
+  const quotes = await client.quote.findMany({
     include: {
       user: true
     }
@@ -42,8 +42,8 @@ export default class QuoteRepository {
   return quotes;
   }
 
-  async updateQuote(id, data) {
-    const quote = await this.prisma.quote.update({
+  async updateQuote(id, data, client = this.prisma) {
+    const quote = await client.quote.update({
       where: {id},
       data,
       include: {
@@ -53,8 +53,8 @@ export default class QuoteRepository {
     return quote;
   }
 
-  async deleteQuote(id) {
-    const quote = await this.prisma.quote.delete({
+  async deleteQuote(id, client = this.prisma) {
+    const quote = await client.quote.delete({
       where: {id},
       include: {
         user: true

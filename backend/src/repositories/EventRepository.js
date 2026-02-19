@@ -3,40 +3,40 @@ export default class EventRepository {
     this.prisma = prisma;
   }
 
-  async createEvent(data) {
-    const event = await this.prisma.event.create({data});
+  async createEvent(data, client = this.prisma) {
+    const event = await client.event.create({data});
     return event;
   }
 
-  async getEventById(id) {
-    const event = await this.prisma.event.findUnique({
+  async getEventById(id, client = this.prisma) {
+    const event = await client.event.findUnique({
       where: {id}
     });
     return event;
   }
 
-  async getAllEvent() {
-    const events = await this.prisma.event.findMany({});
+  async getAllEvent(client = this.prisma) {
+    const events = await client.event.findMany({});
     return events;
   }
 
-  async getEventByDate(date) {
-    const events = await this.prisma.event.findMany({
+  async getEventByDate(date, client = this.prisma) {
+    const events = await client.event.findMany({
       where: {date}
     });
     return events;
   }
 
-  async updateEvent(id, data) {
-    const event = await this.prisma.event.update({
+  async updateEvent(id, data, client = this.prisma) {
+    const event = await client.event.update({
       where: {id},
       data
     });
     return event;
   }
 
-  async deleteEvent(id) {
-    const event = await this.prisma.event.delete({
+  async deleteEvent(id, client = this.prisma) {
+    const event = await client.event.delete({
       where: {id}
     });
     return event;

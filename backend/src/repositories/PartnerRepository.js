@@ -3,8 +3,8 @@ export default class PartnerRepository {
     this.prisma = prisma;
   }
 
-  async createPartner(data) {
-    const partner = await this.prisma.partner.create({
+  async createPartner(data, client = this.prisma) {
+    const partner = await client.partner.create({
       data,
       include: {
         logo: true
@@ -13,8 +13,8 @@ export default class PartnerRepository {
     return partner;
   }
 
-  async getPartnerById(id) {
-    const partner = await this.prisma.partner.findUnique({
+  async getPartnerById(id, client = this.prisma) {
+    const partner = await client.partner.findUnique({
       where: {id},
       include: {
         logo: true
@@ -23,8 +23,8 @@ export default class PartnerRepository {
     return partner;
   }
 
-  async getAllPartners() {
-    const partners = await this.prisma.partner.findMany({
+  async getAllPartners(client = this.prisma) {
+    const partners = await client.partner.findMany({
       include: {
         logo: true
       }
@@ -32,8 +32,8 @@ export default class PartnerRepository {
     return partners;
   }
 
-  async updatePartner(id, data) {
-    const partner = await this.prisma.partner.update({
+  async updatePartner(id, data, client = this.prisma) {
+    const partner = await client.partner.update({
       where: {id},
       data,
       include: {
@@ -43,8 +43,8 @@ export default class PartnerRepository {
     return partner;
   }
 
-  async deletePartner(id) {
-    const partner = await this.prisma.partner.delete({
+  async deletePartner(id, client = this.prisma) {
+    const partner = await client.partner.delete({
       where: {id},
       include: {
         logo: true

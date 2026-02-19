@@ -3,8 +3,8 @@ export default class UserRepository {
     this.prisma = prisma;
   }
 
-  async createUser(data) {
-    const user = await this.prisma.user.create({
+  async createUser(data, client = this.prisma) {
+    const user = await client.user.create({
       data,
     include: {
       quotes: true,
@@ -13,8 +13,8 @@ export default class UserRepository {
     return user;
   }
 
-  async getUserById(id) {
-    const user = await this.prisma.user.findUnique({
+  async getUserById(id, client = this.prisma) {
+    const user = await client.user.findUnique({
       where: {id},
       include : {
         quotes: true,
@@ -24,8 +24,8 @@ export default class UserRepository {
     return user;
   }
 
-  async getAllUsers() {
-    const users = await this.prisma.user.findMany({
+  async getAllUsers(client = this.prisma) {
+    const users = await client.user.findMany({
       include: {
         quotes: true,
         startUp: true
@@ -34,8 +34,8 @@ export default class UserRepository {
     return users;
   }
 
-  async findUserByEmail(email) {
-    const user = await this.prisma.user.findUnique({
+  async findUserByEmail(email, client = this.prisma) {
+    const user = await client.user.findUnique({
       where: {email},
       include: {
         quotes: true,
@@ -45,8 +45,8 @@ export default class UserRepository {
     return user;
   }
 
-  async updateUser(id, data) {
-    const user = await this.prisma.user.update({
+  async updateUser(id, data, client = this.prisma) {
+    const user = await client.user.update({
     where: {id},
     data,
     include: {
@@ -57,8 +57,8 @@ export default class UserRepository {
   return user;
   }
 
-  async deleteUser(id) {
-    const user = await this.prisma.user.delete({
+  async deleteUser(id, client = this.prisma) {
+    const user = await client.user.delete({
       where: {id},
       include: {
         quotes: true,
