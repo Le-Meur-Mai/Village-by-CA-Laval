@@ -19,7 +19,6 @@ export default class PartnerServices {
 
   // POST Création d'un nouveau partenaire
   async createPartner(data) {
-    let newPicture = null;
     try {
       return await prisma.$transaction( async (tx) => {
         if(!data.logo) {
@@ -27,7 +26,7 @@ export default class PartnerServices {
         } else {
           const picture = data.logo;
           new Picture(picture);
-          newPicture = await this.pictureRepo.createPicture(picture, tx);
+          const newPicture = await this.pictureRepo.createPicture(picture, tx);
           data.logoId = newPicture.id;
         }
         // Crée une nouvelle instance pour vérifier la conformité des données
@@ -63,8 +62,6 @@ export default class PartnerServices {
 
   // PATCH Mis à jour d'un partenaire
   async updatePartner(id, data) {
-    // on déclare notre variable ici pour qu'elle puisse être détectée par le catch
-    let newLogo = null;
     try {
       return await prisma.$transaction(async (tx) => {
         // Vérification de l'existence du partenaire
@@ -76,7 +73,7 @@ export default class PartnerServices {
         // Creation du nouveau logo et supression de l'ancien
         if(data.logo) {
           new Picture(data.logo);
-          newLogo = await this.pictureRepo.createPicture(data.logo, tx);
+          const newLogo = await this.pictureRepo.createPicture(data.logo, tx);
           data.logoId = newLogo.id;
           if (existingPartner.logoId !== "Id par defaut") {
             await this.pictureRepo.deletePicture(existingPartner.logoId, tx);
