@@ -22,7 +22,7 @@ export default class StartUpServices {
   // POST Creation d'une startup
   async createStartUp (data) {
     try {
-      return prisma.$transaction(async (tx) => {
+      return await prisma.$transaction(async (tx) => {
         // Verification de l'existence du user
         const user = await this.userRepo.getUserById(data.userId, tx);
         if (!user) {
@@ -93,7 +93,7 @@ export default class StartUpServices {
   // PATCH Met à jour une startup
   async updateStartUp (id, data) {
     try {
-      return prisma.$transaction(async (tx) => {
+      return await prisma.$transaction(async (tx) => {
         // On déclare des variables pour pouvoir gérer la suppression des images.
         let newLogo = null;
         let newDescriptionPicture = null;
@@ -163,7 +163,7 @@ export default class StartUpServices {
 
   // DELETE Suppression d'un startup
   async deleteStartUp (id) {
-    return prisma.$transaction(async (tx) => {
+    return await prisma.$transaction(async (tx) => {
       try {
         const existingStartUp = await this.startUpRepo.getStartUpById(id, tx);
         if (!existingStartUp) {
