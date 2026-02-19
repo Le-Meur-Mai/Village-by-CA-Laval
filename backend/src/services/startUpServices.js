@@ -8,7 +8,7 @@ import StartUp from "../classes/StartUp.js";
 // Importation des classes pour les verifications de format.
 import prisma from "../prismaClient.js";
 // importation de l'instance du prisma client
-import * as Errors from "../errors/errorsHandler.js";
+import * as Errors from "../errors/errorsClasses.js";
 // importation de toutes nos classes d'erreurs personnalisées
 
 export default class StartUpServices {

@@ -3,7 +3,7 @@ import StartUpRepository from "../repositories/StartUpRepository.js";
 import Type from "../classes/Type.js";
 import prisma from "../prismaClient.js";
 // importation de l'instance du prisma client
-import * as Errors from "../errors/errorsHandler.js";
+import * as Errors from "../errors/errorsClasses.js";
 // importation de toutes nos classes d'erreurs personnalisées
 
 export default class TypeServices {

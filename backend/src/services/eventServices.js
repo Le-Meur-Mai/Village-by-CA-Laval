@@ -2,7 +2,7 @@ import EventRepository from "../repositories/EventRepository.js";
 import Event from "../classes/Event.js";
 import prisma from "../prismaClient.js";
 // importation de l'instance du prisma client
-import * as Errors from "../errors/errorsHandler.js";
+import * as Errors from "../errors/errorsClasses.js";
 // importation de toutes nos classes d'erreurs personnalisées
 
 export default class EventServices {

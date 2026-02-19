@@ -8,7 +8,7 @@ import Picture from "../classes/Picture.js";
 // Import du client prisma pour créer une nouvelle instance du Repo
 import prisma from "../prismaClient.js";
 // Import de la classe erreur renvoyant des erreurs personnalisées
-import * as Errors from "../errors/errorsHandler.js";
+import * as Errors from "../errors/errorsClasses.js";
 
 export default class PartnerServices {
   constructor() {
