@@ -9,6 +9,9 @@ import contactRoutes from './routes/contactRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 
+// Importe le Error handler qui va gérer les erreurs reçue par les routes
+import errorHandler from './errors/errorHandler.js'
+
 // Lance la méthode express pour créer une application
 const app = express();
 
@@ -40,6 +43,8 @@ app.use('/locations', locationsRoutes);
 app.use('/contact', contactRoutes);
 app.use('/auth', authRoutes);
 app.use('/admin', adminRoutes);
+
+app.use(errorHandler);
 
 // On exporte notre app
 export default app;
