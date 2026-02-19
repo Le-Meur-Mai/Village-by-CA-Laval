@@ -23,7 +23,7 @@ export default class LocationServices{
       Création d'une transaction Prisma : si une transaction échoue, les autres
       s'annulent 
       */
-      return prisma.$transaction(async (tx) => {
+      return await prisma.$transaction(async (tx) => {
         if(!data.pictures || data.pictures.length < 1 || data.pictures.length > 5) {
           throw new Errors.ValidationError('You must have between 1 and 5 pictures');
         } else {
@@ -69,7 +69,7 @@ export default class LocationServices{
 
   async updateLocation(id, data) {
     try {
-      return prisma.$transaction(async (tx) => {
+      return await prisma.$transaction(async (tx) => {
         const existingLocation = await this.repo.getLocationById(id, tx);
         if(!existingLocation) {
           throw new Errors.NotFoundError('Location not found');
@@ -127,15 +127,15 @@ export default class LocationServices{
       Création d'une transaction Prisma : si une transaction échoue, les autres
       s'annulent 
       */
-      return prisma.$transaction(async (tx) => {
+      return await prisma.$transaction(async (tx) => {
         const location = await this.repo.getLocationById(id, tx);
         if(!location) {
           throw new Errors.NotFoundError('Location not found');
         }
         // Suppression des images
-        await tx.picture.deleteMany({
-          where: { locationId: id }
-        });
+        await Promise.all(
+          location.pictures.map(picture => this.pictureRepo.deletePicture(picture.id, tx))
+        );
         // Suppression de la location
         return await this.repo.deleteLocation(id, tx);
       })
