@@ -1,3 +1,4 @@
+// BaseModel contenant les méthodes communes à toutes les classes
 export default class BaseModel {
   constructor() {
     if (new.target === BaseModel) {

@@ -1,4 +1,7 @@
+// Import de BaseModel pour hériter de ses méthodes
 import BaseModel from "./BaseModel.js";
+// Import de la classe erreur renvoyant des erreurs personnalisées
+import * as Errors from "../errors/errorsHandler.js"
 
 export default class StartUp extends BaseModel {
   constructor({name, description = "", isAlumni = false, website = "",
@@ -22,10 +25,10 @@ export default class StartUp extends BaseModel {
 
   set name(value) {
     if (typeof value !== "string") {
-      throw new TypeError("Name must be a string.");
+      throw new Errors.ValidationError("Name must be a string.");
     }
     else if (value.length > 100) {
-      throw new Error("The length of the name is too long.");
+      throw new Errors.ValidationError("The length of the name is too long.");
     }
     this._name = value;
   }
@@ -36,10 +39,10 @@ export default class StartUp extends BaseModel {
 
   set description(value) {
     if (typeof value !== "string") {
-      throw new TypeError("Description must be a string.");
+      throw new Errors.ValidationError("Description must be a string.");
     }
     else if (value.length > 300) {
-      throw new Error("The length of the description is too long.");
+      throw new Errors.ValidationError("The length of the description is too long.");
     }
     this._description = value;
   }
@@ -50,10 +53,10 @@ export default class StartUp extends BaseModel {
 
   set website(value) {
     if (typeof value !== "string") {
-      throw new TypeError("Website must be a string.");
+      throw new Errors.ValidationError("Website must be a string.");
     }
     else if (value.length > 200) {
-      throw new Error("The length of the website is too long.");
+      throw new Errors.ValidationError("The length of the website is too long.");
     }
     this._website = value;
   }
@@ -64,7 +67,7 @@ export default class StartUp extends BaseModel {
 
   set isAlumni(value) {
     if (typeof value !== "boolean") {
-      throw new TypeError("isAlumni value must be a boolean");
+      throw new Errors.ValidationError("isAlumni value must be a boolean");
     }
     this._isAlumni = value;
   }
@@ -75,10 +78,10 @@ export default class StartUp extends BaseModel {
 
   set logoId(value) {
     if (typeof value !== "string") {
-      throw new TypeError("logoId must be a string.");
+      throw new Errors.ValidationError("logoId must be a string.");
     }
     else if (value.length !== 36) {
-      throw new Error("logoId don't have the correct length.");
+      throw new Errors.ValidationError("logoId don't have the correct length.");
     }
     this._logoId = value;
   }
@@ -89,10 +92,10 @@ export default class StartUp extends BaseModel {
 
   set descriptionPictureId(value) {
     if (typeof value !== "string") {
-      throw new TypeError("DescriptionPictureId must be a string.");
+      throw new Errors.ValidationError("DescriptionPictureId must be a string.");
     }
     else if (value.length !== 36) {
-      throw new Error("DescriptionPictureId don't have the correct length.");
+      throw new Errors.ValidationError("DescriptionPictureId don't have the correct length.");
     }
     this._descriptionPictureId = value;
   }
@@ -103,10 +106,10 @@ export default class StartUp extends BaseModel {
 
   set userId(value) {
     if (typeof value !== "string") {
-      throw new TypeError("UserId must be a string.");
+      throw new Errors.ValidationError("UserId must be a string.");
     }
     else if (value.length !== 36) {
-      throw new Error("UserId don't have the correct length.");
+      throw new Errors.ValidationError("UserId don't have the correct length.");
     }
     this._userId = value;
   }
@@ -117,7 +120,7 @@ export default class StartUp extends BaseModel {
 
   set types(value) {
     if (Array.isArray(value) !== true) {
-      throw new TypeError("Types must be an array.");
+      throw new Errors.ValidationError("Types must be an array.");
     }
     this._types = value;
   }

@@ -11,7 +11,7 @@ export default class StartUpRepository{
         ...dataStartUp,
         types: types ? 
         {
-          connect: types?.map(id => ({ id }))
+          connect: types.map(id => ({ id }))
         } : undefined
       },
       include: {
