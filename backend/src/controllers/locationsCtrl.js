@@ -13,23 +13,23 @@ const createLocation = async (req, res, next) => {
         pictures: req.body.pictures
       }
     )
-    res.status(200).json(newLocation);
+    res.status(201).json(newLocation);
   } catch (error) {
     next(error);
   }
-};
+}
 
 // Retourne une location par rapport à son Id
-const getLocationByID = async (req, res, next) => {
+const getLocationById = async (req, res, next) => {
   try {
     // Enregistre l'id dans la variable id
     const id = req.params.id;
-    const location = await LocationServices.getLocationByID(id);
+    const location = await LocationServices.getLocationById(id);
     res.status(200).json(location);
   } catch (error) {
     next(error);
   }
-};
+}
 
 // Retourne toutes les locations
 const getAllLocations = async (req, res, next) => {
@@ -39,7 +39,7 @@ const getAllLocations = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
+}
 
 // Met à jour les locations
 const updateLocation = async (req, res, next) => {
@@ -68,8 +68,8 @@ const deleteLocation = async (req, res, next) => {
 // Export des fonctions
 export default {
   createLocation,
-  getLocationByID,
+  getLocationById,
   getAllLocations,
   updateLocation,
   deleteLocation
-};
+}
