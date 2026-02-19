@@ -17,19 +17,17 @@ export default class PostServices {
 
   // POST Crétaion d'un post
   async createPost (data) {
-    let newPicturePost = null;
     try {
-      if (data.picture) {
-        new Picture(data.picture);
-        newPicturePost = await this.pictureRepo.createPicture(data.picture);
-        data.pictureId = newPicturePost.id;
-      }
-      new Post(data);
-      return await this.postRepo.createPost(data);
+      return await prisma.$transaction(async (tx) => {
+        if (data.picture) {
+          new Picture(data.picture);
+          const newPicturePost = await this.pictureRepo.createPicture(data.picture, tx);
+          data.pictureId = newPicturePost.id;
+        }
+        new Post(data);
+        return await this.postRepo.createPost(data, tx);
+      })
     } catch (error) {
-      if (newPicturePost && newPicturePost !== "Id par defaut") {
-        await this.pictureRepo.deletePicture(data.pictureId);
-      }
       throw error;
     }
   }
@@ -58,34 +56,38 @@ export default class PostServices {
 
   // PATCH Mise à jour d'un post
   async updatePost (id, data) {
-    let newPicturePost = null;
     try {
-      // On vérifie que le post existe
-      const existingPost = await this.postRepo.getPostById(id);
-      if (!existingPost) {
-        throw new Errors.NotFoundError("The post doesn't exist.");
-      }
-
-
-      // On cree une nouvelle image s'il y en a une et on va suprimmer l'ancienne
-      let oldPicturePostId = null;
-      if (data.picture) {
-        new Picture(data.picture);
-        newPicturePost = await this.pictureRepo.createPicture(data.picture);
-        data.pictureId = newPicturePost.id;
-        if (existingPost.pictureId) {
-          oldPicturePostId = existingPost.pictureId;
+      return await prisma.$transaction(async (tx) => {
+        // On vérifie que le post existe
+        const existingPost = await this.postRepo.getPostById(id, tx);
+        if (!existingPost) {
+          throw new Errors.NotFoundError("The post doesn't exist.");
         }
-      }
-      const fullPost = {...existingPost, ...data};
-      // On fusionne les nouvelles et anciennes données
-      new Post(fullPost);
-      const newPost = await this.postRepo.updatePost(id, data);
-      await this.pictureRepo.deletePicture(oldPicturePostId);
+  
+  
+        // On cree une nouvelle image s'il y en a une et on va suprimmer l'ancienne
+        let oldPicturePostId = null;
+        if (data.picture) {
+          new Picture(data.picture);
+          const newPicturePost = await this.pictureRepo.createPicture(data.picture, tx);
+          data.pictureId = newPicturePost.id;
+          if (existingPost.pictureId) {
+            oldPicturePostId = existingPost.pictureId;
+          }
+        }
+        const fullPost = {...existingPost, ...data};
+        // On fusionne les nouvelles et anciennes données
+        new Post(fullPost);
+  
+        const newPost = await this.postRepo.updatePost(id, data, tx);
+
+        if (oldPicturePostId && oldPicturePostId !== "Id par defaut") {
+          await this.pictureRepo.deletePicture(oldPicturePostId, tx);
+        }
+
+        return newPost;
+      })
     } catch (error) {
-      if (newPicturePost && newPicturePost !== "Id par defaut") {
-        await this.pictureRepo.deletePicture(newPicturePost.id);
-      }
       throw error;
     }
   }
@@ -93,14 +95,16 @@ export default class PostServices {
   // DELETE Suppression d'un post existant
   async deletePost(id) {
     try {
-      const post = await this.postRepo.getPostById(id);
-      if (!post) {
-        throw new Errors.NotFoundError("The post doesn't exist");
-      }
-      if (post.pictureId && post.pictureId !== "Id par defaut") {
-        await this.pictureRepo.deletePicture(post.pictureId);
-      }
-      return await this.postRepo.deletePost(id);
+      return await prisma.$transaction(async (tx) => {
+        const post = await this.postRepo.getPostById(id, tx);
+        if (!post) {
+          throw new Errors.NotFoundError("The post doesn't exist");
+        }
+        if (post.pictureId && post.pictureId !== "Id par defaut") {
+          await this.pictureRepo.deletePicture(post.pictureId, tx);
+        }
+        return await this.postRepo.deletePost(id, tx);
+      })
     } catch (error) {
       throw error;
     }
