@@ -7,7 +7,7 @@ import StartUpServices from "./startUpServices.js";
 // Import du client prisma pour créer une nouvelle instance du Repo
 import prisma from "../prismaClient.js";
 // Import de la classe erreur renvoyant des erreurs personnalisées
-import * as Errors from "../errors/errorsHandler.js";
+import * as Errors from "../errors/errorsClasses.js";
 
 export default class UserServices {
   constructor() {

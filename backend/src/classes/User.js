@@ -3,7 +3,7 @@ import BaseModel from "./BaseModel.js";
 // Import du module de validation d'email
 import validator from "validator";
 // Import de la classe erreur renvoyant des erreurs personnalisées
-import * as Errors from "../errors/errorsHandler.js"
+import * as Errors from "../errors/errorsClasses.js"
 
 export default class User extends BaseModel {
   constructor({name, email, password, quotes = [], startUp = null}) {
