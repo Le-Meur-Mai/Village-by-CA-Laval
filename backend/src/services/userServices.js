@@ -22,6 +22,7 @@ export default class UserServices {
       // Crée une nouvelle instance pour vérifier la conformité des données
       new User(data);
       // Importer fonction de hachage et remplacer le mdp de data
+      data.isAdmin = false;
       return await this.repo.createUser(data);
     } catch (error) {
       throw error;
