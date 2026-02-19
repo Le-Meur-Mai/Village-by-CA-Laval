@@ -16,9 +16,9 @@ export default class TypeServices {
   async createType (data) {
     try {
       if (data.startUps && data.startUps.length > 0) {
-        for (const id of data.startUps.id) {
-          const startUp = await this.startUpRepo.getStartUpById(id);
-          if (!startUp) {
+        for (const startUp of data.startUps) {
+          const existingStartUp = await this.startUpRepo.getStartUpById(startUp.id);
+          if (!existingStartUp) {
             throw new Errors.NotFoundError("One start-up doesn't exist.");
           }
         }
