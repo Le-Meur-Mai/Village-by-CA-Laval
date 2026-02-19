@@ -5,9 +5,9 @@ import PostServices from "../services/postServices";
 
 const getIndex = async (req, res, next) => {
   try {
-    const startUps = StartUpServices.getAllStartUps();
-    const quotes = QuoteServices.getAllQuotes();
-    const posts = PostServices.getAllPosts();
+    const startUps = await StartUpServices.getAllStartUps();
+    const quotes = await QuoteServices.getAllQuotes();
+    const posts = await PostServices.getAllPosts();
   
     res.status(200).json({
       startups: startUps,
