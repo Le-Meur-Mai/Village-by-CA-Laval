@@ -12,7 +12,7 @@ const locationsRouteur = express.Router();
 // Définitions des différentes routes et méthodes
 locationsRouteur.get('/', locationsCtrl.getAllLocations);
 
-locationsRouteur.get('/:id', locationsCtrl.getLocationByID);
+locationsRouteur.get('/:id', locationsCtrl.getLocationById);
 
 // Export du routeur
 export default locationsRouteur;
