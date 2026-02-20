@@ -2,9 +2,11 @@ import LocationServices from "../services/locationServices.js"
 
 // Fonctions pour les routes locations
 
+const servicesLocation = new LocationServices();
+
 const createLocation = async (req, res, next) => {
   try {
-    const newLocation = await LocationServices.createLocation(
+    const newLocation = await servicesLocation.createLocation(
       {
         title: req.body.title,
         description: req.body.description,
@@ -24,7 +26,7 @@ const getLocationById = async (req, res, next) => {
   try {
     // Enregistre l'id dans la variable id
     const id = req.params.id;
-    const location = await LocationServices.getLocationById(id);
+    const location = await servicesLocation.getLocationById(id);
     res.status(200).json(location);
   } catch (error) {
     next(error);
@@ -34,7 +36,7 @@ const getLocationById = async (req, res, next) => {
 // Retourne toutes les locations
 const getAllLocations = async (req, res, next) => {
   try {
-    const allLocations = await LocationServices.getAllLocations()
+    const allLocations = await servicesLocation.getAllLocations()
     res.status(200).json(allLocations);
   } catch (error) {
     next(error);
@@ -46,7 +48,7 @@ const updateLocation = async (req, res, next) => {
   try {
     const id = req.params.id;
     const newData = req.body;
-    const updatedLocation = await LocationServices.updateLocation(id, newData);
+    const updatedLocation = await servicesLocation.updateLocation(id, newData);
     res.status(200).json(updatedLocation);
   } catch (error) {
     next(error);
@@ -57,7 +59,7 @@ const updateLocation = async (req, res, next) => {
 const deleteLocation = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const deletedLocation = await LocationServices.deleteLocation(id);
+    const deletedLocation = await servicesLocation.deleteLocation(id);
     res.status(200).json(deletedLocation);
   } catch (error) {
     next(error);

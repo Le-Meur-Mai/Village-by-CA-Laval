@@ -8,8 +8,8 @@ import * as Errors from "../errors/errorsClasses.js";
 
 export default class TypeServices {
   constructor() {
-    this.typeRepo = TypeRepository(prisma);
-    this.startUpRepo = StartUpRepository(prisma);
+    this.typeRepo = new TypeRepository(prisma);
+    this.startUpRepo = new StartUpRepository(prisma);
   }
 
   // POST Création d'un type

@@ -1,11 +1,12 @@
 import QuoteServices from "../services/quoteServices.js";
 
 // Controleur pour les citations
+const servicesQuote = new QuoteServices();
 
 // Création d'une citation
 const createQuote = async (req, res, next) => {
   try {
-    const newQuote = await QuoteServices.createQuote({
+    const newQuote = await servicesQuote.createQuote({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       description: req.body.description,
@@ -21,7 +22,7 @@ const createQuote = async (req, res, next) => {
 const getQuoteById = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const quote = await QuoteServices.getQuoteById(id);
+    const quote = await servicesQuote.getQuoteById(id);
     res.status(200).json(quote);
   } catch (error) {
     next(error);
@@ -31,7 +32,7 @@ const getQuoteById = async (req, res, next) => {
 // Retourne toutes les citations
 const getAllQuotes = async (req, res, next) => {
   try {
-    const quotes = await QuoteServices.getAllQuotes();
+    const quotes = await servicesQuote.getAllQuotes();
     res.status(200).json(quotes);
   } catch (error) {
     next(error);
@@ -43,7 +44,7 @@ const updateQuote = async (req, res, next) => {
   try {
     const id = req.params.id;
     const newData = req.body;
-    const updatedQuote = await QuoteServices.updateQuote(id, newData);
+    const updatedQuote = await servicesQuote.updateQuote(id, newData);
     res.status(200).json(updatedQuote);
   } catch (error) {
     next(error);
@@ -54,7 +55,7 @@ const updateQuote = async (req, res, next) => {
 const deleteQuote = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const deletedQuote = await QuoteServices.deleteQuote(id);
+    const deletedQuote = await servicesQuote.deleteQuote(id);
     res.status(200).json(deletedQuote);
   } catch (error) {
     next(error);
