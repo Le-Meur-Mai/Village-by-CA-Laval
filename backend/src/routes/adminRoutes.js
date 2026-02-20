@@ -1,5 +1,13 @@
 // Importe le package express
 import express from 'express'
+// Importe les controllers utilisé dans la route admin
+import userCtrl from '../controllers/userCtrl.js'
+import startUpsCtrl from '../controllers/startupsCtrl.js'
+import partnerCtrl from '../controllers/partnersCtrl.js'
+import quoteCtrl from '../controllers/quoteCtrl.js'
+import eventCtrl from '../controllers/eventCtrl.js'
+import postCtrl from '../controllers/'
+import locationCtrl from '../controllers/locationsCtrl.js'
 
 /*
 Créer un router avec le module express.Router, permet de définir les routes
@@ -13,115 +21,59 @@ adminRouteur.get('/', (req, res) => {
 });
 
 // --- USERS --- //
-adminRouteur.get('/users', (req, res) => {
-  res.json({message: 'Page admin - users'});
-});
+adminRouteur.get('/users', userCtrl.getAllUsers);
 
-adminRouteur.post('/users', (req, res) => {
-  res.json({message: 'Page admin - users'});
-});
+adminRouteur.post('/users', userCtrl.createUser);
 
-adminRouteur.get('/users/:id', (req, res) => {
-  const id = req.params.id;
-  res.json({adminUserID: id});
-});
+adminRouteur.get('/users/:id', userCtrl.getUserById);
 
-adminRouteur.patch('/users/:id', (req, res) => {
-  const id = req.params.id;
-  res.json({adminUserID: id});
-});
+adminRouteur.patch('/users/:id', userCtrl.updateUser);
 
-adminRouteur.delete('/users/:id', (req, res) => {
-  const id = req.params.id;
-  res.json({adminUserID: id});
-});
+adminRouteur.delete('/users/:id', userCtrl.deleteUser);
 
 // --- STARTUPS --- //
-adminRouteur.get('/startups', (req, res) => {
-  res.json({message: 'Page admin - startups'});
-});
+adminRouteur.get('/startups', startUpsCtrl.getAllStartups);
 
-adminRouteur.post('/startups', (req, res) => {
-  res.json({message: 'Page admin - startups'});
-});
+adminRouteur.post('/startups', startUpsCtrl.createStartUp);
 
-adminRouteur.get('/startups/:id', (req, res) => {
-  const id = req.params.id;
-  res.json({adminStartupID: id});
-});
+adminRouteur.get('/startups/:id', startUpsCtrl.getStartupById);
 
-adminRouteur.patch('/startups/:id', (req, res) => {
-  const id = req.params.id;
-  res.json({adminStartupID: id});
-});
+adminRouteur.patch('/startups/:id', startUpsCtrl.updateStartUp);
 
-adminRouteur.delete('/startups/:id', (req, res) => {
-  const id = req.params.id;
-  res.json({adminStartupID: id});
-});
+adminRouteur.delete('/startups/:id', startUpsCtrl.deleteStartUp);
 
 // --- PARTNERS --- //
-adminRouteur.get('/partenaires', (req, res) => {
-  res.json({message: 'Page admin - partenaires'});
-});
+adminRouteur.get('/partenaires', partnerCtrl.getAllPartners);
 
-adminRouteur.post('/partenaires', (req, res) => {
-  res.json({message: 'Page admin - partenaires'});
-});
+adminRouteur.post('/partenaires', partnerCtrl.createPartner);
 
-adminRouteur.get('/partenaires/:id', (req, res) => {
-  const id = req.params.id;
-  res.json({adminPartenaireID: id});
-});
+adminRouteur.get('/partenaires/:id', partnerCtrl.getPartnerByID);
 
-adminRouteur.patch('/partenaires/:id', (req, res) => {
-  const id = req.params.id;
-  res.json({adminPartenaireID: id});
-});
+adminRouteur.patch('/partenaires/:id', partnerCtrl.updatePartner);
 
-adminRouteur.delete('/partenaires/:id', (req, res) => {
-  const id = req.params.id;
-  res.json({adminPartenaireID: id});
-});
+adminRouteur.delete('/partenaires/:id', partnerCtrl.deletePartner);
 
 // --- QUOTES --- //
-adminRouteur.get('/citations', (req, res) => {
-  res.json({message: 'Page admin - citations'});
-});
+adminRouteur.get('/citations', quoteCtrl.getAllQuotes);
 
-adminRouteur.get('/citations/:id', (req, res) => {
-  const id = req.params.id;
-  res.json({adminCitationID: id});
-});
+adminRouteur.post('/citations', quoteCtrl.createQuote);
 
-adminRouteur.delete('/citations/:id', (req, res) => {
-  const id = req.params.id;
-  res.json({adminCitationID: id});
-});
+adminRouteur.get('/citations/:id', quoteCtrl.getQuoteById);
+
+adminRouteur.patch('/citations/:id', quoteCtrl.updateQuote);
+
+adminRouteur.delete('/citations/:id', quoteCtrl.deleteQuote);
 
 // --- EVENTS --- //
-adminRouteur.get('/evenements', (req, res) => {
-  res.json({message: 'Page admin - evenements'});
-});
+adminRouteur.get('/evenements', eventCtrl.getAllEvents);
 
-adminRouteur.post('/evenements', (req, res) => {
-  res.json({message: 'Page admin - evenements'});
-});
+adminRouteur.post('/evenements', eventCtrl.createEvent);
 
-adminRouteur.get('/evenements/:id', (req, res) => {
-  const id = req.params.id;
-  res.json({adminEvenementID: id});
-});
+adminRouteur.get('/evenements/:id', eventCtrl.getEventById);
 
-adminRouteur.patch('/evenements/:id', (req, res) => {
-  const id = req.params.id;
-  res.json({adminEvenementID: id});
-});
+adminRouteur.patch('/evenements/:id', eventCtrl.updateEvent);
 
-adminRouteur.delete('/evenements/:id', (req, res) => {
-  const id = req.params.id;
-  res.json({adminEvenementID: id});
-});
+adminRouteur.delete('/evenements/:id', eventCtrl.deleteEvent);
 
 // --- POSTS --- //
 adminRouteur.get('/articles', (req, res) => {
@@ -148,29 +100,15 @@ adminRouteur.delete('/articles/:id', (req, res) => {
 });
 
 // --- LOCATIONS --- //
-adminRouteur.get('/locations', (req, res) => {
-  res.json({message: 'Page admin - locations'});
-});
+adminRouteur.get('/locations', locationCtrl.getAllLocations);
 
-adminRouteur.post('/locations', (req, res) => {
-  res.json({message: 'Page admin - locations'});
-});
+adminRouteur.post('/locations', locationCtrl.createLocation);
 
-adminRouteur.get('/locations/:id', (req, res) => {
-  const id = req.params.id;
-  res.json({adminLocationID: id});
-});
+adminRouteur.get('/locations/:id', locationCtrl.getLocationById);
 
-adminRouteur.patch('/locations/:id', (req, res) => {
-  const id = req.params.id;
-  res.json({adminLocationID: id});
-});
+adminRouteur.patch('/locations/:id', locationCtrl.updateLocation);
 
-adminRouteur.delete('/locations/:id', (req, res) => {
-  const id = req.params.id;
-  res.json({adminLocationID: id});
-});
+adminRouteur.delete('/locations/:id', locationCtrl.deleteLocation);
 
 // Export du routeur
 export default adminRouteur;
-
