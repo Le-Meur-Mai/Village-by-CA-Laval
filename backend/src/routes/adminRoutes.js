@@ -6,7 +6,7 @@ import startUpsCtrl from '../controllers/startupsCtrl.js'
 import partnerCtrl from '../controllers/partnersCtrl.js'
 import quoteCtrl from '../controllers/quoteCtrl.js'
 import eventCtrl from '../controllers/eventCtrl.js'
-import postCtrl from '../controllers/'
+import postCtrl from '../controllers/postCtrl.js'
 import locationCtrl from '../controllers/locationsCtrl.js'
 
 /*
@@ -76,28 +76,15 @@ adminRouteur.patch('/evenements/:id', eventCtrl.updateEvent);
 adminRouteur.delete('/evenements/:id', eventCtrl.deleteEvent);
 
 // --- POSTS --- //
-adminRouteur.get('/articles', (req, res) => {
-  res.json({message: 'Page admin - articles'});
-});
+adminRouteur.get('/articles', postCtrl.getAllPosts);
 
-adminRouteur.post('/articles', (req, res) => {
-  res.json({message: 'Page admin - articles'});
-});
+adminRouteur.post('/articles', postCtrl.createPost);
 
-adminRouteur.get('/articles/:id', (req, res) => {
-  const id = req.params.id;
-  res.json({adminArticleID: id});
-});
+adminRouteur.get('/articles/:id', postCtrl.getPostById);
 
-adminRouteur.patch('/articles/:id', (req, res) => {
-  const id = req.params.id;
-  res.json({adminArticleID: id});
-});
+adminRouteur.patch('/articles/:id', postCtrl.updatePost);
 
-adminRouteur.delete('/articles/:id', (req, res) => {
-  const id = req.params.id;
-  res.json({adminArticleID: id});
-});
+adminRouteur.delete('/articles/:id', postCtrl.deletePost);
 
 // --- LOCATIONS --- //
 adminRouteur.get('/locations', locationCtrl.getAllLocations);
