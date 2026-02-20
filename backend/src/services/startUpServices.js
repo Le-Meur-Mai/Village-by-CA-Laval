@@ -26,7 +26,7 @@ export default class StartUpServices {
         // Verification de l'existence du user
         const user = await this.userRepo.getUserById(data.userId, tx);
         if (!user) {
-          throw Errors.NotFoundError("The owner of the startup doesn't exist.");
+          throw new Errors.NotFoundError("The owner of the startup doesn't exist.");
         }
   
         // Verification de chaque type associé à la startup
@@ -73,7 +73,7 @@ export default class StartUpServices {
     try {
       const startUp = await this.startUpRepo.getStartUpById(id);
       if (!startUp) {
-        throw Errors.NotFoundError("The startup doesn't exist.");
+        throw new Errors.NotFoundError("The startup doesn't exist.");
       }
       return startUp;
     } catch (error) {
@@ -102,7 +102,7 @@ export default class StartUpServices {
         // On vérifie que la startup existe
         const existingStartUp = await this.startUpRepo.getStartUpById(id, tx);
         if (!existingStartUp) {
-          throw Errors.NotFoundError("The startup doesn't exist.");
+          throw new Errors.NotFoundError("The startup doesn't exist.");
         }
   
         // Verification de chaque type associé à la mise à jour de la startup
@@ -167,7 +167,7 @@ export default class StartUpServices {
       try {
         const existingStartUp = await this.startUpRepo.getStartUpById(id, tx);
         if (!existingStartUp) {
-          throw Errors.NotFoundError("The startup doesn't exist.");
+          throw new Errors.NotFoundError("The startup doesn't exist.");
         }
 
         // Supression des images
