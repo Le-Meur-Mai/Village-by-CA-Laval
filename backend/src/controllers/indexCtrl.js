@@ -1,13 +1,17 @@
 // Import des services que l'on va appeler dans les controllers
-import StartUpServices from "../services/startUpServices";
-import QuoteServices from "../services/quoteServices";
-import PostServices from "../services/postServices";
+import StartUpServices from "../services/startUpServices.js";
+import QuoteServices from "../services/quoteServices.js";
+import PostServices from "../services/postServices.js";
+
+const servicesStartUps = new StartUpServices()
+const serviceQuotes = new QuoteServices()
+const servicePosts = new PostServices()
 
 const getIndex = async (req, res, next) => {
   try {
-    const startUps = await StartUpServices.getAllStartUps();
-    const quotes = await QuoteServices.getAllQuotes();
-    const posts = await PostServices.getAllPosts();
+    const startUps = await servicesStartUps.getAllStartUps();
+    const quotes = await serviceQuotes.getAllQuotes();
+    const posts = await servicePosts.getAllPosts();
   
     res.status(200).json({
       startups: startUps,
