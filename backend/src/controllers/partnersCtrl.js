@@ -20,11 +20,11 @@ const createPartner = async (req, res, next) => {
 }
 
 // Trouve un partenaire avec son ID
-const getPartnerByID = async (req, res, next) => {
+const getPartnerById = async (req, res, next) => {
   try {
     // Enregistre l'id dans la variable id
     const id = req.params.id;
-    const partner = await PartnerServices.getPartnerByID(id);
+    const partner = await PartnerServices.getPartnerById(id);
     res.status(200).json(partner);
   } catch (error) {
     next(error);
@@ -67,7 +67,7 @@ const deletePartner = async (req, res, next) => {
 // Export des fonctions
 export default {
   createPartner,
-  getPartnerByID,
+  getPartnerById,
   getAllPartners,
   updatePartner,
   deletePartner
