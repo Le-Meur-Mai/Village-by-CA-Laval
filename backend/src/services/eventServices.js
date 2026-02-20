@@ -30,9 +30,9 @@ export default class EventServices {
     }
   }
 
-  async getAllEvent () {
+  async getAllEvents () {
     try {
-      return await this.eventRepo.getAllEvent();
+      return await this.eventRepo.getAllEvents();
     } catch (error) {
       throw error;
     }

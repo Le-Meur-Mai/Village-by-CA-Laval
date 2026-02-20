@@ -15,7 +15,7 @@ export default class PostServices {
     this.pictureRepo = new PictureRepository(prisma);
   }
 
-  // POST Crétaion d'un post
+  // POST Création d'un post
   async createPost (data) {
     try {
       return await prisma.$transaction(async (tx) => {

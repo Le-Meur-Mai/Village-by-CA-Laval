@@ -21,7 +21,7 @@ const createUser = async (req, res, next) => {
 const getUserById = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const user = await servicesUser.getUser(id);
+    const user = await servicesUser.getUserById(id);
     res.status(200).json(user);
   } catch (error) {
     next(error);
