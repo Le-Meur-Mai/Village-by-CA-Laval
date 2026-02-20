@@ -4,12 +4,12 @@ import BaseModel from "./BaseModel.js";
 import * as Errors from "../errors/errorsClasses.js"
 
 export default class Post extends BaseModel {
-  constructor({title, description, pictureId, picture = null}) {
+  constructor({title, description, pictureId = "", picture = null}) {
     super();
     this.title = title;
     this.description = description;
     this.pictureId = pictureId;
-    this.picture = null;
+    this.picture = picture;
   }
 
   set title(value) {
@@ -39,9 +39,6 @@ export default class Post extends BaseModel {
   set pictureId(value) {
     if (typeof value !== "string") {
       throw new Errors.ValidationError("PictureId must be a string.");
-    }
-    else if (value.length !== 36) {
-      throw new Errors.ValidationError("PictureId don't have the correct length.");
     }
     this._pictureId = value;
   }
