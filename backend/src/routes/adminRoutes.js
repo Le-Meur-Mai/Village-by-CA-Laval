@@ -28,11 +28,11 @@ adminRouteur.patch('/users/:id', userCtrl.updateUser);
 adminRouteur.delete('/users/:id', userCtrl.deleteUser);
 
 // --- STARTUPS --- //
-adminRouteur.get('/startups', startUpsCtrl.getAllStartups);
+adminRouteur.get('/startups', startUpsCtrl.getAllStartUps);
 
 adminRouteur.post('/startups', startUpsCtrl.createStartUp);
 
-adminRouteur.get('/startups/:id', startUpsCtrl.getStartupById);
+adminRouteur.get('/startups/:id', startUpsCtrl.getStartUpById);
 
 adminRouteur.patch('/startups/:id', startUpsCtrl.updateStartUp);
 

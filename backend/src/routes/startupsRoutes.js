@@ -10,9 +10,9 @@ dans des fichiers séparés
 const startupsRouteur = express.Router();
 
 // Définitions des différentes routes et méthodes
-startupsRouteur.get('/', startupsCtrl.getAllStartups);
+startupsRouteur.get('/', startupsCtrl.getAllStartUps);
 
-startupsRouteur.get('/:id', startupsCtrl.getStartupById);
+startupsRouteur.get('/:id', startupsCtrl.getStartUpById);
 
 // Export du routeur
 export default startupsRouteur;

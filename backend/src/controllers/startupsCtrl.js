@@ -25,7 +25,7 @@ const createStartUp = async (req, res, next) => {
   }
 }
 
-const getStartupById = async (req, res, next) => {
+const getStartUpById = async (req, res, next) => {
   // Enregistre l'id dans la variable id
   try {
     const id = req.params.id;
@@ -36,9 +36,9 @@ const getStartupById = async (req, res, next) => {
   }
 }
 
-const getAllStartups = async (req, res, next) => {
+const getAllStartUps = async (req, res, next) => {
   try {
-    const startUps = await servicesStartUp.getAllStartups();
+    const startUps = await servicesStartUp.getAllStartUps();
     res.status(200).json(startUps);
   } catch (error) {
     next(error);
@@ -68,8 +68,8 @@ const deleteStartUp = async (req, res, next) => {
 // Export des fonctions
 export default {
   createStartUp,
-  getStartupById,
-  getAllStartups,
+  getStartUpById,
+  getAllStartUps,
   updateStartUp,
   deleteStartUp
 }
