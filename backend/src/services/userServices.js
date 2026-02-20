@@ -12,8 +12,8 @@ import * as Errors from "../errors/errorsClasses.js";
 export default class UserServices {
   constructor() {
     // Création d'une instance pour utiliser les méthodes de la classe repo
-    this.UserRepo = new UserRepository(prisma);
-    this.StartUpServices = new StartUpServices();
+    this.userRepo = new UserRepository(prisma);
+    this.startUpServices = new StartUpServices();
   }
 
   // POST Création d'un user
@@ -23,7 +23,7 @@ export default class UserServices {
       new User(data);
       // Importer fonction de hachage et remplacer le mdp de data
       data.isAdmin = false;
-      return await this.repo.createUser(data);
+      return await this.userRepo.createUser(data);
     } catch (error) {
       throw error;
     }
@@ -32,7 +32,7 @@ export default class UserServices {
   // GET retourne un user grâce à son id
   async getUserById(id) {
     try {
-      const user = await this.repo.getUserById(id);
+      const user = await this.userRepo.getUserById(id);
       if (!user) {
         throw new Errors.NotFoundError('User not found');
       }
@@ -45,7 +45,7 @@ export default class UserServices {
   // GET Retourne tous les users existants
   async getAllUsers() {
     try {
-      return await this.repo.getAllUsers();
+      return await this.userRepo.getAllUsers();
     } catch (error) {
       throw error;
     }
@@ -55,7 +55,7 @@ export default class UserServices {
   async updateUser(id, data) {
     try {
       // Vérifie que le User existe
-      const existingUser = await this.repo.getUserById(id);
+      const existingUser = await this.userRepo.getUserById(id);
       if (!existingUser) {
         throw new Errors.NotFoundError('User not found');
       }
@@ -64,7 +64,7 @@ export default class UserServices {
       nouvelles données identiques à l'objet de base elles vont les écraser*/
       const newUser = {...existingUser, ...data};
       new User(newUser);
-      return await this.repo.updateUser(id, data);
+      return await this.userRepo.updateUser(id, data);
     } catch (error) {
       throw error;
     }
@@ -74,12 +74,12 @@ export default class UserServices {
   async deleteUser(id) {
     try {
       return await prisma.$transaction(async (tx) => {
-        const user = await this.repo.getUserById(id, tx);
+        const user = await this.userRepo.getUserById(id, tx);
         if(!user) {
           throw new Errors.NotFoundError('User not found');
         }
         await StartUpServices.deleteStartUp(user.startUp.id, tx);
-        return await this.repo.deleteUser(id, tx);
+        return await this.userRepo.deleteUser(id, tx);
       })
     } catch (error) {
       throw error;

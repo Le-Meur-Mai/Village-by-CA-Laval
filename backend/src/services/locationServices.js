@@ -13,7 +13,7 @@ import * as Errors from "../errors/errorsClasses.js"
 export default class LocationServices{
   constructor() {
     // Création d'une instance pour utiliser les méthodes de la classe repo
-    this.repo = new LocationRepository(prisma);
+    this.locationRepo = new LocationRepository(prisma);
     this.pictureRepo = new PictureRepository(prisma);
   }
 
@@ -39,7 +39,7 @@ export default class LocationServices{
 
           // Crée une nouvelle instance pour vérifier la conformité des données
           new Location(data);
-          return await this.repo.createLocation(data, tx);
+          return await this.locationRepo.createLocation(data, tx);
         }
       })
     } catch (error) {
@@ -49,7 +49,7 @@ export default class LocationServices{
 
   async getLocationById(id) {
     try {
-      const location = await this.repo.getLocationById(id);
+      const location = await this.locationRepo.getLocationById(id);
       if(!location) {
         throw new Errors.NotFoundError('Location not found');
       }
@@ -61,7 +61,7 @@ export default class LocationServices{
 
   async getAllLocations() {
     try {
-      return await this.repo.getAllLocations();
+      return await this.locationRepo.getAllLocations();
     } catch (error) {
       throw error;
     }
@@ -70,7 +70,7 @@ export default class LocationServices{
   async updateLocation(id, data) {
     try {
       return await prisma.$transaction(async (tx) => {
-        const existingLocation = await this.repo.getLocationById(id, tx);
+        const existingLocation = await this.locationRepo.getLocationById(id, tx);
         if(!existingLocation) {
           throw new Errors.NotFoundError('Location not found');
         }
@@ -113,7 +113,7 @@ export default class LocationServices{
         const newLocation = {...existingLocation, ...data};
         new Location(newLocation);
 
-        return await this.repo.updateLocation(id, data, tx);
+        return await this.locationRepo.updateLocation(id, data, tx);
       })
     } catch (error) {
       throw error;
@@ -128,7 +128,7 @@ export default class LocationServices{
       s'annulent 
       */
       return await prisma.$transaction(async (tx) => {
-        const location = await this.repo.getLocationById(id, tx);
+        const location = await this.locationRepo.getLocationById(id, tx);
         if(!location) {
           throw new Errors.NotFoundError('Location not found');
         }
@@ -137,7 +137,7 @@ export default class LocationServices{
           location.pictures.map(picture => this.pictureRepo.deletePicture(picture.id, tx))
         );
         // Suppression de la location
-        return await this.repo.deleteLocation(id, tx);
+        return await this.locationRepo.deleteLocation(id, tx);
       })
     } catch (error) {
       throw error;

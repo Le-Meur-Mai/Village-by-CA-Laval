@@ -13,7 +13,7 @@ import * as Errors from "../errors/errorsClasses.js";
 export default class PartnerServices {
   constructor() {
     // Création d'une instance pour utiliser les méthodes de la classe repo
-    this.repo = new PartnerRepository(prisma);
+    this.partnerRepo = new PartnerRepository(prisma);
     this.pictureRepo = new PictureRepository(prisma);
   }
 
@@ -31,7 +31,7 @@ export default class PartnerServices {
         }
         // Crée une nouvelle instance pour vérifier la conformité des données
         new Partner(data);
-        return await this.repo.createPartner(data, tx);
+        return await this.partnerRepo.createPartner(data, tx);
       })
     } catch (error) {
       throw error;
@@ -41,7 +41,7 @@ export default class PartnerServices {
   // GET Retourne un partenaire par rapport à son id
   async getPartnerById(id) {
     try {
-      const partner = await this.repo.getPartnerById(id);
+      const partner = await this.partnerRepo.getPartnerById(id);
       if(!partner) {
         throw new Errors.NotFoundError('Partner not found');
       }
@@ -54,7 +54,7 @@ export default class PartnerServices {
   // GET Tous les partenaires
   async getAllPartners() {
     try {
-      return await this.repo.getAllPartners();
+      return await this.partnerRepo.getAllPartners();
     } catch (error) {
       throw error;
     }
@@ -65,7 +65,7 @@ export default class PartnerServices {
     try {
       return await prisma.$transaction(async (tx) => {
         // Vérification de l'existence du partenaire
-        const existingPartner = await this.repo.getPartnerById(id, tx);
+        const existingPartner = await this.partnerRepo.getPartnerById(id, tx);
         if (!existingPartner) {
           throw new Errors.NotFoundError('Partner not found');
         }
@@ -85,7 +85,7 @@ export default class PartnerServices {
         */
         const newPartner = {...existingPartner, ...data};
         new Partner(newPartner);
-        const updatedPartner = await this.repo.updatePartner(id, data, tx);
+        const updatedPartner = await this.partnerRepo.updatePartner(id, data, tx);
         return updatedPartner;
       })
     } catch (error) {
@@ -97,7 +97,7 @@ export default class PartnerServices {
   async deletePartner(id) {
     try {
       return await prisma.$transaction(async (tx) => {
-        const partner = await this.repo.getPartnerById(id, tx);
+        const partner = await this.partnerRepo.getPartnerById(id, tx);
         if (!partner) {
           throw new Errors.NotFoundError('Partner not found');
         }
@@ -105,7 +105,7 @@ export default class PartnerServices {
         if(partner.logoId !== "defaultId") {
           await this.pictureRepo.deletePicture(partner.logoId, tx);
         } 
-        return await this.repo.deletePartner(id, tx);
+        return await this.partnerRepo.deletePartner(id, tx);
       })
     } catch (error) {
       throw error;
