@@ -16,7 +16,7 @@ export default class QuoteServices {
   // POST Creation d'une nouvelle citation
   async createQuote(data) {
     try {
-      user = await this.userRepo.getUserById(data.userId);
+      const user = await this.userRepo.getUserById(data.userId);
       if (!user) {
         throw new Errors.NotFoundError("The user doesn't exist.");
       }
