@@ -1,5 +1,6 @@
 // Import des services que l'on va appeler dans les controllers
-import ContactServices from "../services/contactServices";
+/*
+import ContactServices from "../services/contactServices.js";
 
 const postContact = async (req, res, next) => {
   try {
@@ -16,3 +17,4 @@ const postContact = async (req, res, next) => {
 export default {
   postContact
 };
+*/
