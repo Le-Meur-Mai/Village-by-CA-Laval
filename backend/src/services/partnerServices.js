@@ -52,7 +52,7 @@ export default class PartnerServices {
   }
 
   // GET Tous les partenaires
-  async getAllPartner() {
+  async getAllPartners() {
     try {
       return await this.repo.getAllPartners();
     } catch (error) {
