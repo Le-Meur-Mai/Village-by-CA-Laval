@@ -13,10 +13,10 @@ import * as Errors from "../errors/errorsClasses.js";
 
 export default class StartUpServices {
   constructor() {
-    this.startUpRepo = StartUpRepository(prisma);
-    this.typeRepo = TypeRepository(prisma);
-    this.userRepo = UserRepository(prisma);
-    this.pictureRepo = PictureRepository(prisma);
+    this.startUpRepo = new StartUpRepository(prisma);
+    this.typeRepo = new TypeRepository(prisma);
+    this.userRepo = new UserRepository(prisma);
+    this.pictureRepo = new PictureRepository(prisma);
   }
 
   // POST Creation d'une startup

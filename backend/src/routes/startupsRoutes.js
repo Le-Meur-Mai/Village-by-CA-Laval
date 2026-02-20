@@ -12,7 +12,7 @@ const startupsRouteur = express.Router();
 // Définitions des différentes routes et méthodes
 startupsRouteur.get('/', startupsCtrl.getAllStartups);
 
-startupsRouteur.get('/:id', startupsCtrl.getStartupByID);
+startupsRouteur.get('/:id', startupsCtrl.getStartupById);
 
 // Export du routeur
 export default startupsRouteur;

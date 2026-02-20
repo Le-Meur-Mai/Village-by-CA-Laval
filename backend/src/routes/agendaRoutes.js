@@ -1,6 +1,6 @@
 import express from 'express'
 // Importe les controlleurs associés à cette route
-import postCtrl from '../controllers/contactCtrl.js'
+import postCtrl from '../controllers/postCtrl.js'
 
 /*
 Créer un router avec le module express.Router, permet de définir les routes

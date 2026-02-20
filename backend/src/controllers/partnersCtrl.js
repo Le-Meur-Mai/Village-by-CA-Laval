@@ -1,5 +1,5 @@
 // Import des services que l'on va appeler dans les controllers
-import PartnerServices from "../services/partnerServices";
+import PartnerServices from "../services/partnerServices.js";
 
 // crée un nouveau partenaire
 // On renvoie le résultat du service, sinon l'erreur est prise en charge par le errorHandler automatiquement

@@ -43,7 +43,7 @@ adminRouteur.get('/partenaires', partnerCtrl.getAllPartners);
 
 adminRouteur.post('/partenaires', partnerCtrl.createPartner);
 
-adminRouteur.get('/partenaires/:id', partnerCtrl.getPartnerByID);
+adminRouteur.get('/partenaires/:id', partnerCtrl.getPartnerById);
 
 adminRouteur.patch('/partenaires/:id', partnerCtrl.updatePartner);
 
