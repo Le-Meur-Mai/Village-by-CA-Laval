@@ -3,6 +3,7 @@ import StartUpServices from "../services/startUpServices.js";
 import QuoteServices from "../services/quoteServices.js";
 import PostServices from "../services/postServices.js";
 
+// Déclaration de nouvelles instances sur les classes Services
 const servicesStartUps = new StartUpServices()
 const serviceQuotes = new QuoteServices()
 const servicePosts = new PostServices()

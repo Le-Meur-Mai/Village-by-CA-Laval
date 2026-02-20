@@ -1,9 +1,12 @@
 import UserServices from "../services/userServices.js";
 
+// Déclaration d'une nouvelle instance sur la classe Service
+const servicesUser = new UserServices();
+
 // Création d'un utilisateur
 const createUser = async (req, res, next) => {
   try {
-    const newUser = await UserServices.createUser({
+    const newUser = await servicesUser.createUser({
       name: req.body.name,
       email: req.body.email,
       password: req.body.password
@@ -18,7 +21,7 @@ const createUser = async (req, res, next) => {
 const getUserById = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const user = await UserServices.getUser(id);
+    const user = await servicesUser.getUser(id);
     res.status(200).json(user);
   } catch (error) {
     next(error);
@@ -28,7 +31,7 @@ const getUserById = async (req, res, next) => {
 // Retourne tous les utilisateurs
 const getAllUsers = async (req, res, next) => {
   try {
-    const users = await UserServices.getAllUsers();
+    const users = await servicesUser.getAllUsers();
     res.status(200).json(users);
   } catch (error) {
     next (error);
@@ -40,7 +43,7 @@ const updateUser = async (req, res, next) => {
   try {
     const id = req.params.id;
     const newData = req.body;
-    const updatedUser = await UserServices.updateUser(id, newData);
+    const updatedUser = await servicesUser.updateUser(id, newData);
     res.status(200).json(updatedUser);
   } catch (error) {
     next(error);
@@ -51,7 +54,7 @@ const updateUser = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const deletedUser = await UserServices.deleteUser(id);
+    const deletedUser = await servicesUser.deleteUser(id);
     res.status(200).json(deletedUser);
   } catch (error) {
     next(error);
