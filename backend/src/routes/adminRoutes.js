@@ -16,10 +16,6 @@ dans des fichiers séparés
 const adminRouteur = express.Router();
 
 // Définitions des différentes routes et méthodes
-adminRouteur.get('/', (req, res) => {
-  res.json({message: 'Page admin'});
-});
-
 // --- USERS --- //
 adminRouteur.get('/users', userCtrl.getAllUsers);
 
