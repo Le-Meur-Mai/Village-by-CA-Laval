@@ -15,7 +15,7 @@ const createUser = async (req, res, next) => {
 }
 
 // Retourne un utilisateur avec son ID
-const getUser = async (req, res, next) => {
+const getUserById = async (req, res, next) => {
   try {
     const id = req.params.id;
     const user = await UserServices.getUser(id);
@@ -60,7 +60,7 @@ const deleteUser = async (req, res, next) => {
 
 export default {
   createUser,
-  getUser,
+  getUserById,
   getAllUsers,
   updateUser,
   deleteUser

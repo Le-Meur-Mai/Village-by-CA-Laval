@@ -18,7 +18,7 @@ const createQuote = async (req, res, next) => {
 }
 
 // Retourne une citation par rapport à son ID
-const getQuote = async (req, res, next) => {
+const getQuoteById = async (req, res, next) => {
   try {
     const id = req.params.id;
     const quote = await QuoteServices.getQuoteById(id);
@@ -64,7 +64,7 @@ const deleteQuote = async (req, res, next) => {
 // Exportation des fonctions
 export default {
   createQuote,
-  getQuote,
+  getQuoteById,
   getAllQuotes,
   updateQuote,
   deleteQuote
