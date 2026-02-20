@@ -1,12 +1,14 @@
 // Import des services que l'on va appeler dans les controllers
 import PartnerServices from "../services/partnerServices.js";
 
+const servicesPartner = new PartnerServices();
+
 // crée un nouveau partenaire
 // On renvoie le résultat du service, sinon l'erreur est prise en charge par le errorHandler automatiquement
 const createPartner = async (req, res, next) => {
   try {
     const data = req.body;
-    const newPartner = await PartnerServices.createPartner({
+    const newPartner = await servicesPartner.createPartner({
       name: data.name,
       description: data.description,
       website: data.website,
@@ -24,7 +26,7 @@ const getPartnerById = async (req, res, next) => {
   try {
     // Enregistre l'id dans la variable id
     const id = req.params.id;
-    const partner = await PartnerServices.getPartnerById(id);
+    const partner = await servicesPartner.getPartnerById(id);
     res.status(200).json(partner);
   } catch (error) {
     next(error);
@@ -34,7 +36,7 @@ const getPartnerById = async (req, res, next) => {
 // Renvoie tous les partenaires
 const getAllPartners = async (req, res, next) => {
   try {
-    const partners = await PartnerServices.getAllPartners();
+    const partners = await servicesPartner.getAllPartners();
     res.status(200).json(partners);
   } catch (error) {
     next(error);
@@ -46,7 +48,7 @@ const updatePartner = async (req, res, next) => {
   try {
     const id = req.params.id;
     const data = req.body;
-    const partner = await PartnerServices.updatePartner(id, data);
+    const partner = await servicesPartner.updatePartner(id, data);
     res.status(200).json(partner);
   } catch (error) {
     next(error);
@@ -57,7 +59,7 @@ const updatePartner = async (req, res, next) => {
 const deletePartner = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const partner = await PartnerServices.deletePartner(id);
+    const partner = await servicesPartner.deletePartner(id);
     res.status(200).json(partner);
   } catch (error) {
     next(error);

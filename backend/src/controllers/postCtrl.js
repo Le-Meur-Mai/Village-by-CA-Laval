@@ -1,9 +1,11 @@
 import PostServices from "../services/postServices.js";
 
+const servicesPost = new PostServices();
+
 // Création d'un post
 const createPost = async (req, res, next) => {
   try {
-    const newPost = await PostServices.createPost({
+    const newPost = await servicesPost.createPost({
       title: req.body.title,
       description: req.body.description,
       picture: req.body.picture
@@ -18,7 +20,7 @@ const createPost = async (req, res, next) => {
 const getPostById = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const post = await PostServices.getPostById(id);
+    const post = await servicesPost.getPostById(id);
     res.status(200).json(post);
   } catch (error) {
     next(error);
@@ -28,7 +30,7 @@ const getPostById = async (req, res, next) => {
 // Retourne tous les posts
 const getAllPosts = async (req, res, next) => {
   try {
-    const posts = await PostServices.getAllPosts();
+    const posts = await servicesPost.getAllPosts();
     res.status(200).json(posts);
   } catch (error) {
     next(error);
@@ -40,7 +42,7 @@ const updatePost = async (req, res, next) => {
   try {
     const id = req.params.id;
     const data = req.body;
-    const updatedPost = await PostServices.updatePost(id, data);
+    const updatedPost = await servicesPost.updatePost(id, data);
     res.status(200).json(updatedPost);
   } catch (error) {
     next(error);
@@ -51,7 +53,7 @@ const updatePost = async (req, res, next) => {
 const deletePost = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const deletedPost = await PostServices.deletePost(id);
+    const deletedPost = await servicesPost.deletePost(id);
     res.status(200).json(deletedPost);
   } catch (error) {
     next(error);
