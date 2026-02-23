@@ -3,13 +3,13 @@ import StartUpRepository from "../repositories/StartUpRepository.js";
 import UserRepository from "../repositories/UserRepository.js";
 import PictureRepository from "../repositories/PictureRepository.js";
 // Importation de toutes les classes repository
-import Picture from "../classes/Picture.js";
 import StartUp from "../classes/StartUp.js";
-// Importation des classes pour les verifications de format.
+// Importation de classe pour les verifications de format.
 import prisma from "../prismaClient.js";
 // importation de l'instance du prisma client
 import * as Errors from "../errors/errorsClasses.js";
 // importation de toutes nos classes d'erreurs personnalisées
+import cloudinary from "../../config/cloudinary.js";
 
 export default class StartUpServices {
   constructor() {
@@ -21,6 +21,9 @@ export default class StartUpServices {
 
   // POST Creation d'une startup
   async createStartUp (data) {
+    let uploadLogo = null;
+    let uploadDescriptionPicture = null;
+    // On déclare ces variables pour qu'elles soient détectées dans le catch
     try {
       return await prisma.$transaction(async (tx) => {
         // Verification de l'existence du user
@@ -45,17 +48,33 @@ export default class StartUpServices {
         if (!data.logo) {
           data.logoId = "Id par defaut";
         } else {
-          new Picture(data.logo);
-          const newLogo = await this.pictureRepo.createPicture(data.logo, tx);
+          // Création de l'image dans cloudinary puis dans la db
+          uploadLogo = await cloudinary.uploader.upload(data.logo, {
+            folder: "StartUps"
+          });
+          const newLogoStartUp = {
+            secureUrl: uploadLogo.secure_url,
+            publicId: uploadLogo.public_id
+          }
+          const newLogo = await this.pictureRepo.createPicture(newLogoStartUp, tx);
           data.logoId = newLogo.id;
+          delete data.logo;
         }
         // Association de l'image de description à la startup
         if (!data.descriptionPicture) {
           data.descriptionPictureId = "Id par defaut";
         } else {
-          new Picture(data.descriptionPicture);
-          const newDescriptionPicture = await this.pictureRepo.createPicture(data.descriptionPicture, tx);
+          // // Création de l'image dans cloudinary puis dans la db
+          uploadDescriptionPicture = await cloudinary.uploader.upload(data.descriptionPicture, {
+            folder: "StartUps"
+          });
+          const newDescriptionPictureStartup = {
+            secureUrl: uploadDescriptionPicture.secure_url,
+            publicId: uploadDescriptionPicture.public_id
+          }
+          const newDescriptionPicture = await this.pictureRepo.createPicture(newDescriptionPictureStartup, tx);
           data.descriptionPictureId = newDescriptionPicture.id;
+          delete data.descriptionPicture;
         }
   
         // Création de la startup après les vérification des autres entités
@@ -64,6 +83,12 @@ export default class StartUpServices {
 
       })
     } catch (error) {
+      if (uploadLogo) {
+        await cloudinary.uploader.destroy(uploadLogo.public_id);
+      }
+      if (uploadDescriptionPicture) {
+        await cloudinary.uploader.destroy(uploadDescriptionPicture.public_id)
+      }
       throw error;
     }
   }
@@ -92,13 +117,13 @@ export default class StartUpServices {
 
   // PATCH Met à jour une startup
   async updateStartUp (id, data) {
+    let uploadLogo = null;
+    let uploadDescriptionPicture = null;
     try {
       return await prisma.$transaction(async (tx) => {
         // On déclare des variables pour pouvoir gérer la suppression des images.
-        let newLogo = null;
-        let newDescriptionPicture = null;
-        let oldLogoId = null;
-        let oldDescriptionPictureId = null;
+        let oldLogo = null;
+        let oldDescriptionPicture = null;
         // On vérifie que la startup existe
         const existingStartUp = await this.startUpRepo.getStartUpById(id, tx);
         if (!existingStartUp) {
@@ -128,18 +153,32 @@ export default class StartUpServices {
   
         // Création du nouveau logo
         if (data.logo) {
-          oldLogoId = existingStartUp.logoId;
-          new Picture(data.logo);
-          newLogo = await this.pictureRepo.createPicture(data.logo, tx);
+          oldLogo = await this.pictureRepo.getPictureById(existingStartUp.logoId, tx);
+          uploadLogo = await cloudinary.uploader.upload(data.logo, {
+            folder: "StartUps"
+          });
+          const newLogoStartUp = {
+            secureUrl: uploadLogo.secure_url,
+            publicId: uploadLogo.public_id
+          }
+          const newLogo = await this.pictureRepo.createPicture(newLogoStartUp, tx);
           data.logoId = newLogo.id
+          delete data.logo;
         }
   
         // Création d'une image de description
         if (data.descriptionPicture) {
-          oldDescriptionPictureId = existingStartUp.descriptionPictureId;
-          new Picture(data.descriptionPicture);
-          newDescriptionPicture = await this.pictureRepo.createPicture(data.descriptionPicture, tx);
+          oldDescriptionPicture = await this.pictureRepo.getPictureById(existingStartUp.descriptionPictureId, tx);
+          uploadDescriptionPicture = await cloudinary.uploader.upload(data.descriptionPicture, {
+            folder: "StartUps"
+          });
+          const newDescriptionPictureStartup = {
+            secureUrl: uploadDescriptionPicture.secure_url,
+            publicId: uploadDescriptionPicture.public_id
+          }
+          const newDescriptionPicture = await this.pictureRepo.createPicture(newDescriptionPictureStartup, tx);
           data.descriptionPictureId = newDescriptionPicture.id;
+          delete data.descriptionPicture;
         }
   
         // Fusion des nouvelles et des anciennes données
@@ -148,15 +187,23 @@ export default class StartUpServices {
         const newStartUp = await this.startUpRepo.updateStartUp(id, data, tx);
   
         // Suppression des anciennes images
-        if (newLogo && oldLogoId !== "Id par defaut") {
-          await this.pictureRepo.deletePicture(oldLogoId, tx);
+        if (uploadLogo && oldLogo && oldLogo.id !== "Id par defaut") {
+          await cloudinary.uploader.destroy(oldLogo.publicId);
+          await this.pictureRepo.deletePicture(oldLogo.id, tx);
         }
-        if (newDescriptionPicture && oldDescriptionPictureId !== "Id par defaut") {
-          await this.pictureRepo.deletePicture(oldDescriptionPictureId, tx);
+        if (uploadDescriptionPicture && oldDescriptionPicture && oldDescriptionPicture.id !== "Id par defaut") {
+          await cloudinary.uploader.destroy(oldDescriptionPicture.publicId);
+          await this.pictureRepo.deletePicture(oldDescriptionPicture.id, tx);
         }
         return newStartUp;
       })
     } catch (error) {
+      if (uploadLogo) {
+        await cloudinary.uploader.destroy(uploadLogo.public_id);
+      }
+      if (uploadDescriptionPicture) {
+        await cloudinary.uploader.destroy(uploadDescriptionPicture.public_id);
+      }
       throw error;
     }
   }
@@ -172,9 +219,11 @@ export default class StartUpServices {
 
         // Supression des images
         if (existingStartUp.logoId !== "Id par défaut") {
+          await cloudinary.uploader.destroy(existingStartUp.logo.publicId);
           await this.pictureRepo.deletePicture(existingStartUp.logoId, tx);
         }
         if (existingStartUp.descriptionPictureId !== "Id par défaut") {
+          await cloudinary.uploader.destroy(existingStartUp.descriptionPicture.publicId);
           await this.pictureRepo.deletePicture(existingStartUp.descriptionPictureId, tx);
         }
 
