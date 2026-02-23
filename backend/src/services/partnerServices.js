@@ -4,11 +4,12 @@ import PartnerRepository from "../repositories/PartnerRepository.js";
 import PictureRepository from "../repositories/PictureRepository.js";
 //Import des classes pour vérifier la conformité des données
 import Partner from "../classes/Partner.js";
-import Picture from "../classes/Picture.js";
 // Import du client prisma pour créer une nouvelle instance du Repo
 import prisma from "../prismaClient.js";
 // Import de la classe erreur renvoyant des erreurs personnalisées
 import * as Errors from "../errors/errorsClasses.js";
+// Import de la config cloudinary pour la relier au serveur
+import cloudinary from "../../config/cloudinary.js";
 
 export default class PartnerServices {
   constructor() {
@@ -19,21 +20,32 @@ export default class PartnerServices {
 
   // POST Création d'un nouveau partenaire
   async createPartner(data) {
+    let uploadLogo = null;
+    // On déclare la variable pour qu'elle soit détectée dans le catch
     try {
       return await prisma.$transaction( async (tx) => {
         if(!data.logo) {
           data.logoId = "Id par defaut";
         } else {
-          const picture = data.logo;
-          new Picture(picture);
-          const newPicture = await this.pictureRepo.createPicture(picture, tx);
+          // On crée l'image dans notre db et dans notre serveur cloudinary
+          uploadLogo = await cloudinary.uploader.upload(data.logo, {
+            folder: "Partners"
+          });
+          const newPicture = await this.pictureRepo.createPicture({
+            secureUrl: uploadLogo.secure_url,
+            publicId: uploadLogo.public_id
+          }, tx);
           data.logoId = newPicture.id;
+          delete data.logo;
         }
         // Crée une nouvelle instance pour vérifier la conformité des données
         new Partner(data);
         return await this.partnerRepo.createPartner(data, tx);
       })
     } catch (error) {
+      if (uploadLogo) {
+        await cloudinary.uploader.destroy(uploadLogo.public_id);
+      }
       throw error;
     }
   }
@@ -63,6 +75,7 @@ export default class PartnerServices {
   // PATCH Mis à jour d'un partenaire
   async updatePartner(id, data) {
     try {
+      let uploadLogo = null;
       return await prisma.$transaction(async (tx) => {
         // Vérification de l'existence du partenaire
         const existingPartner = await this.partnerRepo.getPartnerById(id, tx);
@@ -72,23 +85,38 @@ export default class PartnerServices {
   
         // Creation du nouveau logo et supression de l'ancien
         if(data.logo) {
-          new Picture(data.logo);
-          const newLogo = await this.pictureRepo.createPicture(data.logo, tx);
-          data.logoId = newLogo.id;
-          if (existingPartner.logoId !== "Id par defaut") {
-            await this.pictureRepo.deletePicture(existingPartner.logoId, tx);
-          }
+          uploadLogo = await cloudinary.uploader.upload(data.logo, {
+            folder: "Partners"
+          });
+          const newPicture = await this.pictureRepo.createPicture({
+            secureUrl: uploadLogo.secure_url,
+            publicId: uploadLogo.public_id
+          }, tx);
+          data.logoId = newPicture.id;
+          delete data.logo;
         }
         /* On merge les nouvelles données avec les ancienne, puis on vérifie la
         validité des nouvelles données avec une nouvelle instance de la classe
         avant de communiquer les données à la base de données
         */
-        const newPartner = {...existingPartner, ...data};
-        new Partner(newPartner);
-        const updatedPartner = await this.partnerRepo.updatePartner(id, data, tx);
+
+       
+       const newPartner = {...existingPartner, ...data};
+       new Partner(newPartner);
+       const updatedPartner = await this.partnerRepo.updatePartner(id, data, tx);
+       
+       // On supprime l'ancien logo
+       if (uploadLogo && existingPartner.logoId !== "Id par defaut") {
+           await cloudinary.uploader.destroy(existingPartner.logo.publicId)
+           await this.pictureRepo.deletePicture(existingPartner.logoId, tx);
+         }
+
         return updatedPartner;
       })
     } catch (error) {
+      if (uploadLogo) {
+        await cloudinary.uploader.destroy(uploadLogo.public_id);
+      }
       throw error;
     }
   }
@@ -103,6 +131,7 @@ export default class PartnerServices {
         }
         // Suppression de l'image si elle n'est pas l'image par défaut
         if(partner.logoId !== "defaultId") {
+          await cloudinary.uploader.destroy(partner.logo.publicId);
           await this.pictureRepo.deletePicture(partner.logoId, tx);
         } 
         return await this.partnerRepo.deletePartner(id, tx);
