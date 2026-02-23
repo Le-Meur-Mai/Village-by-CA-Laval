@@ -63,8 +63,8 @@ model Type {
 
 model Picture {
   id                 String     @id @default(uuid()) @db.Char(36)
-  name               String     @db.VarChar(100)
-  path               String     @db.VarChar(200)
+  secureUrl          String
+  publicId           String
   createdAt          DateTime   @default(now())
   updatedAt          DateTime   @updatedAt
   logoPartner        Partner[]
