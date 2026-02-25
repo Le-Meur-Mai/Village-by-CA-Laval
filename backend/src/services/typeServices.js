@@ -16,8 +16,8 @@ export default class TypeServices {
   async createType (data) {
     try {
       if (data.startUps && data.startUps.length > 0) {
-        for (const startUp of data.startUps) {
-          const existingStartUp = await this.startUpRepo.getStartUpById(startUp.id);
+        for (const id of data.startUps) {
+          const existingStartUp = await this.startUpRepo.getStartUpById(id);
           if (!existingStartUp) {
             throw new Errors.NotFoundError("One start-up doesn't exist.");
           }
@@ -61,8 +61,8 @@ export default class TypeServices {
       }
 
       if (data.startUps && data.startUps.length > 0) {
-        for (const id of data.startUps.id) {
-          const startUp = await this.startUpRepo.getStartUpById(id);
+        for (const idStartUp of data.startUps) {
+          const startUp = await this.startUpRepo.getStartUpById(idStartUp);
           if (!startUp) {
             throw new Errors.NotFoundError("One start-up doesn't exist.");
           }
@@ -72,7 +72,7 @@ export default class TypeServices {
       const newType = {...existingType, ...data};
       // On fusionne les anciennes et nouvelles données
       new Type(newType);
-      return await this.typeRepo.updateType(data);
+      return await this.typeRepo.updateType(id, data);
     } catch (error) {
       throw error;
     }
