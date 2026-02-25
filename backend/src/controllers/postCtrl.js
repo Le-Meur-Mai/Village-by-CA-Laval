@@ -8,7 +8,7 @@ const createPost = async (req, res, next) => {
     const newPost = await servicesPost.createPost({
       title: req.body.title,
       description: req.body.description,
-      picture: req.body.picture
+      picture: req.file
     });
     res.status(201).json(newPost);
   } catch (error) {
@@ -42,6 +42,7 @@ const updatePost = async (req, res, next) => {
   try {
     const id = req.params.id;
     const data = req.body;
+    data.picture = req.file;
     const updatedPost = await servicesPost.updatePost(id, data);
     res.status(200).json(updatedPost);
   } catch (error) {
