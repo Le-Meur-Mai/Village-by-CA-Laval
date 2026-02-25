@@ -1,14 +1,16 @@
+// Importation des classes repository pour post et picture
 import PostRepository from "../repositories/PostRepository.js";
 import PictureRepository from "../repositories/PictureRepository.js";
-// Importation des classes repository pour post et picture
-import Post from "../classes/Post.js";
 // importation de la classe post
-import prisma from "../prismaClient.js";
+import Post from "../classes/Post.js";
 // importation de l'instance du prisma client
-import * as Errors from "../errors/errorsClasses.js";
+import prisma from "../prismaClient.js";
 // importation de toutes nos classes d'erreurs personnalisées
+import * as Errors from "../errors/errorsClasses.js";
+// Import de la fonction cloudinary pour envoyer les images sur l'hébergeur
+import uploadPictureToCloudinary from "../utils/uploadToCloudinary.js";
+// Importation de la config Cloudinary pour pouvoir supprimer des images
 import cloudinary from "../../config/cloudinary.js";
-// Importation de notre config cloudinary
 
 export default class PostServices {
   constructor() {
@@ -22,13 +24,13 @@ export default class PostServices {
     try {
       return await prisma.$transaction(async (tx) => {
         if (data.picture) {
-          uploadPicture = await cloudinary.uploader.upload(data.picture, {
-            folder: "Posts"
-          });
+          // Création de l'image dans Cloudinary
+          uploadPicture = await uploadPictureToCloudinary(data.picture, "Posts");
           const newPicture = {
             secureUrl: uploadPicture.secure_url,
             publicId: uploadPicture.public_id
           }
+          // Création de l'image dans la db
           const newPicturePost = await this.pictureRepo.createPicture(newPicture, tx);
           data.pictureId = newPicturePost.id;
           delete data.picture;
@@ -80,15 +82,13 @@ export default class PostServices {
   
         // On cree une nouvelle image s'il y en a une et on va suprimmer l'ancienne
         if (data.picture) {
-          uploadPicture = await cloudinary.uploader.upload(data.picture, {
-            folder: "Posts"
-          });
+          uploadPicture = await uploadPictureToCloudinary(data.picture, "Posts");
           const newPicture = {
             secureUrl: uploadPicture.secure_url,
             publicId: uploadPicture.public_id
           }
-          const newPicturePost = await this.pictureRepo.createPicture(newPicture, tx);
           // On l'enregistre dans Cloudinary puis on l'enregistre dans la db
+          const newPicturePost = await this.pictureRepo.createPicture(newPicture, tx);
 
           data.pictureId = newPicturePost.id;
           delete data.picture;
