@@ -45,7 +45,9 @@ export default class LocationRepository {
       where: { id },
       data: {
         ...dataLocation,
-        pictures: pictures.map(id => ({ id }))
+        pictures: {
+          set: pictures.map(id => ({ id }))
+        }
       },
       include: {
         pictures: true
