@@ -69,9 +69,9 @@ export default class QuoteServices {
       if (!existingQuote) {
         throw new Errors.NotFoundError("This quote doesn't exist");
       }
-      else if (data.userId) {
+      if (data.userId) {
         // fonction pour vérifier que l'utilisateur est un admin
-        const user = await this.userRepo.getUserById(id);
+        const user = await this.userRepo.getUserById(data.userId);
         if (!user) {
           throw new Errors.NotFoundError("The user is not found.");
         }
