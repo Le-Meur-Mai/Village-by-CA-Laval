@@ -1,14 +1,17 @@
+// Importation de toutes les classes repository
 import TypeRepository from "../repositories/TypeRepository.js";
 import StartUpRepository from "../repositories/StartUpRepository.js";
 import UserRepository from "../repositories/UserRepository.js";
 import PictureRepository from "../repositories/PictureRepository.js";
-// Importation de toutes les classes repository
-import StartUp from "../classes/StartUp.js";
 // Importation de classe pour les verifications de format.
-import prisma from "../prismaClient.js";
+import StartUp from "../classes/StartUp.js";
 // importation de l'instance du prisma client
-import * as Errors from "../errors/errorsClasses.js";
+import prisma from "../prismaClient.js";
 // importation de toutes nos classes d'erreurs personnalisées
+import * as Errors from "../errors/errorsClasses.js";
+// Import de la fonction cloudinary pour envoyer les images sur l'hébergeur
+import uploadPictureToCloudinary from "../utils/uploadToCloudinary.js";
+// Importation de la config Cloudinary pour pouvoir supprimer des images
 import cloudinary from "../../config/cloudinary.js";
 
 export default class StartUpServices {
@@ -49,9 +52,7 @@ export default class StartUpServices {
           data.logoId = "Id par defaut";
         } else {
           // Création de l'image dans cloudinary puis dans la db
-          uploadLogo = await cloudinary.uploader.upload(data.logo, {
-            folder: "StartUps"
-          });
+          uploadLogo = await uploadPictureToCloudinary(data.logo, "StartUps");
           const newLogoStartUp = {
             secureUrl: uploadLogo.secure_url,
             publicId: uploadLogo.public_id
@@ -65,9 +66,7 @@ export default class StartUpServices {
           data.descriptionPictureId = "Id par defaut";
         } else {
           // // Création de l'image dans cloudinary puis dans la db
-          uploadDescriptionPicture = await cloudinary.uploader.upload(data.descriptionPicture, {
-            folder: "StartUps"
-          });
+          uploadDescriptionPicture = await uploadPictureToCloudinary(data.descriptionPicture, "StartUps");
           const newDescriptionPictureStartup = {
             secureUrl: uploadDescriptionPicture.secure_url,
             publicId: uploadDescriptionPicture.public_id
@@ -154,9 +153,7 @@ export default class StartUpServices {
         // Création du nouveau logo
         if (data.logo) {
           oldLogo = await this.pictureRepo.getPictureById(existingStartUp.logoId, tx);
-          uploadLogo = await cloudinary.uploader.upload(data.logo, {
-            folder: "StartUps"
-          });
+          uploadLogo = await uploadPictureToCloudinary(data.logo, "StartUps");
           const newLogoStartUp = {
             secureUrl: uploadLogo.secure_url,
             publicId: uploadLogo.public_id
@@ -169,9 +166,8 @@ export default class StartUpServices {
         // Création d'une image de description
         if (data.descriptionPicture) {
           oldDescriptionPicture = await this.pictureRepo.getPictureById(existingStartUp.descriptionPictureId, tx);
-          uploadDescriptionPicture = await cloudinary.uploader.upload(data.descriptionPicture, {
-            folder: "StartUps"
-          });
+          uploadDescriptionPicture = await uploadPictureToCloudinary(data.descriptionPicture, "StartUps");
+
           const newDescriptionPictureStartup = {
             secureUrl: uploadDescriptionPicture.secure_url,
             publicId: uploadDescriptionPicture.public_id
@@ -216,6 +212,8 @@ export default class StartUpServices {
         if (!existingStartUp) {
           throw new Errors.NotFoundError("The startup doesn't exist.");
         }
+        
+        const deletedStartUp = await this.startUpRepo.deleteStartUp(id, tx);
 
         // Supression des images
         if (existingStartUp.logoId !== "Id par défaut") {
@@ -227,7 +225,6 @@ export default class StartUpServices {
           await this.pictureRepo.deletePicture(existingStartUp.descriptionPictureId, tx);
         }
 
-        const deletedStartUp = await this.startUpRepo.deleteStartUp(id, tx);
 
         return deletedStartUp;
       } catch (error) {
