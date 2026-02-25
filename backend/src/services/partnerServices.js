@@ -8,7 +8,9 @@ import Partner from "../classes/Partner.js";
 import prisma from "../prismaClient.js";
 // Import de la classe erreur renvoyant des erreurs personnalisées
 import * as Errors from "../errors/errorsClasses.js";
-// Import de la config cloudinary pour la relier au serveur
+// Import de la fonction cloudinary pour envoyer les images sur l'hébergeur
+import uploadPictureToCloudinary from "../utils/uploadToCloudinary.js";
+// Importation de la config Cloudinary pour pouvoir supprimer des images
 import cloudinary from "../../config/cloudinary.js";
 
 export default class PartnerServices {
@@ -28,9 +30,8 @@ export default class PartnerServices {
           data.logoId = "Id par defaut";
         } else {
           // On crée l'image dans notre db et dans notre serveur cloudinary
-          uploadLogo = await cloudinary.uploader.upload(data.logo, {
-            folder: "Partners"
-          });
+          uploadLogo = await uploadPictureToCloudinary(data.logo, "Partners");
+
           const newPicture = await this.pictureRepo.createPicture({
             secureUrl: uploadLogo.secure_url,
             publicId: uploadLogo.public_id
@@ -85,9 +86,8 @@ export default class PartnerServices {
   
         // Creation du nouveau logo et supression de l'ancien
         if(data.logo) {
-          uploadLogo = await cloudinary.uploader.upload(data.logo, {
-            folder: "Partners"
-          });
+          uploadLogo = await uploadPictureToCloudinary(data.logo, "Partners");
+
           const newPicture = await this.pictureRepo.createPicture({
             secureUrl: uploadLogo.secure_url,
             publicId: uploadLogo.public_id
@@ -129,12 +129,13 @@ export default class PartnerServices {
         if (!partner) {
           throw new Errors.NotFoundError('Partner not found');
         }
+        const deletedPartner = await this.partnerRepo.deletePartner(id, tx);
         // Suppression de l'image si elle n'est pas l'image par défaut
         if(partner.logoId !== "defaultId") {
           await cloudinary.uploader.destroy(partner.logo.publicId);
           await this.pictureRepo.deletePicture(partner.logoId, tx);
-        } 
-        return await this.partnerRepo.deletePartner(id, tx);
+        }
+        return deletedPartner;
       })
     } catch (error) {
       throw error;
