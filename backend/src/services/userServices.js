@@ -2,8 +2,9 @@
 import UserRepository from "../repositories/UserRepository.js";
 //Import de la classe pour vérifier la conformité des données
 import User from "../classes/User.js";
-// Import du service Startup pour la supression d'un user
+// Import du service Startup et Quote pour la supression d'un user
 import StartUpServices from "./startUpServices.js";
+import QuoteServices from "./quoteServices.js";
 // Import du client prisma pour créer une nouvelle instance du Repo
 import prisma from "../prismaClient.js";
 // Import de la classe erreur renvoyant des erreurs personnalisées
@@ -13,7 +14,8 @@ export default class UserServices {
   constructor() {
     // Création d'une instance pour utiliser les méthodes de la classe repo
     this.userRepo = new UserRepository(prisma);
-    this.startUpServices = new StartUpServices();
+    this.startUpRepo = new StartUpServices(prisma);
+    this.quoteRepo = new QuoteServices(prisma);
   }
 
   // POST Création d'un user
@@ -78,7 +80,12 @@ export default class UserServices {
         if(!user) {
           throw new Errors.NotFoundError('User not found');
         }
-        await StartUpServices.deleteStartUp(user.startUp.id, tx);
+        if (user.quotes && user.quotes.length > 0) {
+          await Promise.all(user.quotes.map(quote => this.quoteRepo.deleteQuote(quote.id)));
+        }
+        if (user.startUp?.id) {
+          await this.startUpRepo.deleteStartUp(user.startUp.id, tx);
+        }
         return await this.userRepo.deleteUser(id, tx);
       })
     } catch (error) {
