@@ -1,5 +1,7 @@
 // Importe le package express
 import express from 'express';
+// Importation du middleware Multer pour gérer les fichiers
+import upload from "../middlewares/multer.js";
 // Importe les controllers utilisé dans la route admin
 import userCtrl from '../controllers/userCtrl.js';
 import startUpsCtrl from '../controllers/startupsCtrl.js';
@@ -31,25 +33,30 @@ adminRouteur.delete('/users/:id', userCtrl.deleteUser);
 
 // --- STARTUPS --- //
 
-adminRouteur.post('/startups', startUpsCtrl.createStartUp);
+// On dit à notre middleware upload d'avoir deux files pictures dans req.files
+adminRouteur.post('/startups', upload.fields([
+  {name: 'logo', maxCount: 1}, {name: 'descriptionPicture', maxCount: 1}]),
+  startUpsCtrl.createStartUp);
 
 adminRouteur.get('/startups/:id', startUpsCtrl.getStartUpById);
 
 adminRouteur.get('/startups', startUpsCtrl.getAllStartUps);
 
-adminRouteur.patch('/startups/:id', startUpsCtrl.updateStartUp);
+adminRouteur.patch('/startups/:id', upload.fields([
+  {name: 'logo', maxCount: 1}, {name: 'descriptionPicture', maxCount: 1}]),
+  startUpsCtrl.updateStartUp);
 
 adminRouteur.delete('/startups/:id', startUpsCtrl.deleteStartUp);
 
 // --- PARTNERS --- //
 
-adminRouteur.post('/partenaires', partnerCtrl.createPartner);
+adminRouteur.post('/partenaires', upload.single('logo'), partnerCtrl.createPartner);
 
 adminRouteur.get('/partenaires/:id', partnerCtrl.getPartnerById);
 
 adminRouteur.get('/partenaires', partnerCtrl.getAllPartners);
 
-adminRouteur.patch('/partenaires/:id', partnerCtrl.updatePartner);
+adminRouteur.patch('/partenaires/:id', upload.single('logo'), partnerCtrl.updatePartner);
 
 adminRouteur.delete('/partenaires/:id', partnerCtrl.deletePartner);
 
@@ -79,25 +86,26 @@ adminRouteur.delete('/evenements/:id', eventCtrl.deleteEvent);
 
 // --- POSTS --- //
 
-adminRouteur.post('/articles', postCtrl.createPost);
+adminRouteur.post('/articles', upload.single('picture'), postCtrl.createPost);
 
 adminRouteur.get('/articles/:id', postCtrl.getPostById);
 
 adminRouteur.get('/articles', postCtrl.getAllPosts);
 
-adminRouteur.patch('/articles/:id', postCtrl.updatePost);
+adminRouteur.patch('/articles/:id', upload.single('picture'), postCtrl.updatePost);
 
 adminRouteur.delete('/articles/:id', postCtrl.deletePost);
 
 // --- LOCATIONS --- //
 
-adminRouteur.post('/locations', locationCtrl.createLocation);
+// Multer va chercher le champs pictures avec plusieurs fichiers que l'on met dans req.files
+adminRouteur.post('/locations', upload.array('pictures', 5), locationCtrl.createLocation);
 
 adminRouteur.get('/locations/:id', locationCtrl.getLocationById);
 
 adminRouteur.get('/locations', locationCtrl.getAllLocations);
 
-adminRouteur.patch('/locations/:id', locationCtrl.updateLocation);
+adminRouteur.patch('/locations/:id', upload.array('pictures', 5), locationCtrl.updateLocation);
 
 adminRouteur.delete('/locations/:id', locationCtrl.deleteLocation);
 
