@@ -1,5 +1,7 @@
 // Import des services que l'on va appeler dans les controllers
 import TypeServices from '../services/typeServices.js';
+// Import de la fonction utilitaire pour parser des champs
+import jsonParse from "../utils/jsonParse.js";
 
 // Déclaration d'une nouvelle instance sur la classe Service
 const servicesType = new TypeServices();
@@ -8,6 +10,7 @@ const servicesType = new TypeServices();
 // On renvoie le résultat du service, sinon l'erreur est prise en charge par le errorHandler automatiquement
 const createType = async (req, res, next) => {
   try {
+    req.body.startUps = jsonParse(req.body.startUps);
     const data = req.body;
     const newType = await servicesType.createType({
       name: data.name,
@@ -44,6 +47,7 @@ const getAllTypes = async (req, res, next) => {
 // Met à jour un type
 const updateType = async (req, res, next) => {
   try {
+    req.body.startUps = jsonParse(req.body.startUps);
     const id = req.params.id;
     const data = req.body;
     const updatedType = await servicesType.updateType(id, data);
