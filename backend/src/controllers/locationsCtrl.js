@@ -1,4 +1,5 @@
-import LocationServices from "../services/locationServices.js"
+import LocationServices from "../services/locationServices.js";
+import jsonParse from "../utils/jsonParse.js";
 
 // Fonctions pour les routes locations
 
@@ -6,13 +7,15 @@ const servicesLocation = new LocationServices();
 
 const createLocation = async (req, res, next) => {
   try {
+    req.body.price = jsonParse(req.body.price);
+    req.body.size = jsonParse(req.body.size);
     const newLocation = await servicesLocation.createLocation(
       {
         title: req.body.title,
         description: req.body.description,
         price: req.body.price,
         size: req.body.size,
-        pictures: req.body.pictures
+        pictures: req.files
       }
     )
     res.status(201).json(newLocation);
@@ -46,8 +49,14 @@ const getAllLocations = async (req, res, next) => {
 // Met à jour les locations
 const updateLocation = async (req, res, next) => {
   try {
+    req.body.price = jsonParse(req.body.price);
+    req.body.size = jsonParse(req.body.size);
+    req.body.pictures = jsonParse(req.body.pictures);
     const id = req.params.id;
     const newData = req.body;
+    newData.newPictures = req.files;
+    // On récupère les nouvelles images
+    newData.newPictures = req.files;
     const updatedLocation = await servicesLocation.updateLocation(id, newData);
     res.status(200).json(updatedLocation);
   } catch (error) {
