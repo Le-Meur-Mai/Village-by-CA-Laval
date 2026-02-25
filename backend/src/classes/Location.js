@@ -69,16 +69,6 @@ export default class Location extends BaseModel {
   if (!Array.isArray(value)) {
     throw new Errors.ValidationError("Pictures must be an array.");
   }
-
-  for (const pic of value) {
-    if (typeof pic !== "object" || pic === null) {
-      throw new Errors.ValidationError("Each picture must be an object.");
-    }
-    if (!pic.name || !pic.path) {
-      throw new Errors.ValidationError("Each picture must have a name and a path.");
-    }
-  }
-
   this._pictures = value;
 }
 
