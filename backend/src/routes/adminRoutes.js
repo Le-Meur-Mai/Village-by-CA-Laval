@@ -105,7 +105,7 @@ adminRouteur.get('/locations/:id', locationCtrl.getLocationById);
 
 adminRouteur.get('/locations', locationCtrl.getAllLocations);
 
-adminRouteur.patch('/locations/:id', upload.array('pictures', 5), locationCtrl.updateLocation);
+adminRouteur.patch('/locations/:id', upload.array('newPictures', 5), locationCtrl.updateLocation);
 
 adminRouteur.delete('/locations/:id', locationCtrl.deleteLocation);
 
