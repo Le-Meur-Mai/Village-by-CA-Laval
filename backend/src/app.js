@@ -6,7 +6,7 @@ import partnersRoutes from './routes/partnersRoutes.js';
 import startupsRoutes from './routes/startupsRoutes.js';
 import agendaRoutes from './routes/agendaRoutes.js';
 import locationsRoutes from './routes/locationsRoutes.js';
-//import contactRoutes from './routes/contactRoutes.js';
+import contactRoutes from './routes/contactRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 
@@ -18,9 +18,12 @@ const app = express();
 
 /*
 Middleware qui prend toutes les requêtes ayant comme Content-type Application/JSON
-et rend leur body utilisable directement sur l'objet req
+et rend leur body utilisable directement sur l'objet req. On rajoute le url encoded
+de Express pour lire les formulaires notamment avec les file pour avoir des objets
+js utilisables
 */
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 /* 
 Spécification des headers pour permettre de communiquer entre différents serveurs
@@ -42,7 +45,7 @@ app.use('/partenaires', partnersRoutes);
 app.use('/startups', startupsRoutes);
 app.use('/agenda', agendaRoutes);
 app.use('/locations', locationsRoutes);
-//app.use('/contact', contactRoutes);
+app.use('/contact', contactRoutes);
 app.use('/auth', authRoutes);
 app.use('/admin', adminRoutes);
 
