@@ -1,16 +1,13 @@
 // Import des services que l'on va appeler dans les controllers
-/*
-import ContactServices from "../services/contactServices.js";
+import contactServices from "../services/contactServices.js";
 
 // Déclaration d'une nouvelle instance sur la classe Service
-const servicesContact = new ContactServices();
+const servicesContact = new contactServices();
 
-const postContact = async (req, res, next) => {
+const sendMail = async (req, res, next) => {
   try {
-    const message = req.body;
-    const contact = await servicesContact.postContact(message);
-
-    res.status(200).json(contact);
+    await servicesContact.sendMail(req.body);
+    res.status(200).json("Mail envoyé !");
   } catch (error) {
     next(error);
   }
@@ -18,6 +15,5 @@ const postContact = async (req, res, next) => {
 
 // Export des fonctions
 export default {
-  postContact
+  sendMail
 };
-*/
