@@ -1,4 +1,4 @@
-.header {
+header {
     position: sticky;
     background-color: #57b650;
     color: #fff;
@@ -44,7 +44,9 @@ nav a:hover::after {
     width: 100%;
 }
 
-.contact a {
-    color: #fff;
-    text-decoration: none;
+.contact {
+    padding: 1rem 2rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 50px;
 }
