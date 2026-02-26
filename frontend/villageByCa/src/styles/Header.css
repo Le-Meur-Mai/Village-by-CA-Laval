@@ -1,0 +1,50 @@
+.header {
+    position: sticky;
+    background-color: #57b650;
+    color: #fff;
+    padding: 1rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navBox {
+    max-width: 600px;
+    width: 100%;
+
+}
+
+.navbar {
+    padding: 1rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a {
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    width: max-content;
+    padding-bottom: 2px;
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0%;
+    height: 2px;
+    background-color: #fff;
+    transition: width 0.3s ease;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+.contact a {
+    color: #fff;
+    text-decoration: none;
+}
