@@ -11,20 +11,14 @@ services:
     volumes:
       - ./backend/src:/backend/src
       # Quand on modifiera le code, docker le verra et reloadera.
-      # A gauche on a notre dossier local qui se synchronise a droite sur le dossier de docker cree
-      - /backend/node_modules
-      # Comme on aura pas installe node.js en local mais que docker si,
-      # lui aura les node_modules mais comme on ne les a pas dans nos fichiers en local
-      # il va essayer de les écraser pour se synchroniser sur nos fichiers
-      # et que pour empêcher ça on crée un volume qui protege nos node_modules
       - ./backend/prisma:/backend/prisma
 
     depends_on:
       - db
       # Le backend démarre après la base de données mySQL
-    environment:
-      DATABASE_URL: "mysql://root:password@db:3306/village_by_ca_database"
-      # Le backend se connecte à MySQL via le nom du service Docker : db
+    env_file:
+      - ./backend/.env
+      # Le backend se connecte à MySQL via le nom du service Docker : db + charge le .env
 
   #frontend:
     #build: ./frontend
