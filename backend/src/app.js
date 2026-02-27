@@ -9,6 +9,8 @@ import locationsRoutes from './routes/locationsRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+// On importe cookie parser qui va permettre à express de lire et réceptionner les cookies
+import cookieParser from "cookie-parser";
 
 // Importe le Error handler qui va gérer les erreurs reçue par les routes
 import errorHandler from './errors/errorHandler.js'
@@ -24,6 +26,7 @@ js utilisables
 */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 /* 
 Spécification des headers pour permettre de communiquer entre différents serveurs
