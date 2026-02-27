@@ -41,9 +41,10 @@ const getAllUsers = async (req, res, next) => {
 // Mise à jour d'un utilisateur
 const updateUser = async (req, res, next) => {
   try {
-    const id = req.params.id;
+    const isAdmin = req.user.isAdmin;
+    const id = req.user.id;
     const newData = req.body;
-    const updatedUser = await servicesUser.updateUser(id, newData);
+    const updatedUser = await servicesUser.updateUser(id, newData, isAdmin);
     res.status(200).json(updatedUser);
   } catch (error) {
     next(error);
