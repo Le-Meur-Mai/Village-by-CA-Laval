@@ -2,7 +2,7 @@ import cloudinary from "../../config/cloudinary.js";
 /* Fonction utilitaire pour upload des images dans cloudinary,
 pour éviter la duplication de code. Et alléger les services */
 
-export default function uploadPictureToCloudinary(file, folder) {
+function uploadPictureToCloudinary(file, folder) {
   // On fait une promesse à l'ancienne car Cloudinary ne supporte pas le format async, await.
   return new Promise((resolve, reject) => {
     const upload = cloudinary.uploader.upload_stream(
@@ -23,3 +23,5 @@ export default function uploadPictureToCloudinary(file, folder) {
     upload.end(file.buffer);
   });
 }
+
+export default uploadPictureToCloudinary;
