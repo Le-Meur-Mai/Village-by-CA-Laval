@@ -11,6 +11,9 @@ import eventCtrl from '../controllers/eventCtrl.js';
 import postCtrl from '../controllers/postCtrl.js';
 import locationCtrl from '../controllers/locationsCtrl.js';
 import typeCtrl from '../controllers/typeCtrl.js';
+// Importation des middlewares pour vérifier les tokens
+import authorizationAdmin from '../middlewares/authorizationAdmin.js';
+import authorizationConnexion from '../middlewares/authorizationConnexion.js';
 
 /*
 Créer un router avec le module express.Router, permet de définir les routes
@@ -23,103 +26,103 @@ const adminRouteur = express.Router();
 
 adminRouteur.post('/users', userCtrl.createUser);
 
-adminRouteur.get('/users/:id', userCtrl.getUserById);
+adminRouteur.get('/users/:id', authorizationConnexion, authorizationAdmin, userCtrl.getUserById);
 
-adminRouteur.get('/users', userCtrl.getAllUsers);
+adminRouteur.get('/users', authorizationConnexion, authorizationAdmin, userCtrl.getAllUsers);
 
-adminRouteur.patch('/users/:id', userCtrl.updateUser);
+adminRouteur.patch('/users/:id', authorizationConnexion, authorizationAdmin, userCtrl.updateUser);
 
-adminRouteur.delete('/users/:id', userCtrl.deleteUser);
+adminRouteur.delete('/users/:id', authorizationConnexion, authorizationAdmin, userCtrl.deleteUser);
 
 // --- STARTUPS --- //
 
 // On dit à notre middleware upload d'avoir deux files pictures dans req.files
-adminRouteur.post('/startups', upload.fields([
-  {name: 'logo', maxCount: 1}, {name: 'descriptionPicture', maxCount: 1}]),
+adminRouteur.post('/startups', authorizationConnexion, authorizationAdmin,
+  upload.fields([{name: 'logo', maxCount: 1}, {name: 'descriptionPicture', maxCount: 1}]),
   startUpsCtrl.createStartUp);
 
-adminRouteur.get('/startups/:id', startUpsCtrl.getStartUpById);
+adminRouteur.get('/startups/:id', authorizationConnexion, authorizationAdmin, startUpsCtrl.getStartUpById);
 
-adminRouteur.get('/startups', startUpsCtrl.getAllStartUps);
+adminRouteur.get('/startups', authorizationConnexion, authorizationAdmin, startUpsCtrl.getAllStartUps);
 
-adminRouteur.patch('/startups/:id', upload.fields([
+adminRouteur.patch('/startups/:id', authorizationConnexion, authorizationAdmin, upload.fields([
   {name: 'logo', maxCount: 1}, {name: 'descriptionPicture', maxCount: 1}]),
   startUpsCtrl.updateStartUp);
 
-adminRouteur.delete('/startups/:id', startUpsCtrl.deleteStartUp);
+adminRouteur.delete('/startups/:id', authorizationConnexion, authorizationAdmin, startUpsCtrl.deleteStartUp);
 
 // --- PARTNERS --- //
 
-adminRouteur.post('/partenaires', upload.single('logo'), partnerCtrl.createPartner);
+adminRouteur.post('/partenaires', authorizationConnexion, authorizationAdmin, upload.single('logo'), partnerCtrl.createPartner);
 
-adminRouteur.get('/partenaires/:id', partnerCtrl.getPartnerById);
+adminRouteur.get('/partenaires/:id', authorizationConnexion, authorizationAdmin, partnerCtrl.getPartnerById);
 
-adminRouteur.get('/partenaires', partnerCtrl.getAllPartners);
+adminRouteur.get('/partenaires', authorizationConnexion, authorizationAdmin, partnerCtrl.getAllPartners);
 
-adminRouteur.patch('/partenaires/:id', upload.single('logo'), partnerCtrl.updatePartner);
+adminRouteur.patch('/partenaires/:id', authorizationConnexion, authorizationAdmin, upload.single('logo'), partnerCtrl.updatePartner);
 
-adminRouteur.delete('/partenaires/:id', partnerCtrl.deletePartner);
+adminRouteur.delete('/partenaires/:id', authorizationConnexion, authorizationAdmin, partnerCtrl.deletePartner);
 
 // --- QUOTES --- //
 
-adminRouteur.post('/citations', quoteCtrl.createQuote);
+adminRouteur.post('/citations', authorizationConnexion, authorizationAdmin, quoteCtrl.createQuote);
 
-adminRouteur.get('/citations/:id', quoteCtrl.getQuoteById);
+adminRouteur.get('/citations/:id', authorizationConnexion, authorizationAdmin, quoteCtrl.getQuoteById);
 
-adminRouteur.get('/citations', quoteCtrl.getAllQuotes);
+adminRouteur.get('/citations', authorizationConnexion, authorizationAdmin, quoteCtrl.getAllQuotes);
 
-adminRouteur.patch('/citations/:id', quoteCtrl.updateQuote);
+adminRouteur.patch('/citations/:id', authorizationConnexion, authorizationAdmin, quoteCtrl.updateQuote);
 
-adminRouteur.delete('/citations/:id', quoteCtrl.deleteQuote);
+adminRouteur.delete('/citations/:id', authorizationConnexion, authorizationAdmin, quoteCtrl.deleteQuote);
 
 // --- EVENTS --- //
 
-adminRouteur.post('/evenements', eventCtrl.createEvent);
+adminRouteur.post('/evenements', authorizationConnexion, authorizationAdmin, eventCtrl.createEvent);
 
-adminRouteur.get('/evenements/:id', eventCtrl.getEventById);
+adminRouteur.get('/evenements/:id', authorizationConnexion, authorizationAdmin, eventCtrl.getEventById);
 
-adminRouteur.get('/evenements', eventCtrl.getAllEvents);
+adminRouteur.get('/evenements', authorizationConnexion, authorizationAdmin, eventCtrl.getAllEvents);
 
-adminRouteur.patch('/evenements/:id', eventCtrl.updateEvent);
+adminRouteur.patch('/evenements/:id', authorizationConnexion, authorizationAdmin, eventCtrl.updateEvent);
 
-adminRouteur.delete('/evenements/:id', eventCtrl.deleteEvent);
+adminRouteur.delete('/evenements/:id', authorizationConnexion, authorizationAdmin, eventCtrl.deleteEvent);
 
 // --- POSTS --- //
 
-adminRouteur.post('/articles', upload.single('picture'), postCtrl.createPost);
+adminRouteur.post('/articles', authorizationConnexion, authorizationAdmin, upload.single('picture'), postCtrl.createPost);
 
-adminRouteur.get('/articles/:id', postCtrl.getPostById);
+adminRouteur.get('/articles/:id', authorizationConnexion, authorizationAdmin, postCtrl.getPostById);
 
-adminRouteur.get('/articles', postCtrl.getAllPosts);
+adminRouteur.get('/articles', authorizationConnexion, authorizationAdmin, postCtrl.getAllPosts);
 
-adminRouteur.patch('/articles/:id', upload.single('picture'), postCtrl.updatePost);
+adminRouteur.patch('/articles/:id', authorizationConnexion, authorizationAdmin, upload.single('picture'), postCtrl.updatePost);
 
-adminRouteur.delete('/articles/:id', postCtrl.deletePost);
+adminRouteur.delete('/articles/:id', authorizationConnexion, authorizationAdmin, postCtrl.deletePost);
 
 // --- LOCATIONS --- //
 
 // Multer va chercher le champs pictures avec plusieurs fichiers que l'on met dans req.files
-adminRouteur.post('/locations', upload.array('pictures', 5), locationCtrl.createLocation);
+adminRouteur.post('/locations', authorizationConnexion, authorizationAdmin, upload.array('pictures', 5), locationCtrl.createLocation);
 
-adminRouteur.get('/locations/:id', locationCtrl.getLocationById);
+adminRouteur.get('/locations/:id', authorizationConnexion, authorizationAdmin, locationCtrl.getLocationById);
 
-adminRouteur.get('/locations', locationCtrl.getAllLocations);
+adminRouteur.get('/locations', authorizationConnexion, authorizationAdmin, locationCtrl.getAllLocations);
 
-adminRouteur.patch('/locations/:id', upload.array('newPictures', 5), locationCtrl.updateLocation);
+adminRouteur.patch('/locations/:id', authorizationConnexion, authorizationAdmin, upload.array('newPictures', 5), locationCtrl.updateLocation);
 
-adminRouteur.delete('/locations/:id', locationCtrl.deleteLocation);
+adminRouteur.delete('/locations/:id', authorizationConnexion, authorizationAdmin, locationCtrl.deleteLocation);
 
 // --- TYPES --- //
 
-adminRouteur.post('/types', typeCtrl.createType);
+adminRouteur.post('/types', authorizationConnexion, authorizationAdmin, typeCtrl.createType);
 
-adminRouteur.get('/types/:id', typeCtrl.getTypeById);
+adminRouteur.get('/types/:id', authorizationConnexion, authorizationAdmin, typeCtrl.getTypeById);
 
-adminRouteur.get('/types', typeCtrl.getAllTypes);
+adminRouteur.get('/types', authorizationConnexion, authorizationAdmin, typeCtrl.getAllTypes);
 
-adminRouteur.patch('/types/:id', typeCtrl.updateType);
+adminRouteur.patch('/types/:id', authorizationConnexion, authorizationAdmin, typeCtrl.updateType);
 
-adminRouteur.delete('/types/:id', typeCtrl.deleteType);
+adminRouteur.delete('/types/:id', authorizationConnexion, authorizationAdmin, typeCtrl.deleteType);
 
 // Export du routeur
 export default adminRouteur;
