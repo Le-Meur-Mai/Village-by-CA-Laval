@@ -1,6 +1,14 @@
 // Importe le package express
 import express from 'express'
 
+// Importation des controlleurs nécéssaires
+import authCtrl from "../controllers/authCtrl.js";
+import userCtrl from '../controllers/userCtrl.js';
+import startupsCtrl from '../controllers/startupsCtrl.js';
+import quoteCtrl from '../controllers/quoteCtrl.js';
+// Importation des middlewares nécéssaires
+import authorizationConnexion from "../middlewares/authorizationConnexion.js";
+import upload from "../middlewares/multer.js";
 /*
 Créer un router avec le module express.Router, permet de définir les routes
 dans des fichiers séparés
@@ -8,37 +16,23 @@ dans des fichiers séparés
 const authRouteur = express.Router();
 
 // Définitions des différentes routes et méthodes
-authRouteur.get('/login', (req, res) => {
-  res.json({message: 'Page login'});
-});
+authRouteur.post('/login', authCtrl.login);
 
-authRouteur.get('/profil', (req, res) => {
-  res.json({message: 'Page profil'});
-});
+authRouteur.get('/profil', authorizationConnexion, authCtrl.getProfile);
 
-authRouteur.patch('/profil/update', (req, res) => {
-  // if (verifiaction admin || vérification user = jwt actif)
-  res.json({message: 'Mise à jour du profil'});
-});
+authRouteur.patch('/profil', authorizationConnexion, userCtrl.updateUser);
 
-authRouteur.get('/profil/:id', (req, res) => {
-  res.json({message: 'Détail de la quote du user'});
-});
+authRouteur.patch('/profil/startup/:id', authorizationConnexion, upload.fields([
+  {name: 'logo', maxCount: 1}, {name: 'descriptionPicture', maxCount: 1}]),
+  startupsCtrl.updateStartUp);
 
-authRouteur.post('/profil', (req, res) => {
-  // if (verifiaction admin || vérification user = jwt actif)
-  res.json({message: 'Création de nouvelle quote'});
-});
+authRouteur.post('/profil', authorizationConnexion, quoteCtrl.createQuote);
 
-authRouteur.patch('/profil/:id', (req, res) => {
-  // if (verifiaction admin || vérification user = jwt actif)
-  res.json({message: 'Modification de la quote du user'});
-});
+authRouteur.get('profil/quotes/:id', authorizationConnexion, quoteCtrl.getQuoteById);
 
-authRouteur.delete('/profil/:id', (req, res) => {
-  // if (verifiaction admin || vérification user = jwt actif)
-  res.json({message: 'Suppression de la quote du user'});
-});
+authRouteur.patch('/profil/quotes/:id', authorizationConnexion, quoteCtrl.updateQuote);
+
+authRouteur.delete('/profil/quotes/:id', authorizationConnexion, quoteCtrl.deleteQuote);
 
 // Export du routeur
 export default authRouteur;
