@@ -1,3 +1,5 @@
+// Service pour envoyer un email depuis un formulaire de contact
+
 /*Importation du transporteur (le mail qui va envoyer le formulaire à
 l'adresse mail spécifiée)*/
 import mailTransporter from "../utils/mail.js";
