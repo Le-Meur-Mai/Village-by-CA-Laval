@@ -42,9 +42,10 @@ const getAllQuotes = async (req, res, next) => {
 // Met à jour une citation
 const updateQuote = async (req, res, next) => {
   try {
+    const currentUser = req.user;
     const id = req.params.id;
     const newData = req.body;
-    const updatedQuote = await servicesQuote.updateQuote(id, newData);
+    const updatedQuote = await servicesQuote.updateQuote(id, newData, currentUser);
     res.status(200).json(updatedQuote);
   } catch (error) {
     next(error);
@@ -54,8 +55,9 @@ const updateQuote = async (req, res, next) => {
 // Suppression d'une citation
 const deleteQuote = async (req, res, next) => {
   try {
+    const currentUser = req.user;
     const id = req.params.id;
-    const deletedQuote = await servicesQuote.deleteQuote(id);
+    const deletedQuote = await servicesQuote.deleteQuote(id, currentUser);
     res.status(200).json(deletedQuote);
   } catch (error) {
     next(error);
