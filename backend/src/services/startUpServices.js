@@ -115,7 +115,7 @@ export default class StartUpServices {
   }
 
   // PATCH Met à jour une startup
-  async updateStartUp (id, data) {
+  async updateStartUp (id, data, currentUser) {
     let uploadLogo = null;
     let uploadDescriptionPicture = null;
     try {
@@ -128,7 +128,23 @@ export default class StartUpServices {
         if (!existingStartUp) {
           throw new Errors.NotFoundError("The startup doesn't exist.");
         }
-  
+
+        // On vérifie que c'est un admin ou le propriétaire qui veut modifier la startup
+        if (!currentUser.isAdmin && existingStartUp.user.id !== currentUser.id) {
+          throw new Errors.ForbiddenError(
+            "You have to be the owner or an admin to modify this startup.");
+        }
+        
+        // vérification du nouveau propriétaire
+        if (data.userId && currentUser.isAdmin) {
+          const existingUser = await this.userRepo.getUserById(data.userId, tx);
+          if (!existingUser) {
+            throw new Errors.NotFoundError("The new owner is not found.");
+          }
+        } else if (data.userId && !currentUser.isAdmin) {
+          throw new Errors.ForbiddenError('Only a admin can modify this data');
+        }
+
         // Verification de chaque type associé à la mise à jour de la startup
         if (data.types && data.types.length > 0) {
           const types = await Promise.all(
@@ -141,14 +157,6 @@ export default class StartUpServices {
           }
         }
 
-        // vérification du nouveau propriétaire
-        if (data.userId) {
-          // Fonction de vérification si c'est l'admin
-          const existingUser = await this.userRepo.getUserById(data.userId, tx);
-          if (!existingUser) {
-            throw new Errors.NotFoundError("The new owner is not found.");
-          }
-        }
   
         // Création du nouveau logo
         if (data.logo) {
