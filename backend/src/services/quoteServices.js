@@ -63,18 +63,22 @@ export default class QuoteServices {
   }
 
   // PATCH Modification d'une citation existante
-  async updateQuote(id, data) {
+  async updateQuote(id, data, currentUser) {
     try {
       const existingQuote = await this.quoteRepo.getQuoteById(id);
       if (!existingQuote) {
         throw new Errors.NotFoundError("This quote doesn't exist");
       }
-      if (data.userId) {
-        // fonction pour vérifier que l'utilisateur est un admin
+
+      // Changement de propriétaire
+      if (data.userId && currentUser.isAdmin) {
         const user = await this.userRepo.getUserById(data.userId);
         if (!user) {
           throw new Errors.NotFoundError("The user is not found.");
         }
+      } else if (data.userId && !currentUser.isAdmin) {
+        throw new Errors.ForbiddenError(
+          'You have to be an admin to change the owner of the quote.');
       }
       const newQuote = {...existingQuote, ...data};
       // On fusionne les anciennes données avec les nouveaux champs.
@@ -86,11 +90,15 @@ export default class QuoteServices {
   }
 
   // DELETE Suppression d'une citation
-  async deleteQuote(id) {
+  async deleteQuote(id, currentUser) {
     try {
       const existingQuote = await this.quoteRepo.getQuoteById(id);
       if (!existingQuote) {
         throw new Errors.NotFoundError("The quote doesn't exist.");
+      }
+      if (!currentUser.isAdmin && currentUser.id !== existingQuote.user.id) {
+        throw new Errors.ForbiddenError(
+          'You have to be an admin or the owner to delete this quote.');
       }
       return await this.quoteRepo.deleteQuote(id);
     } catch (error) {
