@@ -1,8 +1,8 @@
 // Import des services que l'on va appeler dans les controllers
-import contactServices from "../services/contactServices.js";
+import ContactServices from "../services/contactServices.js";
 
 // Déclaration d'une nouvelle instance sur la classe Service
-const servicesContact = new contactServices();
+const servicesContact = new ContactServices();
 
 const sendMail = async (req, res, next) => {
   try {
