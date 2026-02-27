@@ -53,6 +53,7 @@ const getAllStartUps = async (req, res, next) => {
 
 const updateStartUp = async (req, res, next) => {
   try {
+    const currentUser = req.user
     // Postman envoie toujours des strings, on le parse pour le convertir en objet js
     req.body.types = jsonParse(req.body.types);
     req.body.isAlumni = jsonParse(req.body.isAlumni);
@@ -61,7 +62,7 @@ const updateStartUp = async (req, res, next) => {
     const newData = req.body;
     newData.logo = req.files?.logo?.[0];
     newData.descriptionPicture = req.files?.descriptionPicture?.[0];
-    const updatedStartUp = await servicesStartUp.updateStartUp(id, newData);
+    const updatedStartUp = await servicesStartUp.updateStartUp(id, newData, currentUser);
     res.status(200).json(updatedStartUp);
   } catch (error) {
     next(error);
