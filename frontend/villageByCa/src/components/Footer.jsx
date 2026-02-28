@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import '../styles/Footer.css';
 import logoBlanc from '../assets/logo_blanc.png';
 
@@ -6,16 +8,16 @@ const Footer = () => {
         <footer>
             <div className='upperPart'>
                 <div className='leftPart'>
-                    <a href="/index"><img src = { logoBlanc } alt="logo du Village By CA" className='logo' /></a>
+                    <Link to="/"><img src = { logoBlanc } alt="logo du Village By CA" className='logo' /></Link>
                     <ul>
-                        <li><a href="/startups">Startups</a></li>
-                        <li><a href="/partenaires">Partenaires</a></li>
-                        <li><a href="/agenda">Agenda</a></li>
-                        <li><a href="/locations">Locaux</a></li>
-                        <li><a href="/contact">Contact</a></li>
+                        <li><Link to="/startups">Startups</Link></li>
+                        <li><Link to="/partenaires">Partenaires</Link></li>
+                        <li><Link to="/agenda">Agenda</Link></li>
+                        <li><Link to="/locations">Locaux</Link></li>
+                        <li><Link to="/contact">Contact</Link></li>
                     </ul>
                     <div className='vl'></div>
-                    <a href="/login">Connexion</a>
+                    <Link to="/login">Connexion</Link>
                 </div>
                 <div className='rightPart'>
                     <img src="/" alt="LinkedIn" />
@@ -24,7 +26,7 @@ const Footer = () => {
             </div>
             <div className='bottomPart'>
                 <p>2024 Village By CA - TOUS DROITS RESERVES</p>
-                <a href="/">Mention Légales</a>
+                <Link to="/">Mention Légales</Link>
             </div>
         </footer>
     )

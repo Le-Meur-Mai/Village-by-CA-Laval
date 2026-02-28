@@ -1,18 +1,21 @@
+import { Link } from 'react-router-dom';
+
 import '../styles/Header.css'
+import logoBlanc from '../assets/logo_blanc.png';
 
 const Header = () => {
     return (
         <header>
-            <img src="logo" alt="logo du Village By CA" />
+            <Link to="/"><img src= { logoBlanc } alt="logo du Village By CA" className='logo-header' /></Link>
             <div className='navBox'>
                 <nav className='navbar'>
-                    <a href="/startups">Startups</a>
-                    <a href="/partenaires">Partenaires</a>
-                    <a href="/agenda">Agenda</a>
-                    <a href="/locations">Locaux</a>
+                    <Link to="/startups">Startups</Link>
+                    <Link to="/partenaires">Partenaires</Link>
+                    <Link to="/agenda">Agenda</Link>
+                    <Link to="/locations">Locaux</Link>
                 </nav>
             </div>
-            <a href="/contact"><button className='contact'>Contact</button></a>
+            <Link to="/contact"><button className='contact'>Contact</button></Link>
         </header>
     )
 }

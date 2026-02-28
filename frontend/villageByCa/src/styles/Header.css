@@ -1,15 +1,20 @@
 header {
     position: sticky;
+    top: 0;
     background-color: #57b650;
     color: #fff;
-    padding: 1rem 3rem;
+    padding: 0rem 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+.logo-header {
+    width: 5rem;
+}
+
 .navBox {
-    max-width: 600px;
+    max-width: 500px;
     width: 100%;
 
 }
