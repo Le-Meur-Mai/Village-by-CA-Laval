@@ -10,7 +10,6 @@ import Locaux from './pages/Locaux.jsx';
 
 const App = () => {
   return (
-    <div className='app'>
       <Routes>
         <Route path='/' element={<Index />} />
         <Route path='/startups' element={<Startups />} />
@@ -19,7 +18,6 @@ const App = () => {
         <Route path='/locations' element={<Locaux />} />
         <Route path='/contact' element={<Contact />} />
       </Routes>
-    </div>
   )
 }
 
