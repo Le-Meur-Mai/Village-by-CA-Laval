@@ -9,6 +9,7 @@
 
 .button:hover {
     transform: scale(1.05);
+    /* box-shadow: position a gauche - position en bas - intensité du flou - couleur de l'ombre */
     box-shadow: 0 0.3rem 0.5rem rgb(76, 76, 76);
     transition: 180ms;
 }
