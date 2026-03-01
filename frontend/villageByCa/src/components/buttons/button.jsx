@@ -3,7 +3,7 @@ import '../../styles/Button.css'
 
 const Button = ({text = "Bouton"}) => {
     return (
-        <button className="button">{ text }</button>
+        <Link to="/startups"><button className="button">{ text }</button></Link>
     )
 }
 
