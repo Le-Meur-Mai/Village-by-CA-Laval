@@ -4,6 +4,7 @@
     padding: 1rem 1.5rem;
     font-size: 1.2rem;
     border-radius: 1rem;
+    border: 1px solid black;
     transition: 180ms;
 }
 
