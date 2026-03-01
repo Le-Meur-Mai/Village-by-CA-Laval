@@ -1,8 +1,29 @@
-.village-image {
+.hero-section-container {
     position: relative;
+    width: 100%;
+    height: 40rem;
+}
+
+.village-image {
+    position: absolute;
     width: 100%;
     height: 40rem;
     object-fit: cover;
     opacity: 50%;
-    z-index: -1;
 }
+
+.top {
+    position: absolute;
+    font-size: 3rem;
+    top: 15rem;
+    left: 5rem;
+}
+
+.bottom {
+    position: absolute;
+    top: 20rem;
+    left: 5rem;
+}
+
+
+
