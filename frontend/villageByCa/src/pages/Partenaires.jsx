@@ -11,9 +11,9 @@ const Partenaires = () => {
             <PresentationPage 
                 title="Partenaires" 
                 text="Nos entreprises ambassadrices sont toujours en quête d'innovation 
-                et c'est pourquoi elles ont choisi le Village by CA. Elles soutiennent et 
+                et c'est pourquoi elles ont choisi le Village by CA. Elles soutiennent et 
                 rendent possible l'aventure Village pour 10 à 15 porteurs de projets chaque année, 
-                en subventionnant  près de 70% du coût de cet accompagnement à la structuration." />
+                en subventionnant près de 70% du coût de cet accompagnement à la structuration." />
             <Footer />
         </div>
     )
