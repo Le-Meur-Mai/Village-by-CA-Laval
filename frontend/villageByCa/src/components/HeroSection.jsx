@@ -11,7 +11,7 @@ const HeroSection = () => {
                 <h2 className='title'>Accélérateur d'innovations pour Start-Up et entreprises</h2>
             </div>
             <div className='bottom'>
-                <Button text="Contactez-nous" />
+                <Button text="Contactez-nous" path='/contact' />
             </div>
         </div>
     )

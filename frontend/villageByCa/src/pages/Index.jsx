@@ -3,6 +3,7 @@ import '../styles/page.css'
 import Header from '../components/Header.jsx';
 import HeroSection from '../components/HeroSection.jsx';
 import Footer from '../components/Footer.jsx';
+import PreFooter from '../components/PreFooter.jsx';
 
 const Index = () => {
     return (
@@ -18,6 +19,10 @@ const Index = () => {
                 entrepreneuriale.</p>
             <h4>Rencontrez l'équipe</h4>
             <p>Amandine et alternant</p>
+            <PreFooter 
+                title="Envie de vous faire accompagner ?" 
+                text="Contactez-nous maintenant et explorons ensemble tout le potentiel de votre entreprise"
+                buttontext="Contactez-nous" />
             <Footer />
         </div>
     )

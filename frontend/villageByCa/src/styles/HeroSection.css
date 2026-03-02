@@ -12,9 +12,9 @@
     opacity: 50%;
 }
 
-.top {
+.top h2 {
     position: absolute;
-    font-size: 2rem;
+    font-size: 2.8rem;
     top: 15rem;
     left: 5rem;
 }

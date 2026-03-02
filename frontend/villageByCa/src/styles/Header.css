@@ -1,8 +1,8 @@
 header {
     position: sticky;
     top: 0;
-    background-color: #57b650;
-    color: #fff;
+    background-color: #88d783;
+    color: #000000;
     padding: 0rem 3rem;
     display: flex;
     justify-content: space-between;
@@ -29,7 +29,7 @@ header {
 
 nav a {
     position: relative;
-    color: #fff;
+    color: #000000;
     text-decoration: none;
     width: max-content;
     padding-bottom: 2px;
@@ -42,7 +42,7 @@ nav a::after {
     bottom: 0;
     width: 0%;
     height: 2px;
-    background-color: #fff;
+    background-color: #000000;
     transition: width 0.3s ease;
 }
 
@@ -51,8 +51,7 @@ nav a:hover::after {
 }
 
 .contact {
-    padding: 1rem 2rem;
-    border: none;
+    color: #000000;
+    text-decoration: none;
     cursor: pointer;
-    border-radius: 50px;
 }
