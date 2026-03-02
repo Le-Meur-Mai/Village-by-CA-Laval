@@ -28,11 +28,11 @@ authRouteur.patch('/profil/startup/:id', authorizationConnexion, upload.fields([
 
 authRouteur.post('/profil', authorizationConnexion, quoteCtrl.createQuote);
 
-authRouteur.get('profil/quotes/:id', authorizationConnexion, quoteCtrl.getQuoteById);
+authRouteur.get('/profil/citations/:id', authorizationConnexion, quoteCtrl.getQuoteById);
 
-authRouteur.patch('/profil/quotes/:id', authorizationConnexion, quoteCtrl.updateQuote);
+authRouteur.patch('/profil/citations/:id', authorizationConnexion, quoteCtrl.updateQuote);
 
-authRouteur.delete('/profil/quotes/:id', authorizationConnexion, quoteCtrl.deleteQuote);
+authRouteur.delete('/profil/citations/:id', authorizationConnexion, quoteCtrl.deleteQuote);
 
 // Export du routeur
 export default authRouteur;
