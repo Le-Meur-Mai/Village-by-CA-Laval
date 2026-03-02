@@ -8,10 +8,10 @@ const HeroSection = () => {
         <div className='hero-section-container'>
             <img src= { VillageImage } alt="Vue du Village by CA" className='village-image'/>
             <div className='top'>
-                <h3 className='title'>Découvrez les Startups de demain</h3>
+                <h2 className='title'>Accélérateur d'innovations pour Start-Up et entreprises</h2>
             </div>
             <div className='bottom'>
-                <Button text="Découvrez les Startups" />
+                <Button text="Contactez-nous" />
             </div>
         </div>
     )
