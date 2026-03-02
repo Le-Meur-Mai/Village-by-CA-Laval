@@ -1,0 +1,13 @@
+.prefooter {
+    background-color: #88d783;
+    padding: 2rem 3rem;
+}
+
+.title {
+    font-size: 2rem;
+}
+
+.text {
+    margin: 1.2rem 0;
+    padding-bottom: 1rem;
+}
