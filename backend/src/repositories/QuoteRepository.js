@@ -17,7 +17,15 @@ export default class QuoteRepository {
     const quote = await client.quote.findUnique({
       where: {id},
       include: {
-        user: true
+        user: {
+          include: {
+            startUp: {
+              include: {
+                logo: true
+              }
+            }
+          }
+        }
       }
     });
     return quote;
@@ -27,7 +35,15 @@ export default class QuoteRepository {
     const quotes = await client.quote.findMany({
       where: {userId: id},
       include: {
-        user: true
+        user: {
+          include: {
+            startUp: {
+              include: {
+                logo: true
+              }
+            }
+          }  
+        }
       }
     });
     return quotes;
@@ -36,7 +52,15 @@ export default class QuoteRepository {
   async getAllQuotes(client = this.prisma) {
   const quotes = await client.quote.findMany({
     include: {
-      user: true
+      user: {
+        include: {
+          startUp: {
+            include: {
+              logo: true
+            }
+          }
+        }
+      }
     }
   });
   return quotes;
