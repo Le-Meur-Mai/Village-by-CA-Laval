@@ -1,7 +1,7 @@
 // Import de BaseModel pour hériter de ses méthodes
 import BaseModel from "./BaseModel.js";
 // Import de la classe erreur renvoyant des erreurs personnalisées
-import * as Errors from "../errors/errorsHandler.js"
+import * as Errors from "../errors/errorsClasses.js"
 
 export default class Event extends BaseModel {
   constructor({title, description = "", color, date = new Date()}) {

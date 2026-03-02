@@ -4,38 +4,48 @@ import PartnerRepository from "../repositories/PartnerRepository.js";
 import PictureRepository from "../repositories/PictureRepository.js";
 //Import des classes pour vérifier la conformité des données
 import Partner from "../classes/Partner.js";
-import Picture from "../classes/Picture.js";
 // Import du client prisma pour créer une nouvelle instance du Repo
 import prisma from "../prismaClient.js";
 // Import de la classe erreur renvoyant des erreurs personnalisées
-import * as Errors from "../errors/errorsHandler.js";
+import * as Errors from "../errors/errorsClasses.js";
+// Import de la fonction cloudinary pour envoyer les images sur l'hébergeur
+import uploadPictureToCloudinary from "../utils/uploadToCloudinary.js";
+// Importation de la config Cloudinary pour pouvoir supprimer des images
+import cloudinary from "../../config/cloudinary.js";
 
 export default class PartnerServices {
   constructor() {
     // Création d'une instance pour utiliser les méthodes de la classe repo
-    this.repo = new PartnerRepository(prisma);
+    this.partnerRepo = new PartnerRepository(prisma);
     this.pictureRepo = new PictureRepository(prisma);
   }
 
   // POST Création d'un nouveau partenaire
   async createPartner(data) {
-    let newPicture = null;
+    let uploadLogo = null;
+    // On déclare la variable pour qu'elle soit détectée dans le catch
     try {
-      if(!data.logo) {
-        data.logoId = "Id par defaut";
-      } else {
-        const picture = data.logo;
-        new Picture(picture);
-        newPicture = await this.pictureRepo.createPicture(picture);
-        data.logoId = newPicture.id;
-      }
-      // Crée une nouvelle instance pour vérifier la conformité des données
-      new Partner(data);
-      return await this.repo.createPartner(data);
+      return await prisma.$transaction( async (tx) => {
+        if(!data.logo) {
+          data.logoId = "Id par defaut";
+        } else {
+          // On crée l'image dans notre db et dans notre serveur cloudinary
+          uploadLogo = await uploadPictureToCloudinary(data.logo, "Partners");
+
+          const newPicture = await this.pictureRepo.createPicture({
+            secureUrl: uploadLogo.secure_url,
+            publicId: uploadLogo.public_id
+          }, tx);
+          data.logoId = newPicture.id;
+          delete data.logo;
+        }
+        // Crée une nouvelle instance pour vérifier la conformité des données
+        new Partner(data);
+        return await this.partnerRepo.createPartner(data, tx);
+      })
     } catch (error) {
-      // Suppression de l'image si elle n'est pas l'image par défaut
-      if(newPicture && newPicture.id !== "Id par defaut") {
-        await this.pictureRepo.deletePicture(data.logoId);
+      if (uploadLogo) {
+        await cloudinary.uploader.destroy(uploadLogo.public_id);
       }
       throw error;
     }
@@ -44,7 +54,7 @@ export default class PartnerServices {
   // GET Retourne un partenaire par rapport à son id
   async getPartnerById(id) {
     try {
-      const partner = await this.repo.getPartnerById(id);
+      const partner = await this.partnerRepo.getPartnerById(id);
       if(!partner) {
         throw new Errors.NotFoundError('Partner not found');
       }
@@ -55,9 +65,9 @@ export default class PartnerServices {
   }
 
   // GET Tous les partenaires
-  async getAllPartner() {
+  async getAllPartners() {
     try {
-      return await this.repo.getAllPartners();
+      return await this.partnerRepo.getAllPartners();
     } catch (error) {
       throw error;
     }
@@ -65,36 +75,47 @@ export default class PartnerServices {
 
   // PATCH Mis à jour d'un partenaire
   async updatePartner(id, data) {
-    // on déclare notre variable ici pour qu'elle puisse être détectée par le catch
-    let newLogo = null;
     try {
-      // Vérification de l'existence du partenaire
-      const existingPartner = await this.repo.getPartnerById(id);
-      if (!existingPartner) {
-        throw new Errors.NotFoundError('Partner not found');
-      }
+      let uploadLogo = null;
+      return await prisma.$transaction(async (tx) => {
+        // Vérification de l'existence du partenaire
+        const existingPartner = await this.partnerRepo.getPartnerById(id, tx);
+        if (!existingPartner) {
+          throw new Errors.NotFoundError('Partner not found');
+        }
+  
+        // Creation du nouveau logo et supression de l'ancien
+        if(data.logo) {
+          uploadLogo = await uploadPictureToCloudinary(data.logo, "Partners");
 
-      // Creation du nouveau logo
-      if(data.logo) {
-        new Picture(data.logo);
-        newLogo = await this.pictureRepo.createPicture(data.logo);
-        data.logoId = newLogo.id;
-      }
-      const oldPictureId = existingPartner.logoId;
-      /* On merge les nouvelles données avec les ancienne, puis on vérifie la
-      validité des nouvelles données avec une nouvelle instance de la classe
-      avant de communiquer les données à la base de données
-      */
-      const newPartner = {...existingPartner, ...data};
-      new Partner(newPartner);
-      const updatedPartner = await this.repo.updatePartner(id, data);
-      if (oldPictureId !== "Id par defaut") {
-        await this.repo.deletePicture(oldPictureId);
-      }
-      return updatedPartner;
+          const newPicture = await this.pictureRepo.createPicture({
+            secureUrl: uploadLogo.secure_url,
+            publicId: uploadLogo.public_id
+          }, tx);
+          data.logoId = newPicture.id;
+          delete data.logo;
+        }
+        /* On merge les nouvelles données avec les ancienne, puis on vérifie la
+        validité des nouvelles données avec une nouvelle instance de la classe
+        avant de communiquer les données à la base de données
+        */
+
+       
+       const newPartner = {...existingPartner, ...data};
+       new Partner(newPartner);
+       const updatedPartner = await this.partnerRepo.updatePartner(id, data, tx);
+       
+       // On supprime l'ancien logo
+       if (uploadLogo && existingPartner.logoId !== "Id par defaut") {
+           await cloudinary.uploader.destroy(existingPartner.logo.publicId)
+           await this.pictureRepo.deletePicture(existingPartner.logoId, tx);
+         }
+
+        return updatedPartner;
+      })
     } catch (error) {
-      if(newLogo && newLogo !== "Id par defaut") {
-        await this.pictureRepo.deletePicture(data.logoId);
+      if (uploadLogo) {
+        await cloudinary.uploader.destroy(uploadLogo.public_id);
       }
       throw error;
     }
@@ -103,15 +124,19 @@ export default class PartnerServices {
   // DELETE Supression d'un partenaire
   async deletePartner(id) {
     try {
-      const partner = await this.repo.getPartnerById(id);
-      if (!partner) {
-        throw new Errors.NotFoundError('Partner not found');
-      }
-      // Suppression de l'image si elle n'est pas l'image par défaut
-      if(partner.logoId !== "defaultId") {
-        await this.pictureRepo.deletePicture(data.logoId);
-      } 
-      return await this.repo.deletePartner(id);
+      return await prisma.$transaction(async (tx) => {
+        const partner = await this.partnerRepo.getPartnerById(id, tx);
+        if (!partner) {
+          throw new Errors.NotFoundError('Partner not found');
+        }
+        const deletedPartner = await this.partnerRepo.deletePartner(id, tx);
+        // Suppression de l'image si elle n'est pas l'image par défaut
+        if(partner.logoId !== "defaultId") {
+          await cloudinary.uploader.destroy(partner.logo.publicId);
+          await this.pictureRepo.deletePicture(partner.logoId, tx);
+        }
+        return deletedPartner;
+      })
     } catch (error) {
       throw error;
     }

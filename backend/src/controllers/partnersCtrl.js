@@ -1,17 +1,83 @@
-// Fonctions pour les routes Partenaires
+// Import des services que l'on va appeler dans les controllers
+import PartnerServices from "../services/partnerServices.js";
+import jsonParse from "../utils/jsonParse.js";
+// Importation des fonction de formattage
+import partnerReturn from "../utils/returnFormat/partnerReturn.js";
 
-const getAllPartners = (req, res) => {
-  res.json({message: 'Page Partenaires'});
-};
+const servicesPartner = new PartnerServices();
 
-const getPartnerByID = (req, res) => {
-  // Enregistre l'id dans la variable id
-  const id = req.params.id;
-  res.json({partenaireID: id});
-};
+// crée un nouveau partenaire
+// On renvoie le résultat du service, sinon l'erreur est prise en charge par le errorHandler automatiquement
+const createPartner = async (req, res, next) => {
+  try {
+    req.body.financialAid = jsonParse(req.body.financialAid);
+    const newPartner = await servicesPartner.createPartner({
+      name: req.body.name,
+      description: req.body.description,
+      website: req.body.website,
+      financialAid: req.body.financialAid,
+      logo: req.file
+    });
+    res.status(201).json(`Le partenaire ${newPartner.name} a été créé`);
+  } catch (error) {
+    next(error);
+  }
+}
+
+// Trouve un partenaire avec son ID
+const getPartnerById = async (req, res, next) => {
+  try {
+    // Enregistre l'id dans la variable id
+    const id = req.params.id;
+    let partner = await servicesPartner.getPartnerById(id);
+    partner = partnerReturn.getPartnerDetailsFormat(partner);
+    res.status(200).json(partner);
+  } catch (error) {
+    next(error);
+  }
+}
+
+// Renvoie tous les partenaires
+const getAllPartners = async (req, res, next) => {
+  try {
+    let partners = await servicesPartner.getAllPartners();
+    partners = partnerReturn.getAllPartnersFormat(partners);
+    res.status(200).json(partners);
+  } catch (error) {
+    next(error);
+  }
+}
+
+// Met un jour un partenaire
+const updatePartner = async (req, res, next) => {
+  try {
+    req.body.financialAid = jsonParse(req.body.financialAid);
+    const id = req.params.id;
+    const data = req.body;
+    data.logo = req.file;
+    const partner = await servicesPartner.updatePartner(id, data);
+    res.status(200).json(`Le partenaire ${partner.name} a été mis à jour`);
+  } catch (error) {
+    next(error);
+  }
+}
+
+// Supprime un partenaire
+const deletePartner = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const partner = await servicesPartner.deletePartner(id);
+    res.status(200).json(`Le partenaire ${partner.name} a été suprimé`);
+  } catch (error) {
+    next(error);
+  }
+}
 
 // Export des fonctions
 export default {
+  createPartner,
+  getPartnerById,
   getAllPartners,
-  getPartnerByID
+  updatePartner,
+  deletePartner
 };

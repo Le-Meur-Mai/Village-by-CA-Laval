@@ -1,7 +1,7 @@
 // Import de BaseModel pour hériter de ses méthodes
 import BaseModel from "./BaseModel.js";
 // Import de la classe erreur renvoyant des erreurs personnalisées
-import * as Errors from "../errors/errorsHandler.js"
+import * as Errors from "../errors/errorsClasses.js"
 
 export default class Location extends BaseModel {
   constructor({title, description, price, size, pictures = []}) {
@@ -69,16 +69,6 @@ export default class Location extends BaseModel {
   if (!Array.isArray(value)) {
     throw new Errors.ValidationError("Pictures must be an array.");
   }
-
-  for (const pic of value) {
-    if (typeof pic !== "object" || pic === null) {
-      throw new Errors.ValidationError("Each picture must be an object.");
-    }
-    if (!pic.name || !pic.path) {
-      throw new Errors.ValidationError("Each picture must have a name and a path.");
-    }
-  }
-
   this._pictures = value;
 }
 

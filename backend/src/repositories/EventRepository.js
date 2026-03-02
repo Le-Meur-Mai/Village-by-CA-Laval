@@ -15,7 +15,7 @@ export default class EventRepository {
     return event;
   }
 
-  async getAllEvent(client = this.prisma) {
+  async getAllEvents(client = this.prisma) {
     const events = await client.event.findMany({});
     return events;
   }

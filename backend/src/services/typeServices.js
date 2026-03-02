@@ -3,22 +3,22 @@ import StartUpRepository from "../repositories/StartUpRepository.js";
 import Type from "../classes/Type.js";
 import prisma from "../prismaClient.js";
 // importation de l'instance du prisma client
-import * as Errors from "../errors/errorsHandler.js";
+import * as Errors from "../errors/errorsClasses.js";
 // importation de toutes nos classes d'erreurs personnalisées
 
 export default class TypeServices {
   constructor() {
-    this.typeRepo = TypeRepository(prisma);
-    this.startUpRepo = StartUpRepository(prisma);
+    this.typeRepo = new TypeRepository(prisma);
+    this.startUpRepo = new StartUpRepository(prisma);
   }
 
   // POST Création d'un type
   async createType (data) {
     try {
       if (data.startUps && data.startUps.length > 0) {
-        for (const id of data.startUps.id) {
-          const startUp = await this.startUpRepo.getStartUpById(id);
-          if (!startUp) {
+        for (const id of data.startUps) {
+          const existingStartUp = await this.startUpRepo.getStartUpById(id);
+          if (!existingStartUp) {
             throw new Errors.NotFoundError("One start-up doesn't exist.");
           }
         }
@@ -61,8 +61,8 @@ export default class TypeServices {
       }
 
       if (data.startUps && data.startUps.length > 0) {
-        for (const id of data.startUps.id) {
-          const startUp = await this.startUpRepo.getStartUpById(id);
+        for (const idStartUp of data.startUps) {
+          const startUp = await this.startUpRepo.getStartUpById(idStartUp);
           if (!startUp) {
             throw new Errors.NotFoundError("One start-up doesn't exist.");
           }
@@ -72,7 +72,7 @@ export default class TypeServices {
       const newType = {...existingType, ...data};
       // On fusionne les anciennes et nouvelles données
       new Type(newType);
-      return await this.typeRepo.updateType(data);
+      return await this.typeRepo.updateType(id, data);
     } catch (error) {
       throw error;
     }

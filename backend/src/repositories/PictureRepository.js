@@ -16,7 +16,7 @@ export default class PictureRepository {
         post: true,
         descriptionPicture: true,
         logoStartUp: true,
-        locations: true
+        location: true
       }
     });
     return picture;
@@ -29,7 +29,7 @@ export default class PictureRepository {
         post: true,
         descriptionPicture: true,
         logoStartUp: true,
-        locations: true
+        location: true
       }
     });
     return pictures;
@@ -44,7 +44,7 @@ export default class PictureRepository {
         post: true,
         descriptionPicture: true,
         logoStartUp: true,
-        locations: true
+        location: true
       }
     });
     return picture;
@@ -58,7 +58,7 @@ export default class PictureRepository {
         post: true,
         descriptionPicture: true,
         logoStartUp: true,
-        locations: true
+        location: true
       }
     });
     return picture;
