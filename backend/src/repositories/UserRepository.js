@@ -18,7 +18,12 @@ export default class UserRepository {
       where: {id},
       include : {
         quotes: true,
-        startUp: true
+        startUp: {
+          include: {
+            logo: true,
+            descriptionPicture: true
+          }
+        }
       }
     });
     return user;
