@@ -1,6 +1,7 @@
 import '../styles/page.css'
 
 import Header from '../components/Header.jsx';
+import PresentationPage from '../components/PresentationPage.jsx';
 import Footer from '../components/Footer.jsx';
 import { useEffect, useState } from 'react';
 
@@ -24,6 +25,12 @@ const Startups = () => {
     return (
         <div className='page'>
             <Header />
+            <PresentationPage 
+                title='Startups' 
+                text='Chaque année, nous accompagnons des dizaines de startups dans leur croissance 
+                et leurs ambitions. Entre mentorat, mise en réseau et soutien stratégique, nous créons 
+                les conditions idéales pour accélérer leurs projets. Cette dynamique collective fait émerger 
+                des innovations qui transforment durablement nos territoires.' />
             {/* On parcourt l'objet avec map, on assigne un id pour identifier chaque startups*/}
             {startups.map(startup => (
                 <p key={ startup.id }>{ startup.name }</p>
