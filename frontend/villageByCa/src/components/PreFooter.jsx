@@ -2,7 +2,7 @@ import '../styles/PreFooter.css'
 
 import Button from "./buttons/button";
 
-const PreFooter = ({title, text, buttontext}) => {
+const PreFooter = ({title = "title", text = "text", buttontext = "button"}) => {
     return (
         <div className='prefooter'>
             <h2 className='title-prefooter'>{ title }</h2>
