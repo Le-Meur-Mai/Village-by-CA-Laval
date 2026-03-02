@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import '../../styles/Button.css'
 
-const Button = ({text = "Bouton"}) => {
+const Button = ({text = "Bouton", path = "/"}) => {
     return (
-        <Link to="/startups"><button className="button">{ text }</button></Link>
+        <Link to={ path }><button className="button">{ text }</button></Link>
     )
 }
 
