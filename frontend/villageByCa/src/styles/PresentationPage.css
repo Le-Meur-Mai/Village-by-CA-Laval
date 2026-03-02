@@ -1,14 +1,15 @@
 .presentation-page {
-    padding: 2rem 3rem;
+    padding: 2.5vw;
 }
 
-.title {
-    font-size: 2rem;
+.title-presentation-page {
+    font-size: clamp(2rem, 5vw, 3.5rem);
 }
 
-.text {
-    margin: 1.2rem 0;
-    padding-bottom: 1rem;
+.text-presentation-page {
+    text-align: justify;
+    margin-top: 1.2rem;
+    padding-bottom: 1.2rem;
     padding-right: 20%;
 }
 

@@ -1,9 +1,9 @@
 .button {
     cursor: pointer;
     background-color: #88d783;
-    padding: 1rem 1.5rem;
-    font-size: 1.2rem;
-    border-radius: 1rem;
+    padding: 1.2vw 1.8vw;
+    font-size: clamp(0.8rem, 1.2vw, 2rem);
+    border-radius: 1.5vw;
     border: 1px solid black;
     transition: 180ms;
 }

@@ -1,13 +1,17 @@
 .prefooter {
     background-color: #88d783;
-    padding: 2rem 3rem;
+    padding-top: clamp(1rem, 3vw, 2rem);
+    padding-bottom: clamp(1rem, 3vw, 2rem);
+    padding-left: clamp(1rem, 5vw, 5rem);
+    padding-right: clamp(1rem, 5vw, 5rem);
 }
 
-.title {
-    font-size: 2rem;
+.title-prefooter {
+    font-size: clamp(1rem, calc(2.3vw + 1rem), 3rem);
 }
 
-.text {
-    margin: 1.2rem 0;
-    padding-bottom: 1rem;
+.text-prefooter {
+    margin-top: 1vw;
+    margin-bottom: 2vw;
+    font-size: max(1rem, 1.3vw);
 }
