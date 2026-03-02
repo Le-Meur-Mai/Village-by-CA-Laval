@@ -1,5 +1,9 @@
+// importation des services
 import LocationServices from "../services/locationServices.js";
+// importation de la fonction pour parser le json en objet js
 import jsonParse from "../utils/jsonParse.js";
+// Importation des fonctions de formatage
+import locationReturn from "../utils/returnFormat/locationReturn.js";
 
 // Fonctions pour les routes locations
 
@@ -18,7 +22,7 @@ const createLocation = async (req, res, next) => {
         pictures: req.files
       }
     )
-    res.status(201).json(newLocation);
+    res.status(201).json(`La location ${newLocation.title} a été créée.`);
   } catch (error) {
     next(error);
   }
@@ -29,7 +33,8 @@ const getLocationById = async (req, res, next) => {
   try {
     // Enregistre l'id dans la variable id
     const id = req.params.id;
-    const location = await servicesLocation.getLocationById(id);
+    let location = await servicesLocation.getLocationById(id);
+    location = locationReturn.getLocationDetailsFormat(location);
     res.status(200).json(location);
   } catch (error) {
     next(error);
@@ -39,8 +44,9 @@ const getLocationById = async (req, res, next) => {
 // Retourne toutes les locations
 const getAllLocations = async (req, res, next) => {
   try {
-    const allLocations = await servicesLocation.getAllLocations()
-    res.status(200).json(allLocations);
+    let locations = await servicesLocation.getAllLocations();
+    locations = locationReturn.getAllLocationsFormat(locations);
+    res.status(200).json(locations);
   } catch (error) {
     next(error);
   }
@@ -58,7 +64,7 @@ const updateLocation = async (req, res, next) => {
     // On récupère les nouvelles images
     newData.newPictures = req.files;
     const updatedLocation = await servicesLocation.updateLocation(id, newData);
-    res.status(200).json(updatedLocation);
+    res.status(200).json(`La location ${updatedLocation.title} a été mise à jour.`);
   } catch (error) {
     next(error);
   }
@@ -69,7 +75,7 @@ const deleteLocation = async (req, res, next) => {
   try {
     const id = req.params.id;
     const deletedLocation = await servicesLocation.deleteLocation(id);
-    res.status(200).json(deletedLocation);
+    res.status(200).json(`La location ${deletedLocation.title} a été suprimée .`);
   } catch (error) {
     next(error);
   }

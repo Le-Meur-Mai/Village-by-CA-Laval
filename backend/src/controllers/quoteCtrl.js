@@ -1,4 +1,7 @@
+// Importation des services
 import QuoteServices from "../services/quoteServices.js";
+// Importation des fonctions de formatage
+import quoteReturn from "../utils/returnFormat/quoteReturn.js";
 
 // Controleur pour les citations
 const servicesQuote = new QuoteServices();
@@ -6,13 +9,17 @@ const servicesQuote = new QuoteServices();
 // Création d'une citation
 const createQuote = async (req, res, next) => {
   try {
+    let owner = req.user.id
+    if (req.user.isAdmin) {
+      owner = req.body.userId;
+    }
     const newQuote = await servicesQuote.createQuote({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       description: req.body.description,
-      userId: req.body.userId
+      userId: owner
     })
-    res.status(201).json(newQuote);
+    res.status(201).json(`La citation de ${newQuote.firstName} a été créé.`);
   } catch (error) {
     next(error);
   }
@@ -22,7 +29,8 @@ const createQuote = async (req, res, next) => {
 const getQuoteById = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const quote = await servicesQuote.getQuoteById(id);
+    let quote = await servicesQuote.getQuoteById(id);
+    quote = quoteReturn.getQuoteDetailsFormat(quote);
     res.status(200).json(quote);
   } catch (error) {
     next(error);
@@ -32,7 +40,8 @@ const getQuoteById = async (req, res, next) => {
 // Retourne toutes les citations
 const getAllQuotes = async (req, res, next) => {
   try {
-    const quotes = await servicesQuote.getAllQuotes();
+    let quotes = await servicesQuote.getAllQuotes();
+    quotes = quoteReturn.getAllQuotesFormat(quotes);
     res.status(200).json(quotes);
   } catch (error) {
     next(error);
@@ -46,7 +55,7 @@ const updateQuote = async (req, res, next) => {
     const id = req.params.id;
     const newData = req.body;
     const updatedQuote = await servicesQuote.updateQuote(id, newData, currentUser);
-    res.status(200).json(updatedQuote);
+    res.status(200).json(`La citation de ${updatedQuote.firstName} a été mise à jour.`);
   } catch (error) {
     next(error);
   }
@@ -58,7 +67,7 @@ const deleteQuote = async (req, res, next) => {
     const currentUser = req.user;
     const id = req.params.id;
     const deletedQuote = await servicesQuote.deleteQuote(id, currentUser);
-    res.status(200).json(deletedQuote);
+    res.status(200).json(`La citation de ${deletedQuote.firstName} a été supprimée.`);
   } catch (error) {
     next(error);
   }

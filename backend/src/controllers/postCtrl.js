@@ -1,4 +1,7 @@
+// Importation des services
 import PostServices from "../services/postServices.js";
+// Importations des fonctions de formatage
+import postReturn from "../utils/returnFormat/postReturn.js";
 
 const servicesPost = new PostServices();
 
@@ -10,7 +13,7 @@ const createPost = async (req, res, next) => {
       description: req.body.description,
       picture: req.file
     });
-    res.status(201).json(newPost);
+    res.status(201).json(`Le post ${newPost.title} a été créé.`);
   } catch (error) {
     next(error);
   }
@@ -20,7 +23,8 @@ const createPost = async (req, res, next) => {
 const getPostById = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const post = await servicesPost.getPostById(id);
+    let post = await servicesPost.getPostById(id);
+    post = postReturn.getPostDetailsFormat(post);
     res.status(200).json(post);
   } catch (error) {
     next(error);
@@ -30,7 +34,8 @@ const getPostById = async (req, res, next) => {
 // Retourne tous les posts
 const getAllPosts = async (req, res, next) => {
   try {
-    const posts = await servicesPost.getAllPosts();
+    let posts = await servicesPost.getAllPosts();
+    posts = postReturn.getAllPostsFormat(posts);
     res.status(200).json(posts);
   } catch (error) {
     next(error);
@@ -44,7 +49,7 @@ const updatePost = async (req, res, next) => {
     const data = req.body;
     data.picture = req.file;
     const updatedPost = await servicesPost.updatePost(id, data);
-    res.status(200).json(updatedPost);
+    res.status(200).json(`Le post ${updatedPost.title} a été mis à jour.`);
   } catch (error) {
     next(error);
   }
@@ -55,7 +60,7 @@ const deletePost = async (req, res, next) => {
   try {
     const id = req.params.id;
     const deletedPost = await servicesPost.deletePost(id);
-    res.status(200).json(deletedPost);
+    res.status(200).json(`Le post ${deletedPost.title} a été supprimé.`);
   } catch (error) {
     next(error);
   }

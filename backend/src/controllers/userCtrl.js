@@ -1,4 +1,5 @@
 import UserServices from "../services/userServices.js";
+import userReturn from "../utils/returnFormat/userReturn.js";
 
 // Déclaration d'une nouvelle instance sur la classe Service
 const servicesUser = new UserServices();
@@ -11,7 +12,7 @@ const createUser = async (req, res, next) => {
       email: req.body.email,
       password: req.body.password
     });
-    res.status(201).json(newUser);
+    res.status(201).json(`Le nouvel utilisateur ${newUser.name} a été créé.`);
   } catch (error) {
     next(error);
   }
@@ -21,7 +22,8 @@ const createUser = async (req, res, next) => {
 const getUserById = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const user = await servicesUser.getUserById(id);
+    let user = await servicesUser.getUserById(id);
+    user = userReturn.getUserProfile(user);
     res.status(200).json(user);
   } catch (error) {
     next(error);
@@ -31,7 +33,8 @@ const getUserById = async (req, res, next) => {
 // Retourne tous les utilisateurs
 const getAllUsers = async (req, res, next) => {
   try {
-    const users = await servicesUser.getAllUsers();
+    let users = await servicesUser.getAllUsers();
+    users = userReturn.getAllUsersFormat(users);
     res.status(200).json(users);
   } catch (error) {
     next (error);
@@ -45,7 +48,7 @@ const updateUser = async (req, res, next) => {
     const id = req.user.id;
     const newData = req.body;
     const updatedUser = await servicesUser.updateUser(id, newData, isAdmin);
-    res.status(200).json(updatedUser);
+    res.status(200).json(`Le nouvel utilisateur ${updatedUser.name} a été mis à jour.`);
   } catch (error) {
     next(error);
   }
@@ -56,7 +59,7 @@ const deleteUser = async (req, res, next) => {
   try {
     const id = req.params.id;
     const deletedUser = await servicesUser.deleteUser(id);
-    res.status(200).json(deletedUser);
+    res.status(200).json(`Le nouvel utilisateur ${deletedUser.name} a été supprimé.`);
   } catch (error) {
     next(error);
   }

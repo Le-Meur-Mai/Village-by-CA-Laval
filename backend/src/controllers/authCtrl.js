@@ -1,7 +1,13 @@
+// Importation du module jsonWebToken pour créer le token de session
 import jwt from "jsonwebtoken";
+// Importation des services
 import AuthServices from "../services/authServices.js";
+import UserServices from "../services/userServices.js";
+// Importation des fonction de formattage
+import userReturn from "../utils/returnFormat/userReturn.js";
 
 const servicesAuth = new AuthServices();
+const userServices = new UserServices();
 
 // Vérifie que l'email et le mot de passe de l'utilisateur correspond.
 const login = async (req, res, next) => {
@@ -31,7 +37,8 @@ const login = async (req, res, next) => {
 const getProfile = async (req, res, next) => {
   try {
     const id = req.user.id;
-    const profile = await servicesAuth.getProfile(id);
+    const user = await userServices.getUserById(id);
+    const profile = userReturn.getUserProfile(user);
     res.status(200).json(profile);
   } catch (error) {
     next(error);
