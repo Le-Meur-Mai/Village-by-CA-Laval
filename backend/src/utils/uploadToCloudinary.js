@@ -18,7 +18,7 @@ function uploadPictureToCloudinary(file, folder) {
       }
     );
     /*Sert à envoyer l'image dans le flux Cloudinary donné par upload_stream
-    (il renvoie un stream d'écriture, et tuyau où envoyer des données) et
+    (il renvoie un stream d'écriture, et c'est tuyau où envoyer des données) et
     dire qu'il a finit d'envoyer des données*/
     upload.end(file.buffer);
   });
