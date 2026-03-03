@@ -9,7 +9,7 @@ export default class ContactServices {
   async sendMail (formulaire) {
     try {
       return mailTransporter.sendMail({
-        from: `${process.env.SENDER}`, // L'email qui va envoyer le formulaire
+        from: `${process.env.SMTP_USER}`, // L'email qui va envoyer le formulaire
         replyTo: formulaire.email, // L'email auquel le destinataire va répondre
         to: `${process.env.RECEIVER}`, // L'email du destinataire
         subject: `${formulaire.subject}`, // L'objet du mail
