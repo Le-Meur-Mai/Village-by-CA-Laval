@@ -7,6 +7,8 @@ const Contact = () => {
     return (
         <div className='page'>
             <Header />
+            <main>
+            </main>
             <Footer />
         </div>
     )

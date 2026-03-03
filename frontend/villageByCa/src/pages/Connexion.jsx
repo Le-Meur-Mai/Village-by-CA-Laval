@@ -7,6 +7,8 @@ const Connexion = () => {
     return (
         <div className='page'>
             <Header />
+            <main>
+            </main>
             <Footer />
         </div>
     )
