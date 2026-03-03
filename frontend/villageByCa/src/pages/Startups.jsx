@@ -4,6 +4,7 @@ import Header from '../components/Header.jsx';
 import PresentationPage from '../components/PresentationPage.jsx';
 import Footer from '../components/Footer.jsx';
 import { useEffect, useState } from 'react';
+import Card from '../components/Card.jsx';
 
 const Startups = () => {
     /* On créer un useState qui va contenir toutes nos Startups */
@@ -35,6 +36,7 @@ const Startups = () => {
             {startups.map(startup => (
                 <p key={ startup.id }>{ startup.name }</p>
             ))}
+            <Card />
             <Footer />
         </div>
     )
