@@ -1,21 +1,29 @@
 import nodemailer from "nodemailer";
 
-/*Transporteur Simple Mail Transfer Protocol utilisé pour envoyer les emails.
-  Il s'authentifie auprès de outlook avec l'adresse et le mot de passe d'application
-  définis dans les variables d'environnement. Les emails envoyés proviennent
-  toujours de cette adresse SMTP, jamais de l'adresse du client.*/
+/*On fait appel au protocole OAuth2 de google qui donne des tokens d'autorisation
+à certaine APIs d'un compte google, de façon plus sécurisée et plus
+contrôlée que les mots de passe d'application.*/
 
+/*Le Gmail_Client_Id et le Gmail_Client_Secret sont des identifiants récupérés
+auprès de googlecloud pour identifier notre application auprès du protocole
+d'identification OAuth2 de Google. On a du faire une validation manuelle
+pour autoriser l'accès à notre appli au service GMAIL la première fois pour
+récupérer un refresh token.*/
+
+/*On fournit à l'OAuth2Client un refresh token: un token longue durée qui permet
+ d’obtenir des access_token valides sans redemander manuellement le consentement
+  de l’utilisateur. Les access_token autorisent notre appli à envoyer des mails.*/
 
 const mailTransporter = nodemailer.createTransport({
-  host:"smtp.office365.com",
-  /*Pour le http et outlook qui l'utilise, sinon le port est le https 465.
-  Ici ça utilise la méthode STARTLS qui commence la connexion en claire et la chiffre après.*/
-  port: 587, 
-  secure: false, // true pour le https
+  service:"gmail", 
   auth: {
-    // Sert à authentifier le serveur auprès du Simple Mail Transfer Protocol de outlook
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASSWORD
+    // Sert à authentifier le serveur auprès du protocole OAuth2
+    type: "OAuth2",
+    user: process.env.SMTP_USER, // l'adresse Gmail d’envoi
+    clientId: process.env.GMAIL_CLIENT_ID,
+    clientSecret: process.env.GMAIL_CLIENT_SECRET,
+    refreshToken: process.env.GMAIL_REFRESH_TOKEN
+
   }
 });
 
