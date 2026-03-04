@@ -1,0 +1,33 @@
+.hero-section-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 35vw;
+}
+
+.hero-section-image {
+    position: absolute;
+    width: 100%;
+    height: 35vw;
+    object-fit: cover;
+    opacity: 30%;
+    z-index: -1;
+}
+
+.hero-section-content {
+    padding-left: clamp(1rem, 5vw, 5rem);
+    padding-right: clamp(1rem, 5vw, 5rem);
+}
+
+.title-hero-section {
+    font-size: clamp(1rem, calc(2.3vw + 1rem), 3.3rem);
+    padding-bottom: 2vw;
+}
+
+.cta-hero-section {
+    margin-top: 15px;
+}
+
+
+

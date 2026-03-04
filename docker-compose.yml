@@ -20,13 +20,17 @@ services:
       - ./backend/.env
       # Le backend se connecte à MySQL via le nom du service Docker : db + charge le .env
 
-  #frontend:
-    #build: ./frontend
-    #container_name: frontend
-    #ports:
-      #- "5173:5173"
-    #volumes:
-      #- ./frontend:/app
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend/villageByCa/src:/frontend/villageByCa/src
+
+    depends_on:
+      - backend
+      # Le frontend se lance après le backend
 
   db:
     image: mysql:8

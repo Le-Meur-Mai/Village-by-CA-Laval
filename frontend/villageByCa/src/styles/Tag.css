@@ -1,0 +1,25 @@
+
+.tag button{
+    cursor: pointer;
+    padding: 0.5vw 1.8vw;
+    margin: 2rem;
+    font-size: 1rem;
+    border-radius: 1.5vw;
+    border: 2px solid var(--black-main);
+    transition: 180ms;
+}
+
+.tag button:hover {
+    transform: scale(1.01);
+    /* box-shadow: position a gauche - position en bas - intensité du flou - couleur de l'ombre */
+    box-shadow: 0 0.1rem 0.2rem rgb(152, 152, 152);
+    transition: 180ms;
+}
+
+.tag-inactive {
+    background-color: #88d783;
+}
+
+.tag-active {
+    background-color: #ff8787;
+}
