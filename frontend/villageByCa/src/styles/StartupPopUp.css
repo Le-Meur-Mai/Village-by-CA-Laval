@@ -1,0 +1,146 @@
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000; /*Pour pouvoir se mettre au dessus du header*/
+}
+
+.popup-card {
+    background: white;
+    width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 14px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    animation: popupFade 0.25s ease;
+    z-index: 10000;
+}
+
+@keyframes popupFade {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.popup-color {
+    height: 90px;
+    width: 100%;
+}
+
+.popup-content {
+    padding: 20px;
+    text-align: center;
+    background: var(--white-main);
+}
+
+.popup-logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: -60px auto 10px auto;
+    background: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.popup-title {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.popup-email {
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.popup-website {
+    display: inline-block;
+    background: var(--primary-green);
+    color: var(--black-main);
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    margin-bottom: 20px;
+}
+
+.popup-website:hover {
+    background: #4f9a53;
+    transform: scale(1.03);
+    /* box-shadow: position a gauche - position en bas - intensité du flou - couleur de l'ombre */
+    box-shadow: 0 0.1rem 0.2rem rgb(76, 76, 76);
+    transition: 180ms;
+}
+
+.popup-image {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.popup-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Scrollbar globale du popup */
+.popup-card::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Le fond de la scroll barre */
+.popup-card::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+/* La barre */
+.popup-card::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+}
+
+.popup-card::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+
+
+.popup-description {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.popup-close {
+    background: var(--primary-green);
+    color: var(--black-main);
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.popup-close:hover {
+    background: #4f9a53;
+    transform: scale(1.03);
+    box-shadow: 0 0.1rem 0.2rem rgb(76, 76, 76);
+    transition: 180ms;
+}
