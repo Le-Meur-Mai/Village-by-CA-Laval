@@ -5,7 +5,7 @@
     align-items: center;
     width: clamp(10rem, 18vw, 18rem);
     height: clamp(10rem, 18vw, 18rem);
-    border: 2px solid black;
+    border: 2px solid #0D0322;
     border-radius: 1.5vw;
     cursor: pointer;
     transition: 150ms;

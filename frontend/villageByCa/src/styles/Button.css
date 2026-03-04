@@ -1,16 +1,17 @@
 .button {
     cursor: pointer;
-    background-color: #88d783;
+    color: #F4F4F4;
+    background-color: #48B3AF;
     padding: 1.2vw 1.8vw;
     font-size: clamp(0.8rem, 1.2vw, 2rem);
+    border: none;
     border-radius: 1.5vw;
-    border: 1px solid black;
     transition: 180ms;
 }
 
 .button:hover {
-    transform: scale(1.05);
+    transform: scale(1.03);
     /* box-shadow: position a gauche - position en bas - intensité du flou - couleur de l'ombre */
-    box-shadow: 0 0.3rem 0.5rem rgb(76, 76, 76);
+    box-shadow: 0 0.1rem 0.2rem rgb(76, 76, 76);
     transition: 180ms;
 }

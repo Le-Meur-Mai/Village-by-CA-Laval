@@ -3,7 +3,7 @@ footer {
 }
 
 .vl {
-  border-left: 3px solid rgb(255, 255, 255);
+  border-left: 3px solid #F4F4F4;
   height: 130px;
 }
 
@@ -13,11 +13,11 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(43, 39, 50);
+    background-color: #0D0322;
 }
 
 .upperPart a{
-    color: aliceblue;
+    color: #F4F4F4;
     text-decoration: none;
 }
 
@@ -46,12 +46,12 @@ li {
     display: flex;
     flex: 0.12;
     justify-content: space-between;
-    border: 2px solid white;
+    border: 2px solid #F4F4F4;
 }
 
 /* --- Bottom Part --- */
 .bottomPart {
-    background-color: rgb(211, 211, 209);
+    background-color: #F4F4F4;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -61,5 +61,5 @@ li {
 
 .bottomPart a {
     text-decoration: none;
-    color: black;
+    color: #0D0322;
 }

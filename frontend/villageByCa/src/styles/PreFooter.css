@@ -1,6 +1,6 @@
 .prefooter {
     margin-top: auto;
-    background-color: #88d783;
+    background-color: var(--primary-green);
     padding-top: clamp(1rem, 3vw, 2rem);
     padding-bottom: clamp(1rem, 3vw, 2rem);
     padding-left: clamp(1rem, 5vw, 5rem);
