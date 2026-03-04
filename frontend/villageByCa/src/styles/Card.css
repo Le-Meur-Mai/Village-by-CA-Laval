@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     width: clamp(10rem, 18vw, 18rem);
-    height: clamp(10rem, 18vw, 18rem);
+    height: clamp(10rem, 20vw, 20rem);
     border: 2px solid var(--black-main);
     border-radius: 1.5vw;
     cursor: pointer;
@@ -29,24 +29,28 @@
 .card-content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    height: 100%;
-    width: 100%;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.card-description {
+    text-align: center;
+    padding: 0 1rem;
 }
 
 .card_logo {
-    position: relative;
     width: 40%;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 1;
     border-radius: 50%;
     background-color: var(--black-main);
-    bottom: 5%;
-    overflow: hidden; /* L'image ne dépasse pas du cercle */
-    display: flex; /* Centre l'image */
+    overflow: hidden;
+    display: flex;
     align-items: center;
     justify-content: center;
 }
+
 
 .card_logo img {
     width: 100%;
@@ -57,6 +61,7 @@
 .card-title {
     position: relative;
     font-size: clamp(1rem, calc(1vw + 1rem), 2rem);
-    padding-bottom: 1rem;
-    bottom: 3%;
+    padding-bottom: 0.5rem;
+    padding: 0 0.1rem;
+    bottom: 1%;
 }
