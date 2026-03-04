@@ -1,8 +1,11 @@
+.tag {
+    display: inline-block;
+}
 
 .tag button{
     cursor: pointer;
     padding: 0.5vw 1.8vw;
-    margin: 2rem;
+    margin: 0.5rem;
     font-size: 1rem;
     border-radius: 1.5vw;
     border: 2px solid var(--black-main);
@@ -16,10 +19,11 @@
     transition: 180ms;
 }
 
-.tag-inactive {
-    background-color: #88d783;
+.tag-active {
+    border: 2px solid black;
+    opacity: 1;
 }
 
-.tag-active {
-    background-color: #ff8787;
+.tag-inactive {
+    opacity: 0.6;
 }
