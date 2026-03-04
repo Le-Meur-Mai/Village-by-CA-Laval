@@ -1,7 +1,7 @@
 import multer from "multer";
 /* Middleware utilisant multer. Multer est un middleware Express qui va
 intercepter et gérer les uploads de fichiers via des formulaires : 
-multipart/form-data -> fomrat spécial utilisé dans les requête HTTP
+multipart/form-data -> format spécial utilisé dans les requête HTTP
 et dans Postman pour envoyer des fichiers.*/
 
 /*Pour stocker le fichier uploadé dans la mémoire vive temporairement dans

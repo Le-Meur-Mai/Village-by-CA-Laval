@@ -1,7 +1,8 @@
 import { v2 as cloudinary } from 'cloudinary';
 
-// On configure Cloudinary pour que nos images puissent savoir où aller et pour pouvoir les modifier
-// On utilise process.env pour aller chercher les clés dans notre environnement car on ne doit pas les push sur github
+/* On configure Cloudinary pour que nos images puissent savoir où aller et pour
+pouvoir les modifier. On utilise process.env pour aller chercher les clés dans
+notre environnement car on ne doit pas les push sur github.*/
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -9,7 +10,7 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   // La clé publique de cloudinary
   api_secret: process.env.CLOUDINARY_API_SECRET 
-  // La clé pour accéder à notre seveur c'est notre mot de passe
+  // La clé pour accéder à notre serveur c'est notre mot de passe
 });
 
 export default cloudinary;

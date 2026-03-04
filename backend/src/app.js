@@ -22,7 +22,7 @@ const app = express();
 Middleware qui prend toutes les requêtes ayant comme Content-type Application/JSON
 et rend leur body utilisable directement sur l'objet req. On rajoute le url encoded
 de Express pour lire les formulaires notamment avec les file pour avoir des objets
-js utilisables
+js utilisables. CookieParser sert à lire le cookie dans lequel se trouve le JWT
 */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
