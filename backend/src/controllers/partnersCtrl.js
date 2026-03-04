@@ -1,5 +1,8 @@
 // Import des services que l'on va appeler dans les controllers
 import PartnerServices from "../services/partnerServices.js";
+import jsonParse from "../utils/jsonParse.js";
+// Importation des fonction de formattage
+import partnerReturn from "../utils/returnFormat/partnerReturn.js";
 
 const servicesPartner = new PartnerServices();
 
@@ -7,15 +10,15 @@ const servicesPartner = new PartnerServices();
 // On renvoie le résultat du service, sinon l'erreur est prise en charge par le errorHandler automatiquement
 const createPartner = async (req, res, next) => {
   try {
-    const data = req.body;
+    req.body.financialAid = jsonParse(req.body.financialAid);
     const newPartner = await servicesPartner.createPartner({
-      name: data.name,
-      description: data.description,
-      website: data.website,
-      financialAid: data.financialAid,
-      logo: data.logo
+      name: req.body.name,
+      description: req.body.description,
+      website: req.body.website,
+      financialAid: req.body.financialAid,
+      logo: req.file
     });
-    res.status(201).json(newPartner);
+    res.status(201).json(`Le partenaire ${newPartner.name} a été créé`);
   } catch (error) {
     next(error);
   }
@@ -26,7 +29,8 @@ const getPartnerById = async (req, res, next) => {
   try {
     // Enregistre l'id dans la variable id
     const id = req.params.id;
-    const partner = await servicesPartner.getPartnerById(id);
+    let partner = await servicesPartner.getPartnerById(id);
+    partner = partnerReturn.getPartnerDetailsFormat(partner);
     res.status(200).json(partner);
   } catch (error) {
     next(error);
@@ -36,7 +40,8 @@ const getPartnerById = async (req, res, next) => {
 // Renvoie tous les partenaires
 const getAllPartners = async (req, res, next) => {
   try {
-    const partners = await servicesPartner.getAllPartners();
+    let partners = await servicesPartner.getAllPartners();
+    partners = partnerReturn.getAllPartnersFormat(partners);
     res.status(200).json(partners);
   } catch (error) {
     next(error);
@@ -46,10 +51,12 @@ const getAllPartners = async (req, res, next) => {
 // Met un jour un partenaire
 const updatePartner = async (req, res, next) => {
   try {
+    req.body.financialAid = jsonParse(req.body.financialAid);
     const id = req.params.id;
     const data = req.body;
+    data.logo = req.file;
     const partner = await servicesPartner.updatePartner(id, data);
-    res.status(200).json(partner);
+    res.status(200).json(`Le partenaire ${partner.name} a été mis à jour`);
   } catch (error) {
     next(error);
   }
@@ -60,7 +67,7 @@ const deletePartner = async (req, res, next) => {
   try {
     const id = req.params.id;
     const partner = await servicesPartner.deletePartner(id);
-    res.status(200).json(partner);
+    res.status(200).json(`Le partenaire ${partner.name} a été suprimé`);
   } catch (error) {
     next(error);
   }

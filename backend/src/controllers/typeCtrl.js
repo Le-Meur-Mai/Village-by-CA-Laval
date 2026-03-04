@@ -1,5 +1,9 @@
 // Import des services que l'on va appeler dans les controllers
 import TypeServices from '../services/typeServices.js';
+// Import de la fonction utilitaire pour parser des champs
+import jsonParse from "../utils/jsonParse.js";
+// Importation des fonctions de formatage
+import typeReturn from '../utils/returnFormat/typeReturn.js';
 
 // Déclaration d'une nouvelle instance sur la classe Service
 const servicesType = new TypeServices();
@@ -8,13 +12,14 @@ const servicesType = new TypeServices();
 // On renvoie le résultat du service, sinon l'erreur est prise en charge par le errorHandler automatiquement
 const createType = async (req, res, next) => {
   try {
+    req.body.startUps = jsonParse(req.body.startUps);
     const data = req.body;
     const newType = await servicesType.createType({
       name: data.name,
       color: data.color,
       startUps: data.startUps
     });
-    res.status(201).json(newType);
+    res.status(201).json(`Le type ${newType.name} a été créé.`);
   } catch (error) {
     next(error);
   }
@@ -24,7 +29,8 @@ const createType = async (req, res, next) => {
 const getTypeById = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const type = await servicesType.getTypeById(id);
+    let type = await servicesType.getTypeById(id);
+    type = typeReturn.getTypeDetailsFormat(type);
     res.status(200).json(type);
   } catch (error) {
     next(error);
@@ -34,8 +40,9 @@ const getTypeById = async (req, res, next) => {
 // renvoie tous les types
 const getAllTypes = async (req, res, next) => {
   try {
-    const allTypes = await servicesType.getAllTypes();
-    res.status(200).json(allTypes);
+    let types = await servicesType.getAllTypes();
+    types = typeReturn.getAllTypesFormat(types);
+    res.status(200).json(types);
   } catch (error) {
     next(error);
   }
@@ -44,10 +51,11 @@ const getAllTypes = async (req, res, next) => {
 // Met à jour un type
 const updateType = async (req, res, next) => {
   try {
+    req.body.startUps = jsonParse(req.body.startUps);
     const id = req.params.id;
     const data = req.body;
     const updatedType = await servicesType.updateType(id, data);
-    res.status(200).json(updatedType);
+    res.status(200).json(`Le type ${updatedType.name} a été mis à jour.`);
   } catch (error) {
     next(error);
   }
@@ -58,7 +66,7 @@ const deleteType = async (req, res, next) => {
   try {
     const id = req.params.id;
     const deletedType = await servicesType.deleteType(id);
-    res.status(200).json(deletedType);
+    res.status(200).json(`Le type ${deletedType.name} a été supprimé.`);
   } catch (error) {
     next(error);
   }
