@@ -1,22 +1,17 @@
-import { useState } from "react";
-
 import '../styles/Tag.css';
 
-const Tag = ( {title = "Tag"} ) => {
-
-    const [tagStatus, setTag] = useState(false);
-
-    const ActivateTag = () => {
-        setTag(!tagStatus);
-    }
-
+const Tag = ({ name = "Tag", color = "CCF2B1", active, onClick }) => {
     return (
         <div className="tag">
-            <button onClick={ ActivateTag } className={tagStatus ? "tag-active" : "tag-inactive"}>
-                    { title }
+            <button
+                onClick={onClick}
+                className={active ? "tag-active" : "tag-inactive"}
+                style={{ backgroundColor: `#${color}` }}
+            >
+                {name}
             </button>
         </div>
     );
-}
+};
 
 export default Tag;
