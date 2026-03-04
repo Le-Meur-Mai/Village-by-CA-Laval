@@ -5,7 +5,7 @@
     margin: 2rem;
     font-size: 1rem;
     border-radius: 1.5vw;
-    border: 2px solid #0D0322;
+    border: 2px solid var(--black-main);
     transition: 180ms;
 }
 

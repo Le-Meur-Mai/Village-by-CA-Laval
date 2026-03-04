@@ -3,7 +3,7 @@ footer {
 }
 
 .vl {
-  border-left: 3px solid #F4F4F4;
+  border-left: 3px solid var(--white-main);
   height: 130px;
 }
 
@@ -13,11 +13,11 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #0D0322;
+    background-color: var(--black-main);
 }
 
 .upperPart a{
-    color: #F4F4F4;
+    color: var(--white-main);
     text-decoration: none;
 }
 
@@ -46,12 +46,12 @@ li {
     display: flex;
     flex: 0.12;
     justify-content: space-between;
-    border: 2px solid #F4F4F4;
+    border: 2px solid var(--white-main);
 }
 
 /* --- Bottom Part --- */
 .bottomPart {
-    background-color: #F4F4F4;
+    background-color: var(--white-main);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -61,5 +61,5 @@ li {
 
 .bottomPart a {
     text-decoration: none;
-    color: #0D0322;
+    color: var(--black-main);
 }

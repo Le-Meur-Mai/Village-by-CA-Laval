@@ -1,7 +1,7 @@
 header {
     position: sticky;
     top: 0;
-    background-color: #89D68C;
+    background-color: var(--primary-green);
     padding: 0rem 3rem;
     display: flex;
     justify-content: space-between;
@@ -40,7 +40,7 @@ nav a::after {
     bottom: 0;
     width: 0%;
     height: 3px;
-    background-color: #48B3AF;
+    background-color: var(--light-blue);
     transition: width 0.3s ease;
 }
 
