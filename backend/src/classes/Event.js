@@ -16,8 +16,8 @@ export default class Event extends BaseModel {
     if (typeof value !== "string") {
       throw new Errors.ValidationError("Title must be a string.");
     }
-    else if (value.length > 80) {
-      throw new Errors.ValidationError("The length of the title is too long.");
+    else if (value.length > 80 || value.length < 1) {
+      throw new Errors.ValidationError("The length of the title is too long or too short.");
     }
     this._title = value;
   }
