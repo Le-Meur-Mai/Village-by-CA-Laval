@@ -15,8 +15,8 @@ export default class Type extends BaseModel {
     if (typeof value !== "string") {
       throw new Errors.ValidationError("Name must be a string.");
     }
-    else if (value.length > 30) {
-      throw new Errors.ValidationError("Name is too long.");
+    else if (value.length > 30 || value.length < 1) {
+      throw new Errors.ValidationError("Name is too long or too short.");
     }
     this._name = value;
   }

@@ -20,8 +20,8 @@ export default class User extends BaseModel {
     if (typeof value !== "string") {
       throw new Errors.ValidationError("Name must be a string");
     }
-    else if (value.length > 50) {
-      throw new Errors.ValidationError("The length of the name is too long");
+    else if (value.length > 50 || value.length < 1) {
+      throw new Errors.ValidationError("The length of the name is too long or too short.");
     }
     this._name = value;
   }
@@ -35,7 +35,7 @@ export default class User extends BaseModel {
       throw new Errors.ValidationError("Email must be a string");
     }
     else if (validator.isEmail(value) === false) {
-      throw new Errors.ValidationError("Email has a wrong format")
+      throw new Errors.ValidationError("Email has a wrong format");
     }
     else if (value.length > 100) {
       throw new Errors.ValidationError("The length of the email is too long");

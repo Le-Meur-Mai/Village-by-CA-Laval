@@ -20,9 +20,9 @@ export default class AuthServices {
         const existingUser = await this.userRepo.findUserByEmail(data.email, tx);
         if (!existingUser) {
           throw new Errors.NotFoundError('User not found');
-        } else if(checkPassword(data.password, existingUser.password)) {
-          return {id: existingUser.id, isAdmin: existingUser.isAdmin};
         }
+        await checkPassword(data.password, existingUser.password);
+        return {id: existingUser.id, isAdmin: existingUser.isAdmin};
       })
     } catch (error) {
       throw error;

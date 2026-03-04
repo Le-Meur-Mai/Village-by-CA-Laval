@@ -16,8 +16,8 @@ export default class Post extends BaseModel {
     if (typeof value !== "string") {
       throw new Errors.ValidationError("Title must be a string.");
     }
-    else if (value.length > 100) {
-      throw new Errors.ValidationError("The length of the title is too long.");
+    else if (value.length > 100 || value.length < 1) {
+      throw new Errors.ValidationError("The length of the title is too long or too short.");
     }
     this._title = value;
   }
@@ -30,8 +30,8 @@ export default class Post extends BaseModel {
     if (typeof value !== "string") {
       throw new Errors.ValidationError("Description must be a string.");
     }
-    else if (value.length > 5000) {
-      throw new Errors.ValidationError("The length of the description is too long.");
+    else if (value.length > 5000 || value.length < 10) {
+      throw new Errors.ValidationError("The length of the description is too long or too short.");
     }
     this._description = value;
   }
