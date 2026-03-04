@@ -12,7 +12,5 @@ const partnersRouteur = express.Router();
 // Définitions des différentes routes et méthodes
 partnersRouteur.get('/', partnersCtrl.getAllPartners);
 
-partnersRouteur.get('/:id', partnersCtrl.getPartnerById);
-
 // Export du routeur
 export default partnersRouteur;
