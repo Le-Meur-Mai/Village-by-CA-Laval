@@ -63,15 +63,16 @@ const Startups = () => {
                     et leurs ambitions. Entre mentorat, mise en réseau et soutien stratégique, nous créons 
                     les conditions idéales pour accélérer leurs projets. Cette dynamique collective fait émerger 
                     des innovations qui transforment durablement nos territoires.' />
-                <div className="filters">
-                    <Tag 
-                        name="Alumni"
-                        color="88d783"
-                        active={showAlumni}
-                        onClick={() => setShowAlumni(!showAlumni)}
-                    />
-                    {types.map(type => (
+                <div className="presentation-page">
+                    <div className="filters">
                         <Tag 
+                            name="Alumni"
+                            color="88d783"
+                            active={showAlumni}
+                            onClick={() => setShowAlumni(!showAlumni)}
+                            />
+                        {types.map(type => (
+                            <Tag 
                             key={type.id}
                             name={type.name}
                             color={type.color}
@@ -80,27 +81,28 @@ const Startups = () => {
                             onClick={() => setSelectedType(
                                 selectedType?.name === type.name ? null : type
                             )}
-                        />
-                    ))}
-                </div>
-                {/* On parcourt l'objet avec map, on assigne un id pour identifier chaque startups*/}
-                {filteredStartups.map(startup => (
-                    <Card 
+                            />
+                        ))}
+                    </div>
+                    {/* On parcourt l'objet avec map, on assigne un id pour identifier chaque startups*/}
+                    {filteredStartups.map(startup => (
+                        <Card 
                         key={startup.id}
                         name={startup.name}
                         description={startup.description}
                         logo={startup.logo}
                         color={startup.types[0]?.color}
                         onClick={() => openPopup(startup.id)}
-                    />
-                ))}
-                {/*Pour activer le pop-up*/}
-                {showPopup && (
-                    <StartupPopup 
+                        />
+                    ))}
+                    {/*Pour activer le pop-up*/}
+                    {showPopup && (
+                        <StartupPopup 
                         data={popupData}
                         onClose={() => setShowPopup(false)}
-                    />
-                )}
+                        />
+                    )}
+                </div>
             </main>
             <PreFooter 
                 title="Envie de vous faire accompagner ?" 
