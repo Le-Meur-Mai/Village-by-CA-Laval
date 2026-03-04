@@ -27,8 +27,8 @@ export default class StartUp extends BaseModel {
     if (typeof value !== "string") {
       throw new Errors.ValidationError("Name must be a string.");
     }
-    else if (value.length > 100) {
-      throw new Errors.ValidationError("The length of the name is too long.");
+    else if (value.length > 100 || value.length < 1) {
+      throw new Errors.ValidationError("The length of the name is too long or too short.");
     }
     this._name = value;
   }
