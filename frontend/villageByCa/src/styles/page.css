@@ -7,3 +7,10 @@
 main {
     flex: 1;
 }
+
+.filters {
+    display: flex;
+    flex-wrap: wrap; /* permet de passer à la ligne si trop long */
+    gap: 2px;       /* espace entre les tags */
+    align-items: center;
+}
