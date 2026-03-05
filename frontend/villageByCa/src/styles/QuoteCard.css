@@ -1,0 +1,90 @@
+/* --- Carte portrait (desktop/tablette) --- */
+.quote-card {
+  width: 17rem;
+  height: 20rem;
+  background: var(--white-main);
+  border: 2px solid var(--black-main);
+  border-radius: 0.2rem;
+  padding: 1.5rem;
+  box-shadow: 0 0.1rem 0.2rem var(--black-main);
+  transition: transform 0.2s ease;
+  overflow: hidden;             /* empêche tout débordement */
+}
+
+.quote-card:hover {
+  transform: scale(1.01);
+}
+
+/* --- Header : logo + nom/prénom + startup --- */
+.quote-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.quote-logo {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--black-main);
+  flex-shrink: 0;
+}
+
+.quote-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.quote-person {
+  display: flex;
+  flex-direction: column;
+}
+
+.quote-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.quote-startup {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0.2rem 0 0 0;
+  color: var(--green-borders);
+}
+
+/* --- Description --- */
+.quote-description {
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--black-main);
+  margin: 0;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--grey-main);
+  overflow: hidden;
+  text-overflow: ellipsis; /* Si jamais il y a du texte qui dépasse remplace ce texte par ..*/
+}
+
+/* --- Responsive mobile --- */
+@media (max-width: 600px) {
+  .quote-card {
+    width: 90vw;        /* prend presque toute la largeur */
+    height: auto;       /* s’adapte au contenu */
+    padding: 1rem;
+  }
+
+  .quote-logo {
+    width: 55px;
+    height: 55px;
+  }
+
+  .quote-startup {
+    font-size: 1.1rem;
+  }
+
+  .quote-description {
+    font-size: 0.95rem;
+  }
+}
