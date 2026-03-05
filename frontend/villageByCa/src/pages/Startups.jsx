@@ -44,7 +44,7 @@ const Startups = () => {
 
     // Fonction pour filtrer les startups
     const filteredStartups = startups.filter(startup => {
-        if (selectedType && !startup.types.some(t => t.name === selectedType.name)) {
+        if (selectedType && !startup.types.some(type => type.name === selectedType.name)) {
             return false;
         }
         if (showAlumni && !startup.isAlumni) {
@@ -64,7 +64,7 @@ const Startups = () => {
                     les conditions idéales pour accélérer leurs projets. Cette dynamique collective fait émerger 
                     des innovations qui transforment durablement nos territoires.' />
                 <div className="presentation-page">
-                    <div className="filters">
+                    <div className="tag-align">
                         <Tag 
                             name="Alumni"
                             color="88d783"
@@ -84,17 +84,19 @@ const Startups = () => {
                             />
                         ))}
                     </div>
-                    {/* On parcourt l'objet avec map, on assigne un id pour identifier chaque startups*/}
-                    {filteredStartups.map(startup => (
-                        <Card 
-                        key={startup.id}
-                        name={startup.name}
-                        description={startup.description}
-                        logo={startup.logo}
-                        color={startup.types[0]?.color}
-                        onClick={() => openPopup(startup.id)}
-                        />
-                    ))}
+                    <div className='item-align'>
+                        {/* On parcourt l'objet avec map, on assigne un id pour identifier chaque startups*/}
+                        {filteredStartups.map(startup => (
+                            <Card 
+                            key={startup.id}
+                            name={startup.name}
+                            description={startup.description}
+                            logo={startup.logo}
+                            color={startup.types[0]?.color}
+                            onClick={() => openPopup(startup.id)}
+                            />
+                        ))}
+                    </div>
                     {/*Pour activer le pop-up*/}
                     {showPopup && (
                         <StartupPopup 
