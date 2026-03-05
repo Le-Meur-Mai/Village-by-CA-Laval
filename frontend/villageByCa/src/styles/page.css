@@ -8,11 +8,29 @@ main {
     flex: 1;
 }
 
-.filters {
+.tag-align {
     display: flex;
     flex-wrap: wrap; /* permet de passer à la ligne si trop long */
     gap: 2px;       /* espace entre les tags */
     align-items: center;
+}
+
+.item-align {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem; /* espace entre les cartes */
+    width: 100%;
+}
+.quote-align {
+    display: flex;
+    justify-content: center;   /* centre horizontalement */
+    align-items: flex-start;    /* aligne en haut */
+    flex-wrap: wrap;            /* passe à la ligne si besoin */
+    gap: 2rem;                  /* espace entre les cartes */
+    width: 100%;
+    margin: 2rem 0;
+
 }
 
 .section-title-left {
@@ -23,6 +41,8 @@ main {
     width: 75%;                   /* trois quarts de la page */
     font-size: clamp(1.5rem, 4vw, 2.5rem);
     margin: 2rem 0 1rem 0;        /* espace autour du titre */
+    margin-top: 2rem;
+    margin-bottom: 1rem;
 }
 
 .section-title-right {
@@ -35,4 +55,12 @@ main {
     font-size: clamp(1.5rem, 4vw, 2.5rem);
     margin-top: 2rem;
     margin-bottom: 1rem;
+}
+
+.paragraph-center {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto; /* Le bloc doit occuper l'espace dispo à droite et à gauche de manière équilibré*/
+    max-width: 100ch; /* limite la largeur pour une meilleure lisibilité */
+    font-size: clamp(1rem, 2vw, 1.3rem);
 }
