@@ -40,30 +40,35 @@ const Partenaires = () => {
                     en subventionnant près de 70% du coût de cet accompagnement à la structuration." />
                 <h2 className='section-title-left'>Partenaires Experts:</h2>
                 <div className="presentation-page">
-                    {/* On parcourt l'objet avec map, on assigne un id pour identifier chaque partenaires*/}
-                    {experts.map(partner => (
-                        <Card 
-                        key={partner.id}
-                        name={partner.name}
-                        description={partner.description}
-                        logo={partner.logo}
-                        color="CCF2B1"
-                        onClick={() => window.open(partner.website, "_blank", "noopener,noreferrer")}
-                        />
-                    ))}
+                    <div className='item-align'>
+                        {/* On parcourt l'objet avec map, on assigne un id pour identifier chaque partenaires*/}
+                        {experts.map(partner => (
+                            <Card 
+                            key={partner.id}
+                            name={partner.name}
+                            description={partner.description}
+                            logo={partner.logo}
+                            color="CCF2B1"
+                            // ouvre dans un nouvel onglet, et ça coupe tout lien avec le nouveau site ouvert
+                            onClick={() => window.open(partner.website, "_blank", "noopener,noreferrer")}
+                            />
+                        ))}
+                    </div>
                 </div>
                 <h2 className='section-title-right'>Partenaires:</h2>
                 <div className="presentation-page">
-                    {classics.map(partner => (
-                        <Card 
-                        key={partner.id}
-                        name={partner.name}
-                        description={partner.description}
-                        logo={partner.logo}
-                        color="CCF2B1"
-                        onClick={() => window.open(partner.website, "_blank", "noopener,noreferrer")}
-                        />
-                    ))}
+                    <div className='item-align'>
+                        {classics.map(partner => (
+                            <Card 
+                            key={partner.id}
+                            name={partner.name}
+                            description={partner.description}
+                            logo={partner.logo}
+                            color="CCF2B1"
+                            onClick={() => window.open(partner.website, "_blank", "noopener,noreferrer")}
+                            />
+                        ))}
+                    </div>
                 </div>
             </main>
             <PreFooter
