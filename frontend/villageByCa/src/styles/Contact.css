@@ -26,7 +26,7 @@
 .contact-form textarea {
     padding: 12px;
     border-radius: 10px;
-    border: 1px solid #2d7a2d;
+    border: 1px solid var(--green-borders);
     font-size: 16px;
 }
 
