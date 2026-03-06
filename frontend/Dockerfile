@@ -1,5 +1,5 @@
 FROM node:20
-WORKDIR /app
+WORKDIR /frontend/villageByCa
 COPY villageByCa/package*.json ./
 RUN npm install
 COPY villageByCa/ .
