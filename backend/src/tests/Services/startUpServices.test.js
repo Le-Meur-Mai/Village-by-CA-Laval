@@ -2,10 +2,6 @@ import { jest } from "@jest/globals";
 import StartUpServices from "../../services/startUpServices.js"
 import * as Errors from "../../errors/errorsClasses.js"
 
-import prisma from "../../prismaClient.js"
-import uploadPictureToCloudinary from "../../utils/uploadToCloudinary.js"
-import cloudinary from "../../../config/cloudinary.js"
-
 jest.mock("../../prismaClient.js", () => ({
   $transaction: jest.fn((callback) => callback({}))
 }))
