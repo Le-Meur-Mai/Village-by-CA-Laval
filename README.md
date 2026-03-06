@@ -52,6 +52,11 @@ A direct communication channel allowing users to send messages to the Village’
 
 ---
 
+## 🛠️ Diagrams
+<img width="1686" height="901" alt="Database Schema drawio" src="https://github.com/user-attachments/assets/9fc81447-f15b-4d35-baa4-0d2558c68bd5" />
+<img width="742" height="714" alt="Architectur_System_stage4" src="https://github.com/user-attachments/assets/49b036e3-0a79-4dea-941e-ba0432d4edd6" />
+
+
 ## 🔀 Branch Structure
 
 We have several branches on this project, each with a different role:
