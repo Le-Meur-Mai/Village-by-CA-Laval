@@ -76,7 +76,7 @@ export default class QuoteServices {
         if (!user) {
           throw new Errors.NotFoundError("The user is not found.");
         }
-      } else if (data.userId && !currentUser.isAdmin) {
+      } else if (data.userId && data.userId !== existingQuote.userId && !currentUser.isAdmin) {
         throw new Errors.ForbiddenError(
           'You have to be an admin to change the owner of the quote.');
       }
