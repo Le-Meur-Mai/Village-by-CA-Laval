@@ -9,6 +9,7 @@ dans des fichiers séparés
 const agendaRouteur = express.Router();
 
 agendaRouteur.get('/', postCtrl.getAllPosts);
+agendaRouteur.get('/:id', postCtrl.getPostById);
 
 // Exportation du routeur
 export default agendaRouteur;
