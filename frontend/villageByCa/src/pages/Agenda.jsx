@@ -1,16 +1,46 @@
 import '../styles/page.css'
 
+import PresentationPage from '../components/PresentationPage.jsx';
 import Header from '../components/Header.jsx';
 import Footer from '../components/Footer.jsx';
 import PreFooter from '../components/PreFooter.jsx';
+import PostCard from '../components/PostCard.jsx';
+
+import { useEffect, useState } from 'react';
 
 const Agenda = () => {
+    const [posts, setPosts] = useState([]);
+    useEffect (() => {
+                const fetchStartupsPostsAndQuotes = async () => {
+                    const result = await fetch('http://localhost:3000/agenda');
+                    /* On convertit la promesse en json*/
+                    const jsonResult = await result.json()
+                    setPosts(jsonResult);
+                    }
+                    /* On appelle la fonction */
+                    fetchStartupsPostsAndQuotes();
+                }, []);
     return (
         <div className='page'>
             <Header />
             <main>
+                <PresentationPage 
+                    title="Agenda" 
+                    text="Le Village by Ca participe à de nombreux évenements et propose
+                    des ateliers personnalisés pour accompagner chaque startup, afin de faciliter leur évolution." />
+                <h2 className='section-title-left'>Calendrier</h2>
+                <p>à venir</p>
+                <h2 className='section-title-right'>Actualités du Village</h2>
+                <div className='quote-align'>
+                    {posts.map(post => (
+                        <PostCard post={post}/>
+                    ))}
+                </div>
             </main>
-            <PreFooter />
+            <PreFooter
+            title="Envie de participer à un évenement ?"
+            text="Contactez-nous !"
+            buttontext="Nous contacter"/>
             <Footer />
         </div>
     )
