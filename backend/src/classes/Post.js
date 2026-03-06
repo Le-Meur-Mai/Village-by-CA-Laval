@@ -36,6 +36,10 @@ export default class Post extends BaseModel {
     this._description = value;
   }
 
+  get description() {
+    return this._description;
+  }
+
   set pictureId(value) {
     if (typeof value !== "string") {
       throw new Errors.ValidationError("PictureId must be a string.");

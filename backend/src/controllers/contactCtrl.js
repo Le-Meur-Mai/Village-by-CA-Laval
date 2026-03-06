@@ -7,7 +7,7 @@ const servicesContact = new ContactServices();
 const sendMail = async (req, res, next) => {
   try {
     await servicesContact.sendMail(req.body);
-    res.status(200).json("Mail envoyé !");
+    res.status(200).json({"message": "Mail envoyé !"});
   } catch (error) {
     next(error);
   }

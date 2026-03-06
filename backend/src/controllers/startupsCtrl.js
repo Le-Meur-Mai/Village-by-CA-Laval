@@ -1,12 +1,15 @@
 // Import des services que l'on va appeler dans les controllers
 import StartUpServices from "../services/startUpServices.js";
+import TypeServices from '../services/typeServices.js';
 // Import de la fonction utilitaire pour parser des champs
 import jsonParse from "../utils/jsonParse.js";
 // Importation des fonctions pour gérer le format renvoyé
 import startupReturn from "../utils/returnFormat/startupReturn.js";
+import typeReturn from '../utils/returnFormat/typeReturn.js';
 
 // Déclaration d'une nouvelle instance sur la classe Service
 const servicesStartUp = new StartUpServices();
+const servicesType = new TypeServices();
 
 // Fonctions pour les routes Startups
 
@@ -49,7 +52,9 @@ const getAllStartUps = async (req, res, next) => {
   try {
     let startUps = await servicesStartUp.getAllStartUps();
     startUps = startupReturn.getAllStartUpsFormat(startUps);
-    res.status(200).json(startUps);
+    let types = await servicesType.getAllTypes();
+    types = typeReturn.getAllTypesFormat(types);
+    res.status(200).json({startUps: startUps, types: types});
   } catch (error) {
     next(error);
   }

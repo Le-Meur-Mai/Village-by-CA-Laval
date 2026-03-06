@@ -37,12 +37,16 @@ export default class Location extends BaseModel {
     this._description = value;
   }
 
+  get description() {
+  return this._description;
+  }
+
   set price(value) {
     if (typeof value !== "number") {
       throw new Errors.ValidationError("Price must be a number.");
     }
     else if (value < 0) {
-      throw Errors.ValidationError("Price must be positive");
+      throw new Errors.ValidationError("Price must be positive");
     }
     this._price = value;
   }
@@ -56,7 +60,7 @@ export default class Location extends BaseModel {
       throw new Errors.ValidationError("Size must be a number.");
     }
     else if (value < 0) {
-      throw Errors.ValidationError("Size must be positive");
+      throw new Errors.ValidationError("Size must be positive");
     }
     this._size = value;
   }

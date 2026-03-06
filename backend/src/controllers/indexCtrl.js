@@ -23,7 +23,7 @@ const getIndex = async (req, res, next) => {
     posts = postReturn.getAllPostsFormat(posts);
   
     res.status(200).json({
-      startups: startUps,
+      startUps: startUps,
       quotes: quotes,
       posts: posts
     });

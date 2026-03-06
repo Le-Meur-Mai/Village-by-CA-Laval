@@ -75,8 +75,8 @@ export default class PartnerServices {
 
   // PATCH Mis à jour d'un partenaire
   async updatePartner(id, data) {
+    let uploadLogo = null;
     try {
-      let uploadLogo = null;
       return await prisma.$transaction(async (tx) => {
         // Vérification de l'existence du partenaire
         const existingPartner = await this.partnerRepo.getPartnerById(id, tx);

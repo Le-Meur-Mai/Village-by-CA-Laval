@@ -17,5 +17,8 @@ COPY . .
 EXPOSE 3000 
 # → Port d’exposition 3000 est la convention
 
+RUN npx prisma generate
+# On génère le client Prisma lors du lancement
+
 CMD ["npm", "run", "dev"] 
 # → Lance le serveur en mode développement

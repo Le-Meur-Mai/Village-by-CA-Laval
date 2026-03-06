@@ -43,7 +43,7 @@ export default class QuoteServices {
   // GET Retourne toutes les citations d'un user basé sur son id
   async getQuotesByUser(userId) {
     try {
-      const user = await this.userRepo.getUserById(id);
+      const user = await this.userRepo.getUserById(userId);
       if (!user) {
         throw new Errors.NotFoundError("The user is not found.");
       }
@@ -76,7 +76,7 @@ export default class QuoteServices {
         if (!user) {
           throw new Errors.NotFoundError("The user is not found.");
         }
-      } else if (data.userId && !currentUser.isAdmin) {
+      } else if (data.userId && data.userId !== existingQuote.userId && !currentUser.isAdmin) {
         throw new Errors.ForbiddenError(
           'You have to be an admin to change the owner of the quote.');
       }

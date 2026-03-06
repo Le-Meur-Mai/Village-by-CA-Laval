@@ -38,6 +38,10 @@ export default class Partner extends BaseModel {
     this._description = value;
   }
 
+  get description() {
+    return this._description;
+  }
+
   set website(value) {
     if (typeof value !== "string") {
       throw new Errors.ValidationError("Website must be a string.");

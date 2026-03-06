@@ -1,0 +1,47 @@
+.card-staff-section {
+  display: flex;
+  justify-content: center;   /* centre horizontalement */
+  align-items: flex-start;    /* aligne les cartes en haut */
+  gap: 1rem;                  /* espace entre les cartes */
+  flex-wrap: wrap;            /* permet de passer à la ligne sur petits écrans */
+  padding: 1rem;
+}
+
+
+.card-staff {
+  width: 300px;
+  padding: 1.2rem;
+  border-radius: 0.2rem;
+  background: var(--grey-main);
+  border: 2px solid var(--green-borders);
+  text-align: center;
+  margin: 0.5rem;
+  transition: transform 0.25s ease;
+  cursor: pointer;
+}
+
+.card-staff:hover {
+  transform: scale(1.01); /* léger zoom */
+  box-shadow: 0 2px 5px var(--black-main); /* ombre plus marquée */
+}
+
+.card-staff-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+  margin: 0 auto 1rem auto;
+}
+
+.card-staff-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0.3rem 0;
+}
+
+.card-staff-role {
+  font-size: 0.95rem;
+  color: var(--black-main);
+  margin: 0;
+}
