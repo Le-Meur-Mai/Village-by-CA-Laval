@@ -49,7 +49,7 @@ export default class StartUpServices {
   
         // Association du logo à la startup
         if (!data.logo) {
-          data.logoId = "Id par defaut";
+          data.logoId = process.env.LOGO_ID_DEFAULT;
         } else {
           // Création de l'image dans cloudinary puis dans la db
           uploadLogo = await uploadPictureToCloudinary(data.logo, "StartUps");
@@ -63,7 +63,7 @@ export default class StartUpServices {
         }
         // Association de l'image de description à la startup
         if (!data.descriptionPicture) {
-          data.descriptionPictureId = "Id par defaut";
+          data.descriptionPictureId = process.env.DESCRIPTION_PICTURE_ID_DEFAULT;
         } else {
           // // Création de l'image dans cloudinary puis dans la db
           uploadDescriptionPicture = await uploadPictureToCloudinary(data.descriptionPicture, "StartUps");
@@ -191,11 +191,12 @@ export default class StartUpServices {
         const newStartUp = await this.startUpRepo.updateStartUp(id, data, tx);
   
         // Suppression des anciennes images
-        if (uploadLogo && oldLogo && oldLogo.id !== "Id par defaut") {
+        if (uploadLogo && oldLogo && oldLogo.id !== process.env.LOGO_ID_DEFAULT) {
           await cloudinary.uploader.destroy(oldLogo.publicId);
           await this.pictureRepo.deletePicture(oldLogo.id, tx);
         }
-        if (uploadDescriptionPicture && oldDescriptionPicture && oldDescriptionPicture.id !== "Id par defaut") {
+        if (uploadDescriptionPicture && oldDescriptionPicture
+          && oldDescriptionPicture.id !== process.env.DESCRIPTION_PICTURE_ID_DEFAULT) {
           await cloudinary.uploader.destroy(oldDescriptionPicture.publicId);
           await this.pictureRepo.deletePicture(oldDescriptionPicture.id, tx);
         }
@@ -224,11 +225,11 @@ export default class StartUpServices {
         const deletedStartUp = await this.startUpRepo.deleteStartUp(id, tx);
 
         // Supression des images
-        if (existingStartUp.logoId !== "Id par défaut") {
+        if (existingStartUp.logoId !== process.env.LOGO_ID_DEFAULT) {
           await cloudinary.uploader.destroy(existingStartUp.logo.publicId);
           await this.pictureRepo.deletePicture(existingStartUp.logoId, tx);
         }
-        if (existingStartUp.descriptionPictureId !== "Id par défaut") {
+        if (existingStartUp.descriptionPictureId !== process.env.DESCRIPTION_PICTURE_ID_DEFAULT) {
           await cloudinary.uploader.destroy(existingStartUp.descriptionPicture.publicId);
           await this.pictureRepo.deletePicture(existingStartUp.descriptionPictureId, tx);
         }

@@ -27,7 +27,7 @@ export default class PartnerServices {
     try {
       return await prisma.$transaction( async (tx) => {
         if(!data.logo) {
-          data.logoId = "Id par defaut";
+          data.logoId = process.env.LOGO_ID_DEFAULT;
         } else {
           // On crée l'image dans notre db et dans notre serveur cloudinary
           uploadLogo = await uploadPictureToCloudinary(data.logo, "Partners");
@@ -106,7 +106,7 @@ export default class PartnerServices {
        const updatedPartner = await this.partnerRepo.updatePartner(id, data, tx);
        
        // On supprime l'ancien logo
-       if (uploadLogo && existingPartner.logoId !== "Id par defaut") {
+       if (uploadLogo && existingPartner.logoId !== process.env.LOGO_ID_DEFAULT) {
            await cloudinary.uploader.destroy(existingPartner.logo.publicId)
            await this.pictureRepo.deletePicture(existingPartner.logoId, tx);
          }
@@ -131,7 +131,7 @@ export default class PartnerServices {
         }
         const deletedPartner = await this.partnerRepo.deletePartner(id, tx);
         // Suppression de l'image si elle n'est pas l'image par défaut
-        if(partner.logoId !== "defaultId") {
+        if(partner.logoId !== process.env.LOGO_ID_DEFAULT) {
           await cloudinary.uploader.destroy(partner.logo.publicId);
           await this.pictureRepo.deletePicture(partner.logoId, tx);
         }
