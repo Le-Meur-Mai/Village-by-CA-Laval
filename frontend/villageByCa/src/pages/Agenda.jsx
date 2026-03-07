@@ -1,4 +1,6 @@
-import '../styles/page.css'
+import '../styles/page.css';
+
+import events from "../assets/Events.png";
 
 import PresentationPage from '../components/PresentationPage.jsx';
 import Header from '../components/Header.jsx';
@@ -29,7 +31,7 @@ const Agenda = () => {
                     text="Le Village by Ca participe à de nombreux évenements et propose
                     des ateliers personnalisés pour accompagner chaque startup, afin de faciliter leur évolution." />
                 <h2 className='section-title-left'>Calendrier</h2>
-                <p>à venir</p>
+                <img className='paragraph-center' src={events} alt="Evenements à venir du Village by CA"/>
                 <h2 className='section-title-right'>Actualités du Village</h2>
                 <div className='quote-align'>
                     {posts.map(post => (
