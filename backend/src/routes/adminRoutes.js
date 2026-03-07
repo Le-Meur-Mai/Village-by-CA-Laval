@@ -24,7 +24,7 @@ const adminRouteur = express.Router();
 // Définitions des différentes routes et méthodes
 // --- USERS --- //
 
-adminRouteur.post('/users', userCtrl.createUser);
+adminRouteur.post('/users', authorizationConnexion, authorizationAdmin, userCtrl.createUser);
 
 adminRouteur.get('/users/:id', authorizationConnexion, authorizationAdmin, userCtrl.getUserById);
 
