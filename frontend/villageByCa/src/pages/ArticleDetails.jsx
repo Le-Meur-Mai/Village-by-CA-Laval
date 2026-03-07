@@ -38,7 +38,7 @@ const ArticleDetails = () => {
                   <div className="button-on-the-left">
                       <Button
                       text="Retour →"
-                      path="http://localhost:3000/agenda"/>
+                      path="http://localhost:5173/agenda"/>
                   </div>
                   <PostDetails
                   title={post.title}
