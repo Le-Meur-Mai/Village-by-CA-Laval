@@ -70,3 +70,9 @@ main {
 .button-on-the-left {
     margin-left: 1rem;
 }
+
+.location-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
