@@ -13,6 +13,7 @@ import Contact from './pages/Contact.jsx';
 import Locaux from './pages/Locaux.jsx';
 import LocationsDetails from './pages/LocationsDetails.jsx'
 import Connexion from './pages/Connexion.jsx';
+import Profil from './pages/Profil.jsx';
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
         <Route path='/locations/:id' element={<LocationsDetails/>}/>
         <Route path='/contact' element={<Contact />} />
         <Route path='/login' element={<Connexion />} />
+        <Route path='/profil' element={<Profil />} />
       </Routes>
     </>
   )

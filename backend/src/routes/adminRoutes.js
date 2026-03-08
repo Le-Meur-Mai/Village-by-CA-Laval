@@ -30,7 +30,7 @@ adminRouteur.get('/users/:id', authorizationConnexion, authorizationAdmin, userC
 
 adminRouteur.get('/users', authorizationConnexion, authorizationAdmin, userCtrl.getAllUsers);
 
-adminRouteur.patch('/users/:id', authorizationConnexion, authorizationAdmin, userCtrl.updateUser);
+adminRouteur.patch('/users/:id', authorizationConnexion, authorizationAdmin, userCtrl.updateUserByAdmin);
 
 adminRouteur.delete('/users/:id', authorizationConnexion, authorizationAdmin, userCtrl.deleteUser);
 

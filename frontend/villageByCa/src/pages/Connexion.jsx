@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 import Header from '../components/Header.jsx';
 import PresentationPage from '../components/PresentationPage.jsx'
-import Button from '../components/buttons/button.jsx'
 import Footer from '../components/Footer.jsx';
 
 const Connexion = () => {
@@ -26,6 +25,7 @@ const Connexion = () => {
         try {
             const response = await fetch('http://localhost:3000/auth/login', {
                 method: 'POST',
+                credentials: "include", // Pour enregistrer les cookies crss-origin
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(connexionForm)
             });
@@ -44,7 +44,7 @@ const Connexion = () => {
             if (data) {
                 navigate("/admin");
             } else {
-                navigate("/")
+                navigate("/profil")
             }
             
         } catch (error) {

@@ -11,6 +11,8 @@ import authRoutes from './routes/authRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 // On importe cookie parser qui va permettre à express de lire et réceptionner les cookies
 import cookieParser from "cookie-parser";
+// Import CORS pour gérer les erreurs cross-serveur
+import cors from "cors";
 
 // Importe le Error handler qui va gérer les erreurs reçue par les routes
 import errorHandler from './errors/errorHandler.js'
@@ -28,19 +30,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-/* 
-Spécification des headers pour permettre de communiquer entre différents serveurs
-et éviter les erreurs CORS. Ils permettent :
-- d'accéder à notre API depuis n'importe quelle origine ( '*' ) ;
-- d'ajouter les headers mentionnés aux requêtes envoyées vers notre API (Origin , X-Requested-With , etc.) ;
-- d'envoyer des requêtes avec les méthodes mentionnées ( GET ,POST , etc.).
-*/
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-  next();
-});
+// Gère les requêtes cross-origin entre plusieurs serveurs et les erreurs CORS
+app.use(cors({
+    origin: "http://localhost:5173", // le serveur frontend
+    credentials: true // Pour que le navigateur accepte les cookies cross-origin
+}));
 
 // On assigne les différents endpoints à nos routeurs
 app.use('/', indexRoutes);
