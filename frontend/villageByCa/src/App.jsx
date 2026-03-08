@@ -11,6 +11,7 @@ import Agenda from './pages/Agenda.jsx';
 import ArticleDetails from './pages/ArticleDetails.jsx';
 import Contact from './pages/Contact.jsx';
 import Locaux from './pages/Locaux.jsx';
+import LocationsDetails from './pages/LocationsDetails.jsx'
 import Connexion from './pages/Connexion.jsx';
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
         <Route path='/agenda' element={<Agenda />} />
         <Route path='/agenda/:id' element={<ArticleDetails/>}/>
         <Route path='/locations' element={<Locaux />} />
+        <Route path='/locations/:id' element={<LocationsDetails/>}/>
         <Route path='/contact' element={<Contact />} />
         <Route path='/login' element={<Connexion />} />
       </Routes>
