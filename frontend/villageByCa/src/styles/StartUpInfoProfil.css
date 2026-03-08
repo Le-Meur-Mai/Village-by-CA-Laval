@@ -1,0 +1,14 @@
+.startup-card{
+    background: var(--white-main);
+    padding:20px;
+    border-radius:12px;
+    margin-top:20px;
+}
+
+.tags span{
+    background:#7cc48d;
+    padding:5px 10px;
+    border-radius:12px;
+    margin-right:8px;
+}
+

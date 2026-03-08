@@ -3,8 +3,9 @@ import '../styles/page.css';
 import { useEffect, useState } from 'react';
 
 import Header from '../components/Header';
-import Footer from '../components/Footer';
 import PresentationPage from '../components/PresentationPage';
+import StartUpInfoProfil from '../components/StartUpInfoProfil';
+import Footer from '../components/Footer';
 
 const Profil = () => {
 
@@ -36,18 +37,26 @@ const Profil = () => {
         fecthProfil();
     }, []);
 
+    if (!userInfo) {
+        return <div className="page">Chargement...</div>;
+    }
+
     return (
         <div className='page'>
             <Header />
             <main>
-                <PresentationPage title='Bonjour machin' text='' />
-                <p>Page Profil !</p>
+                <PresentationPage title={`Bonjour ${userInfo.user.name}`} text='' />
+                <div className='Profil-userInfo'>
+                    { userInfo.user.name }
+                    { userInfo.user.email }
+                </div>
+                <div>
+                    <StartUpInfoProfil startup={ userInfo.startUp } />
+                </div>
                 { JSON.stringify(userInfo, null, 2) }
             </main>
-            <Footer />
-            
+            <Footer />   
         </div>
-
     )
 }
 
