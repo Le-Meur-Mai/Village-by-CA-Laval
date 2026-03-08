@@ -54,6 +54,19 @@ const updateUser = async (req, res, next) => {
   }
 }
 
+// Mise à jour d'un utilisateur par un admin
+const updateUserByAdmin = async (req, res, next) => {
+  try {
+    const isAdmin = req.user.isAdmin;
+    const id = req.params.id;
+    const newData = req.body;
+    const updatedUser = await servicesUser.updateUser(id, newData, isAdmin);
+    res.status(200).json(`L'utilisateur ${updatedUser.name} a été mis à jour.`);
+  } catch (error) {
+    next(error);
+  }
+}
+
 // Supression d'un utilisateur
 const deleteUser = async (req, res, next) => {
   try {
@@ -70,5 +83,6 @@ export default {
   getUserById,
   getAllUsers,
   updateUser,
+  updateUserByAdmin,
   deleteUser
 }
