@@ -21,7 +21,8 @@ export default class UserRepository {
         startUp: {
           include: {
             logo: true,
-            descriptionPicture: true
+            descriptionPicture: true,
+            types: true
           }
         }
       }
