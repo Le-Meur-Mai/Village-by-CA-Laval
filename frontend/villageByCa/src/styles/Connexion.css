@@ -1,0 +1,84 @@
+.login-section {
+    width: 50vw;
+    margin: 3vw auto;
+    display: flex;
+    border: 2px solid var(--green-borders);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+/* Partie gauche */
+.login-left-section {
+    flex: 1;
+    background: var(--white-main);
+    padding: 2.5vw;
+}
+
+.login-left-section h2 {
+    text-align: center;
+    margin-bottom: 5vw;
+}
+
+.login-left-section form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-left-section label {
+    margin-top: 0.5vw;
+    margin-bottom: 0.5vw;
+}
+
+.login-left-section input {
+    padding: 1vw;
+    margin-bottom: 1vw;
+    border-radius: 8px;
+    outline: none;
+    background: var(--grey-main);
+}
+
+.login-left-section button {
+    margin-top: 2vw;
+    padding: 1vw;
+    border: none;
+    border-radius: 8px;
+    background: var(--light-blue);
+    color: var(--white-main);
+    font-weight: bold;
+    cursor: pointer;
+    transition: 180ms;
+}
+
+.login-left-section button:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0.1rem 0.2rem rgb(76, 76, 76);
+    transition: 180ms;
+}
+
+/* Partie droite */
+.login-right-section {
+    flex: 1;
+    background: var(--hoover-green);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.login-right-section h5 {
+    font-size: 1.5vw;
+    color: var(--black-main);
+}
+
+/* message retour */
+.response-message {
+    margin-top: 15px;
+}
+
+.response-message.error {
+    color: red;
+}
+
+.response-message.success {
+    color: green;
+}
