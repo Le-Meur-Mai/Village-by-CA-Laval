@@ -12,6 +12,7 @@ import ArticleDetails from './pages/ArticleDetails.jsx';
 import Contact from './pages/Contact.jsx';
 import Locaux from './pages/Locaux.jsx';
 import Connexion from './pages/Connexion.jsx';
+import Profil from './pages/Profil.jsx';
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
         <Route path='/locations' element={<Locaux />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/login' element={<Connexion />} />
+        <Route path='/profil' element={<Profil />} />
       </Routes>
     </>
   )
