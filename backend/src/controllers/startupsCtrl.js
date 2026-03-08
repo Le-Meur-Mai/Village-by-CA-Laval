@@ -64,8 +64,11 @@ const updateStartUp = async (req, res, next) => {
   try {
     const currentUser = req.user
     // Postman envoie toujours des strings, on le parse pour le convertir en objet js
-    req.body.types = jsonParse(req.body.types);
-    req.body.isAlumni = jsonParse(req.body.isAlumni);
+    ["types", "isAlumni"].forEach(key => {
+      if (req.body[key]) {
+        req.body[key] = jsonParse(req.body[key]);
+      }
+    });
 
     const id = req.params.id;
     const newData = req.body;

@@ -51,7 +51,9 @@ const getAllPartners = async (req, res, next) => {
 // Met un jour un partenaire
 const updatePartner = async (req, res, next) => {
   try {
-    req.body.financialAid = jsonParse(req.body.financialAid);
+    if (req.body.financialAid) {
+      req.body.financialAid = jsonParse(req.body.financialAid);
+    }
     const id = req.params.id;
     const data = req.body;
     data.logo = req.file;

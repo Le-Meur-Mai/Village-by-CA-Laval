@@ -1,0 +1,39 @@
+.location-info {
+  max-width: 700px;
+  margin: 30px auto;
+  text-align: center;
+}
+
+.location-info h1 {
+  margin-bottom: 15px;
+  font-size: 2rem;
+  color: var(--black-main);
+}
+
+.location-meta {
+  display: flex;
+  justify-content: space-between; /* prix à gauche, taille à droite */
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto 10px auto; /* centré sous l’image */
+  padding: 0 10px;
+}
+
+.location-meta p {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--black-main);
+}
+
+.horizontal-line-location-details {
+  border-bottom: 2px solid var(--black-main);
+  width: 100%;
+}
+
+.description {
+  margin: 20px auto 50px;
+  max-width: 600px;
+  line-height: 1.6;
+}

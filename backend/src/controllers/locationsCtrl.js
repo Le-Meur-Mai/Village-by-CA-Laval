@@ -55,9 +55,12 @@ const getAllLocations = async (req, res, next) => {
 // Met à jour les locations
 const updateLocation = async (req, res, next) => {
   try {
-    req.body.price = jsonParse(req.body.price);
-    req.body.size = jsonParse(req.body.size);
-    req.body.pictures = jsonParse(req.body.pictures);
+    // On parse que si les données existent
+    ["price", "size", "pictures"].forEach(key => {
+      if (req.body[key]) {
+        req.body[key] = jsonParse(req.body[key]);
+      }
+    });
     const id = req.params.id;
     const newData = req.body;
     newData.newPictures = req.files;
