@@ -58,6 +58,8 @@ main {
 }
 
 .paragraph-center {
+    display: flex;
+    flex-direction: column;
     text-align: center;
     margin-left: auto;
     margin-right: auto; /* Le bloc doit occuper l'espace dispo à droite et à gauche de manière équilibré*/

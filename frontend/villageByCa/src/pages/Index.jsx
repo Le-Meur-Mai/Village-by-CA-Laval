@@ -1,6 +1,7 @@
-import '../styles/page.css'
+import '../styles/page.css';
 
-import amandine from '../assets/Amandine.jpeg'
+import amandine from '../assets/Amandine.jpeg';
+import events from '../assets/Events.png';
 
 import PostCard from '../components/PostCard.jsx';
 import QuoteCard from '../components/QuoteCard.jsx';
@@ -72,7 +73,7 @@ const Index = () => {
                     path="http://localhost:5173/startups"/>
                 </div>
                 <h3 className='section-title-right'>Agenda</h3>
-                <p className='paragraph-center'>// A venir</p>
+                <img className='paragraph-center' src={events} alt="Evenements à venir du Village by CA"/>
                 <h3 className='section-title-left'>Actualités</h3>
                 <div className='quote-align'>
                     {posts.map(post => (
