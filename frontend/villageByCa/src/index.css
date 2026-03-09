@@ -12,6 +12,15 @@ html, body, #root {
     padding: 0;
 }
 
+body {
+background-image: url('./assets/FondSite.png');
+  background-repeat: repeat;      /* l’image se répète partout */
+  background-size: auto;          /* taille originale, pas étirée */
+  background-position: center;  /* point de départ */
+  z-index: -2;
+
+}
+
 h1, h2 {
   font-family: 'Inria Sans', sans-serif;
   font-weight: 300;
