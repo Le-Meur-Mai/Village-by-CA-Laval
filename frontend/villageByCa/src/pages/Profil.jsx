@@ -54,7 +54,7 @@ const Profil = () => {
                         <h1>Mes Informations</h1>
                         <div className='profil-userInfo-cards-container'>
                             <UserInfoProfil user={userInfo.user} onUpdate={setUserInfo} />
-                            <StartUpInfoProfil startup={ userInfo.startUp } />
+                            <StartUpInfoProfil startup={userInfo.startUp} onUpdate={setUserInfo} />
                         </div>
                     </div>
                     <div className='profil-quotes'>
@@ -72,8 +72,6 @@ const Profil = () => {
                         </div>
                     </div>
                 </div>
-                <hr />
-                { JSON.stringify(userInfo, null, 2) }
             </main>
             <Footer />   
         </div>
