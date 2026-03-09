@@ -30,7 +30,10 @@ const StartUpInfoProfil = ( {startup} ) => {
                 </div>
         
                 <p>{startup.description}</p>
+
             </div>
+            
+            <button>Modifier</button>
     
         </div>
     )

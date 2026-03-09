@@ -28,10 +28,23 @@
 }
 
 .startup-card-info p{
-    margin: 8px;
+    margin: 5px;
 }
 
-.startup-card-info {
-    margin-bottom: 1.5vw;
+.startup-card button {
+    margin-top: 1vw;
+    padding: clamp(1rem, 1.2vw, 2rem);
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    background: var(--light-blue);
+    color: var(--white-main);
+    cursor: pointer;
+    transition: 180ms;
 }
 
+.startup-card button:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0.1rem 0.2rem rgb(76, 76, 76);
+    transition: 180ms;
+}

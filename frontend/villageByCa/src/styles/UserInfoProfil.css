@@ -20,3 +20,88 @@
     margin-bottom: 1.5vw;
 }
 
+.user-card button {
+    margin-top: 1vw;
+    padding: clamp(1rem, 1.2vw, 2rem);
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    background: var(--light-blue);
+    color: var(--white-main);
+    cursor: pointer;
+    transition: 180ms;
+}
+
+.user-card button:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0.1rem 0.2rem rgb(76, 76, 76);
+    transition: 180ms;
+}
+
+/* --- Form Card --- */
+.edit-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.edit-form label {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    color: var(--black-main);
+    font-size: 0.9rem;
+}
+
+.edit-form input {
+    margin-top: 0.4rem;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--black-main);
+    border-radius: 8px;
+    font-size: 1rem;
+    background: var(--white-main);
+    transition: 150ms;
+}
+
+.edit-form input:focus {
+    outline: none;
+    border-color: var(--light-blue);
+    box-shadow: 0 0 4px var(--light-blue);
+}
+
+.edit-form button[type="submit"] {
+    background: var(--light-blue);
+    color: var(--white-main);
+    border: none;
+    padding: 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 150ms;
+    box-shadow: 0 0.1rem 0.3rem rgb(169, 169, 169);
+}
+
+.edit-form button[type="submit"]:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0.1rem 0.2rem rgb(76, 76, 76);
+}
+
+.edit-form button[type="button"] {
+    background: var(--grey-main);
+    color: var(--black-main);
+    border: none;
+    padding: 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 150ms;
+    box-shadow: 0 0.1rem 0.3rem rgb(169, 169, 169);
+}
+
+.edit-form button[type="button"]:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0.1rem 0.2rem rgb(76, 76, 76);
+}
+
