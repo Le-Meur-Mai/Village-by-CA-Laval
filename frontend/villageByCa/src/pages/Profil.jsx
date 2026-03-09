@@ -8,7 +8,6 @@ import PresentationPage from '../components/PresentationPage';
 import UserInfoProfil from '../components/UserInfoProfil';
 import StartUpInfoProfil from '../components/StartUpInfoProfil';
 import QuoteCard from '../components/QuoteCard';
-import Button from '../components/buttons/button';
 import Footer from '../components/Footer';
 
 const Profil = () => {
@@ -54,10 +53,9 @@ const Profil = () => {
                     <div className='profil-userInfo'>
                         <h1>Mes Informations</h1>
                         <div className='profil-userInfo-cards-container'>
-                            <UserInfoProfil user={ userInfo.user } />
+                            <UserInfoProfil user={userInfo.user} onUpdate={setUserInfo} />
                             <StartUpInfoProfil startup={ userInfo.startUp } />
                         </div>
-                        <Button text='Modifier' path='/profil/update'/>
                     </div>
                     <div className='profil-quotes'>
                         <h2><strong>Mes Citations</strong></h2>
@@ -72,7 +70,6 @@ const Profil = () => {
                                 />
                             ))}
                         </div>
-                        <Button text='Modifier'/>
                     </div>
                 </div>
                 <hr />
