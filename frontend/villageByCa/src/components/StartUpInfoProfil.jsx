@@ -1,7 +1,5 @@
 import '../styles/StartUpInfoProfil.css';
 
-import Button from '../components/buttons/button'
-
 const StartUpInfoProfil = ( {startup} ) => {
     if (!startup) {
         return (
@@ -33,8 +31,6 @@ const StartUpInfoProfil = ( {startup} ) => {
         
                 <p>{startup.description}</p>
             </div>
-    
-            <Button text='Modifier'/>
     
         </div>
     )

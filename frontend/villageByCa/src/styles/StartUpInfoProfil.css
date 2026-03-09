@@ -4,7 +4,7 @@
     padding:1vw;
     border-radius:1vw;
     margin-top:2vw;
-    width: clamp(16rem, 25vw, 25rem);
+    width: clamp(16rem, 30vw, 25rem);
     display: flex;
     flex-direction: column;
     justify-content: center;

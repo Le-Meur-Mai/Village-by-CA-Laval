@@ -1,7 +1,5 @@
 import '../styles/UserInfoProfil.css';
 
-import Button from '../components/buttons/button'
-
 const UserInfoProfil = ( {user} ) => {
     if (!user) {
         return (
@@ -22,8 +20,6 @@ const UserInfoProfil = ( {user} ) => {
         
                 <p><strong>Email :</strong> {user.email}</p>
             </div>
-    
-            <Button text='Modifier'/>
     
         </div>
     )
