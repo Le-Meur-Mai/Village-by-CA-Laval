@@ -1,4 +1,5 @@
 import '../styles/page.css';
+import '../styles/Profil.css';
 
 import { useEffect, useState } from 'react';
 
@@ -46,12 +47,14 @@ const Profil = () => {
             <Header />
             <main>
                 <PresentationPage title={`Bonjour ${userInfo.user.name}`} text='' />
-                <div className='Profil-userInfo'>
-                    { userInfo.user.name }
-                    { userInfo.user.email }
-                </div>
-                <div>
-                    <StartUpInfoProfil startup={ userInfo.startUp } />
+                <div className='profil-userInfo'>
+                    <div>
+                        { userInfo.user.name }
+                        { userInfo.user.email }
+                    </div>
+                    <div>
+                        <StartUpInfoProfil startup={ userInfo.startUp } />
+                    </div>
                 </div>
                 { JSON.stringify(userInfo, null, 2) }
             </main>

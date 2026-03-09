@@ -1,5 +1,7 @@
 import '../styles/StartUpInfoProfil.css';
 
+import Button from '../components/buttons/button'
+
 const StartUpInfoProfil = ( {startup} ) => {
     if (!startup) {
         return (
@@ -13,24 +15,26 @@ const StartUpInfoProfil = ( {startup} ) => {
     return (
         <div className="startup-card">
     
-            <h2>Ma Start-up</h2>
+            <h2><strong>Ma Start-up</strong></h2>
     
             <img src={startup.logo} alt="logo" />
     
-            <p><strong>Nom :</strong> {startup.name}</p>
-    
-            <p><strong>Site :</strong> {startup.website}</p>
-    
-            <p><strong>Type :</strong></p>
-            <div className="tags">
-                {startup.types.map((type,i) => (
-                    <span key={type.id}>{type.name}</span>
-                ))}
+            <div className='startup-card-info'>
+                <p><strong>Nom :</strong> {startup.name}</p>
+        
+                <p><strong>Site :</strong> {startup.website}</p>
+        
+                <p><strong>Type :</strong></p>
+                <div className="tags">
+                    {startup.types.map((type,i) => (
+                        <span key={type.id}>{type.name}</span>
+                    ))}
+                </div>
+        
+                <p>{startup.description}</p>
             </div>
     
-            <p>{startup.description}</p>
-    
-            <button>Modifier</button>
+            <Button text='Modifier'/>
     
         </div>
     )

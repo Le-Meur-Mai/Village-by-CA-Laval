@@ -1,8 +1,23 @@
 .startup-card{
     background: var(--white-main);
-    padding:20px;
-    border-radius:12px;
-    margin-top:20px;
+    border: 2px solid var(--black-main);
+    padding:1vw;
+    border-radius:1vw;
+    margin-top:2vw;
+    width: clamp(16rem, 25vw, 25rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.startup-card img{
+    width: 40%;
+    margin: 1vw;
+}
+
+.tags {
+    margin: 20px;
 }
 
 .tags span{
@@ -10,5 +25,13 @@
     padding:5px 10px;
     border-radius:12px;
     margin-right:8px;
+}
+
+.startup-card-info p{
+    margin: 8px;
+}
+
+.startup-card-info {
+    margin-bottom: 1.5vw;
 }
 
