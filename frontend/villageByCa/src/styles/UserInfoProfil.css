@@ -1,0 +1,22 @@
+.user-card{
+    background: var(--white-main);
+    border: 2px solid var(--black-main);
+    padding:1vw;
+    border-radius:1vw;
+    margin-top:2vw;
+    width: clamp(12rem, 20vw, 20rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-card-info p{
+    margin: 8px;
+}
+
+.user-card-info {
+    margin: 20px;
+    margin-bottom: 1.5vw;
+}
+

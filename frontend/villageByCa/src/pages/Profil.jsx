@@ -7,6 +7,7 @@ import Header from '../components/Header';
 import PresentationPage from '../components/PresentationPage';
 import StartUpInfoProfil from '../components/StartUpInfoProfil';
 import Footer from '../components/Footer';
+import UserInfoProfil from '../components/UserInfoProfil';
 
 const Profil = () => {
 
@@ -48,13 +49,8 @@ const Profil = () => {
             <main>
                 <PresentationPage title={`Bonjour ${userInfo.user.name}`} text='' />
                 <div className='profil-userInfo'>
-                    <div>
-                        { userInfo.user.name }
-                        { userInfo.user.email }
-                    </div>
-                    <div>
-                        <StartUpInfoProfil startup={ userInfo.startUp } />
-                    </div>
+                    <UserInfoProfil user={ userInfo.user } />
+                    <StartUpInfoProfil startup={ userInfo.startUp } />
                 </div>
                 { JSON.stringify(userInfo, null, 2) }
             </main>
