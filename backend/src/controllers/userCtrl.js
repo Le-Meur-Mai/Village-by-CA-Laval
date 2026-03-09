@@ -48,7 +48,7 @@ const updateUser = async (req, res, next) => {
     const id = req.user.id;
     const newData = req.body;
     const updatedUser = await servicesUser.updateUser(id, newData, isAdmin);
-    res.status(200).json(`Le nouvel utilisateur ${updatedUser.name} a été mis à jour.`);
+    res.status(200).json(`L'utilisateur ${updatedUser.name} a été mis à jour.`);
   } catch (error) {
     next(error);
   }
