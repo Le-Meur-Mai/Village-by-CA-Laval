@@ -80,7 +80,7 @@ const Index = () => {
                         <PostCard post={post}/>
                     ))}
                 </div>
-                <div className="paragraph-center">
+                <div className="paragraph-center button-with-margin-bottom">
                     <Button
                     text="Voir plus d'articles"
                     path="http://localhost:5173/agenda"/>

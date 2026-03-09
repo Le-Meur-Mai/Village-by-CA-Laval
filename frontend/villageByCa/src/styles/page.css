@@ -66,6 +66,9 @@ main {
     max-width: 100ch; /* limite la largeur pour une meilleure lisibilité */
     font-size: clamp(1rem, 2vw, 1.3rem);
 }
+.button-with-margin-bottom {
+    margin-bottom: 5rem;
+}
 
 .button-on-the-left {
     margin-left: 1rem;
