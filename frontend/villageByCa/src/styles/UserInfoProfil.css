@@ -1,53 +1,65 @@
+/* --- User Card --- */
 .user-card{
     background: var(--white-main);
-    border: 2px solid var(--black-main);
-    padding:1vw;
-    border-radius:1vw;
-    margin-top:2vw;
+    border: 1px solid var(--black-main);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-top: 2vw;
     width: clamp(12rem, 30vw, 20rem);
+
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    text-align: center;
+
+    box-shadow: 0 0.1rem 0.3rem rgb(169, 169, 169);
+}
+
+/* Infos */
+.user-card-info{
+    margin: 1rem 0 1.2rem 0;
 }
 
 .user-card-info p{
-    margin: 8px;
+    margin: 6px 0;
+    font-size: 0.95rem;
+    color: var(--black-main);
 }
 
-.user-card-info {
-    margin: 20px;
-    margin-bottom: 1.5vw;
-}
-
-.user-card button {
-    margin-top: 1vw;
-    padding: clamp(1rem, 1.2vw, 2rem);
+/* Bouton principal */
+.user-card button{
+    margin-top: 0.8rem;
+    padding: 0.8rem 1rem;
     font-size: 1rem;
+
     border: none;
     border-radius: 8px;
+
     background: var(--light-blue);
     color: var(--white-main);
+
     cursor: pointer;
-    transition: 180ms;
+    transition: 150ms;
+    box-shadow: 0 0.1rem 0.3rem rgb(169, 169, 169);
 }
 
-.user-card button:hover {
+.user-card button:hover{
     transform: scale(1.03);
     box-shadow: 0 0.1rem 0.2rem rgb(76, 76, 76);
-    transition: 180ms;
 }
 
-/* --- Form Card --- */
-.edit-form {
+
+/* --- Edit Form --- */
+.edit-form{
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.6rem;
     margin-top: 1rem;
 }
 
-.edit-form label {
+/* Labels */
+.edit-form label{
     display: flex;
     flex-direction: column;
     font-weight: bold;
@@ -55,53 +67,64 @@
     font-size: 0.9rem;
 }
 
-.edit-form input {
-    margin-top: 0.4rem;
+/* Inputs */
+.edit-form input{
+    margin-top: 0.35rem;
     padding: 0.6rem 0.8rem;
+
     border: 1px solid var(--black-main);
     border-radius: 8px;
+
     font-size: 1rem;
     background: var(--white-main);
+
     transition: 150ms;
 }
 
-.edit-form input:focus {
+.edit-form input:focus{
     outline: none;
     border-color: var(--light-blue);
     box-shadow: 0 0 4px var(--light-blue);
 }
 
-.edit-form button[type="submit"] {
+/* Submit */
+.edit-form button[type="submit"]{
     background: var(--light-blue);
     color: var(--white-main);
+
     border: none;
     padding: 0.8rem;
     border-radius: 8px;
+
     cursor: pointer;
     font-size: 1rem;
+
     transition: 150ms;
     box-shadow: 0 0.1rem 0.3rem rgb(169, 169, 169);
 }
 
-.edit-form button[type="submit"]:hover {
+.edit-form button[type="submit"]:hover{
     transform: scale(1.03);
     box-shadow: 0 0.1rem 0.2rem rgb(76, 76, 76);
 }
 
-.edit-form button[type="button"] {
+/* Cancel */
+.edit-form button[type="button"]{
     background: var(--grey-main);
     color: var(--black-main);
+
     border: none;
     padding: 0.8rem;
     border-radius: 8px;
+
     cursor: pointer;
     font-size: 1rem;
+
     transition: 150ms;
     box-shadow: 0 0.1rem 0.3rem rgb(169, 169, 169);
 }
 
-.edit-form button[type="button"]:hover {
+.edit-form button[type="button"]:hover{
     transform: scale(1.03);
     box-shadow: 0 0.1rem 0.2rem rgb(76, 76, 76);
 }
-

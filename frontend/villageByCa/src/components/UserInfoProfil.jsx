@@ -36,7 +36,7 @@ const UserInfoProfil = ( {user, onUpdate} ) => {
             const response = await fetch('http://localhost:3000/auth/profil', {
                 method: 'PATCH',
                 credentials: "include", // Pour enregistrer les cookies crss-origin
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'form-data' },
                 body: JSON.stringify(formData)
             });
 
