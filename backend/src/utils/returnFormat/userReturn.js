@@ -22,6 +22,8 @@ function getUserProfile (existingUser) {
           }
           if (existingUser.quotes.length > 0) {
             profile.quotes = existingUser.quotes.map(quote => ({
+              logo: existingUser.startUp?.logo.secureUrl,
+              startUp: existingUser.startUp?.name,
               firstName: quote.firstName,
               lastName: quote.lastName,
               description: quote.description,
