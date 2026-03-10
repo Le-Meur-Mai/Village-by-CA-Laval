@@ -64,18 +64,23 @@ const updateStartUp = async (req, res, next) => {
   try {
     const currentUser = req.user
     // Postman envoie toujours des strings, on le parse pour le convertir en objet js
-    ["types", "isAlumni"].forEach(key => {
-      if (req.body[key]) {
-        req.body[key] = jsonParse(req.body[key]);
-      }
-    });
+    if (req.body.types) {
+      req.body.types = jsonParse(req.body.types);
+    }
+    if (req.body.isAlumni) {
+      req.body.isAlumni = jsonParse(req.body.isAlumni);
+    }
 
     const id = req.params.id;
     const newData = req.body;
     newData.logo = req.files?.logo?.[0];
     newData.descriptionPicture = req.files?.descriptionPicture?.[0];
-    const updatedStartUp = await servicesStartUp.updateStartUp(id, newData, currentUser);
-    res.status(200).json(`La startup ${updatedStartUp.name} a été mise à jour.`);
+    let updatedStartUp = await servicesStartUp.updateStartUp(id, newData, currentUser);
+    updatedStartUp = startupReturn.getStartupDetailsFormat(updatedStartUp);
+    return res.status(200).json({
+      message: `La startup ${updatedStartUp.name} a été mise à jour.`,
+      updatedStartUp
+    });
   } catch (error) {
     next(error);
   }
