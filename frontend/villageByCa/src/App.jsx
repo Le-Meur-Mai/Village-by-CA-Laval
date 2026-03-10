@@ -14,6 +14,7 @@ import Locaux from './pages/Locaux.jsx';
 import LocationsDetails from './pages/LocationsDetails.jsx'
 import Connexion from './pages/Connexion.jsx';
 import Profil from './pages/Profil.jsx';
+import AdminWelcomePage from './pages/AdminWelcomePage.jsx';
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
         <Route path='/contact' element={<Contact />} />
         <Route path='/login' element={<Connexion />} />
         <Route path='/profil' element={<Profil />} />
+        <Route path='/admin' element={<AdminWelcomePage/>}/>
       </Routes>
     </>
   )

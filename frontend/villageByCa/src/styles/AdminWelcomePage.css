@@ -1,0 +1,32 @@
+.section-admin-title-left {
+    display: inline-block;        /* pour que la bande s’adapte au contenu */
+    background-color: var(--primary-green);
+    padding: 0.4rem 1rem;         /* espace autour du texte */
+    border-radius: 0 2rem 2rem 0; /* arrondi à droite */
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    margin: 2rem 0 1rem 0;        /* espace autour du titre */
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+
+    transition: transform 0.25s ease;
+
+  --i: 1; /* valeur par défaut */
+  width: calc(var(--i) * 10%);
+}
+
+.section-admin-title-left:hover {
+   transform: scaleX(1.03);
+   cursor: pointer;
+}
+/*nth-of-type est un sélecteur CSS qui permet de cibler un élément en fonction de sa position dans le DOM,
+parmi les éléments du même type.*/
+
+/* On incrémente automatiquement */
+.section-admin-title-left:nth-of-type(1) { --i: 3; }
+.section-admin-title-left:nth-of-type(2) { --i: 4; }
+.section-admin-title-left:nth-of-type(3) { --i: 5; }
+.section-admin-title-left:nth-of-type(4) { --i: 6; }
+.section-admin-title-left:nth-of-type(5) { --i: 7; }
+.section-admin-title-left:nth-of-type(6) { --i: 8; }
+.section-admin-title-left:nth-of-type(7) { --i: 9; }
+.section-admin-title-left:nth-of-type(8) { --i: 10; }

@@ -10,12 +10,15 @@
     cursor: pointer;
     transition: 150ms;
     margin: 2vw;
+    background-color: var(--grey-main);
+    z-index: 1;
 }
 
 .card:hover {
     transform: scale(1.05);
     box-shadow: 0 0.2vw 0.3rem rgb(139, 139, 139);
     transition: 150ms;
+    z-index: 2;
 }
 
 .color-card {

@@ -33,7 +33,7 @@ const Locaux = () => {
                 <PresentationPage 
                     title='Nos Bureaux' 
                     text="Nos startups s’épanouissent dans nos locaux, où elles peuvent pleinement 
-                    se développer et créer un réseau. C’est un cadre idéal pour rassembler et dévelloper 
+                    se développer et créer un réseau. C’est un cadre idéal pour rassembler et développer 
                     votre startup." />
                 <h2 className='section-title-left'>Les Locaux:</h2>
                 <img className='paragraph-center' src={video} alt="Découverte des bureaux du Village by CA"/>
