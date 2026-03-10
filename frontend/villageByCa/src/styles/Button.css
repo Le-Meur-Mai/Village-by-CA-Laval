@@ -2,8 +2,10 @@
     cursor: pointer;
     color: var(--white-main);
     background-color: var(--light-blue);
-    padding: 1.2vw 1.8vw;
-    font-size: clamp(0.8rem, 1.2vw, 2rem);
+    padding: clamp(1rem, 1.2vw, 2rem);
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    font-size: clamp(1rem, 2vw, 1.5rem);
     border: none;
     border-radius: 1.5vw;
     transition: 180ms;

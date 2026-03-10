@@ -68,7 +68,7 @@
 }
 
 /* --- Responsive mobile --- */
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   .quote-card {
     width: 90vw;        /* prend presque toute la largeur */
     height: auto;       /* s’adapte au contenu */

@@ -1,0 +1,67 @@
+.profil-all-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- User --- */
+.profil-userInfo {
+    width: clamp(25rem, 85vw, 65rem);
+    padding: 1.5vw;
+    border-radius: 1vw;
+    margin: 1vw;
+    background-color: var(--grey-main);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.profil-userInfo h1 {
+    font-size: clamp(2rem, 3vw, 2.5rem);
+}
+
+.profil-userInfo-cards-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 2vw;
+    width: clamp(25rem, 85vw, 55rem);
+}
+
+/* --- Quotes --- */
+.profil-quotes {
+    width: clamp(30rem, 95vw, 90rem);
+    padding: 1.5vw;
+    border-radius: 1vw;
+    background-color: var(--grey-main);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.profil-quote-container {
+    width: clamp(28rem, 85vw, 90rem);
+    width: 100%;
+    height: 22rem;
+    margin: 2vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+@media (max-width: 900px) {
+  .profil-userInfo-cards-container {
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  .profil-quote-container {
+    flex-direction: column;
+    height: 30rem;
+  }
+}
