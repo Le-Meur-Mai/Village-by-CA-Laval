@@ -66,7 +66,7 @@ const Connexion = () => {
                             <label htmlFor="email">Email : </label>
                             <input 
                                 id='email' 
-                                type="text"
+                                type="email"
                                 value={connexionForm.email}
                                 onChange={(e) => setConnexionForm({
                                     ...connexionForm,
