@@ -36,7 +36,7 @@ const UserInfoProfil = ( {user, onUpdate} ) => {
             const response = await fetch('http://localhost:3000/auth/profil', {
                 method: 'PATCH',
                 credentials: "include", // Pour enregistrer les cookies crss-origin
-                headers: { 'Content-Type': 'form-data' },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             });
 
@@ -64,7 +64,6 @@ const UserInfoProfil = ( {user, onUpdate} ) => {
             setResponseType("error");
             setResponseMessage("Impossible de contacter le serveur.");
         }
-        console.log("Nouvelles données :", formData);
 
         setIsEditing(false);
     };
