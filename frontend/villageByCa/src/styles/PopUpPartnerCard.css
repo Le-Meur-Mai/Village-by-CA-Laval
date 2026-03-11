@@ -32,7 +32,7 @@
 }
 
 .popup-partner-card strong {
-  color: var(--green-borders); /* vert foncé harmonieux */
+  color: var(--green-borders);
 }
 
 /* Bouton */
@@ -50,6 +50,14 @@
 
 .popup-partner-card button:hover {
   background: #2e7d32;
+}
+
+.sureButton {
+  text-align: center;
+}
+
+.sureButton button {
+  margin: 0 0.5rem;
 }
 
 /* Petite animation */

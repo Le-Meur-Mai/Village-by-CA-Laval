@@ -102,6 +102,8 @@ const AdminPartners = () => {
                                     ...updater(partners).find(p => p.id === popupData.id)
                                 }));
                             }}
+                            // On remonte le DELETE au composant parent
+                            onDelete={(id) => setPartners(prev => prev.filter(p => p.id !== id))}
                         />
                     )}
             </main>

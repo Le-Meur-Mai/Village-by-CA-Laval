@@ -3,10 +3,13 @@ import '../styles/StartUpInfoProfil.css';
 import "../styles/PopUpPartnerCard.css";
 import { useState, useEffect } from 'react';
 
-const PartnerPopUp = ({ partner, onClose, onUpdate }) => {
+const PartnerPopUp = ({ partner, onClose, onUpdate, onDelete }) => {
     
     // Bascule entre le mode lecture et le mode édition
     const [isEditing, setIsEditing] = useState(false);
+
+    // Mise en place d'un valeur qui va confirmer le DELETE 
+    const [confirmDelete, setConfirmDelete] = useState(false);
     
     // Valeurs des champs texte du formulaire
     const [formData, setFormData] = useState({
@@ -39,6 +42,28 @@ const PartnerPopUp = ({ partner, onClose, onUpdate }) => {
             });
         }
     }, [partner]);
+
+    // Fonction pour gérer le Delete du partenaire:
+    const handleDelete = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/admin/partenaires/${partner.id}`, {
+                method: "DELETE",
+                credentials: "include",
+            });
+
+            if (!response.ok) {
+                setResponseType("error");
+                setResponseMessage("Erreur lors de la suppression.");
+                return;
+            }
+
+            onDelete(partner.id); // on remonte l'id au parent
+            onClose();            // on ferme la popup
+        } catch (error) {
+            setResponseType("error");
+            setResponseMessage("Impossible de contacter le serveur.");
+        }
+    };
     
     // Met à jour formData dynamiquement selon le champ modifié (name, website, description)
     const handleChange = (e) => {
@@ -131,6 +156,15 @@ const PartnerPopUp = ({ partner, onClose, onUpdate }) => {
                         <button onClick={() => setIsEditing(true)}>
                             Modifier
                         </button>
+                        {!confirmDelete ? (
+                            <button onClick={() => setConfirmDelete(true)}>Supprimer</button>
+                        ) : (
+                            <div className="sureButton">
+                                <p>Voulez-vous vraiment supprimer <strong>{partner.name}</strong> ?</p>
+                                <button onClick={handleDelete}>Confirmer</button>
+                                <button onClick={() => setConfirmDelete(false)}>Annuler</button>
+                            </div>
+                        )}
                     </>
                 )}
 
