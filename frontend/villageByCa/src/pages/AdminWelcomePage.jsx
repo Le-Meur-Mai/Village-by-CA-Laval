@@ -4,6 +4,7 @@ import '../styles/AdminWelcomePage.css'
 import Footer from '../components/Footer.jsx';
 import Header from '../components/Header.jsx';
 import PresentationPage from '../components/PresentationPage.jsx';
+import { Link } from 'react-router-dom';
 
 const AdminWelcomePage = () => {
     return (
@@ -12,14 +13,14 @@ const AdminWelcomePage = () => {
            <PresentationPage
            title="Bonjour Amandine"
            text="Que voulez-vous faire aujourd'hui ?"/>
-           <h2 className='section-admin-title-left'>Gestion des utilisateurs</h2>
-           <h2 className='section-admin-title-left'>Gestion des startups</h2>
-           <h2 className='section-admin-title-left'>Gestion des partenaires</h2>
-           <h2 className='section-admin-title-left'>Gestion des posts</h2>
-           <h2 className='section-admin-title-left'>Gestion des startups</h2>
-           <h2 className='section-admin-title-left'>Gestion des citations</h2>
-           <h2 className='section-admin-title-left'>Gestion des types</h2>
-           <h2 className='section-admin-title-left'>Profil administrateur</h2>
+           <Link to='/admin/utilisateurs' className='section-admin-title-left'><h2>Gestion des utilisateurs</h2></Link>
+           <Link to='/admin/startups' className='section-admin-title-left'><h2>Gestion des startups</h2></Link>
+           <Link to='/admin/partenaires' className='section-admin-title-left'><h2>Gestion des partenaires</h2></Link>
+           <Link to='/admin/evenements' className='section-admin-title-left'><h2>Gestion des évènements (à venir)</h2></Link>
+           <Link to='/admin/posts' className='section-admin-title-left'><h2>Gestion des posts</h2></Link>
+           <Link to='/admin/citations' className='section-admin-title-left'><h2>Gestion des citations</h2></Link>
+           <Link to='/admin/types' className='section-admin-title-left'><h2>Gestion des types</h2></Link>
+           <Link to='/admin/profil' className='section-admin-title-left'><h2>Profil Administrateur</h2></Link>
            <Footer/>
         </div>
     )

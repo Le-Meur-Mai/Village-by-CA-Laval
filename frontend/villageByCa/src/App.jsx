@@ -15,6 +15,13 @@ import LocationsDetails from './pages/LocationsDetails.jsx'
 import Connexion from './pages/Connexion.jsx';
 import Profil from './pages/Profil.jsx';
 import AdminWelcomePage from './pages/AdminWelcomePage.jsx';
+import AdminUsers from './pages/adminPages/AdminUsers.jsx';
+import AdminStartups from './pages/adminPages/AdminStartups.jsx';
+import AdminPartners from './pages/adminPages/AdminPartners.jsx';
+import AdminPosts from './pages/adminPages/AdminPosts.jsx';
+import AdminQuotes from './pages/adminPages/AdminQuotes.jsx';
+import AdminTags from './pages/adminPages/AdminTags.jsx';
+import AdminProfil from './pages/adminPages/AdminProfil.jsx';
 
 const App = () => {
   return (
@@ -34,7 +41,14 @@ const App = () => {
         <Route path='/contact' element={<Contact />} />
         <Route path='/login' element={<Connexion />} />
         <Route path='/profil' element={<Profil />} />
-        <Route path='/admin' element={<AdminWelcomePage/>}/>
+        <Route path='/admin' element={<AdminWelcomePage />} />
+        <Route path='/admin/utilisateurs' element={<AdminUsers />} />
+        <Route path='/admin/startups' element={<AdminStartups />} />
+        <Route path='/admin/partenaires' element={<AdminPartners />} />
+        <Route path='/admin/posts' element={<AdminPosts />} />
+        <Route path='/admin/citations' element={<AdminQuotes />} />
+        <Route path='/admin/types' element={<AdminTags />} />
+        <Route path='/admin/profil' element={<AdminProfil />} />
       </Routes>
     </>
   )
