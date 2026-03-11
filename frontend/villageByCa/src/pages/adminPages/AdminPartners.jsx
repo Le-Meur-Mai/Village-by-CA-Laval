@@ -1,11 +1,13 @@
-import '../../styles/page.css'
-import '../../styles/PresentationPage.css'
+import '../../styles/page.css';
+import '../../styles/PresentationPage.css';
+import '../../styles/AdminPartners.css';
 
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import PresentationPage from '../../components/PresentationPage';
 import Card from '../../components/Card.jsx';
 import PartnerPopUp from '../../components/PartnerPopUp.jsx';
+import PartnerCreatePopUp from '../../components/PartnerCreationPopUp.jsx';
 
 import { useNavigate} from "react-router-dom";
 import { useEffect, useState } from 'react';
@@ -16,6 +18,8 @@ const AdminPartners = () => {
     const [partners, setPartners] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
     const [popupData, setPopupData] = useState(null);
+    const [showCreatePopup, setShowCreatePopup] = useState(false);
+
     
     // On va récupérer les partenaires après le chargement de la page
     useEffect (() => {
@@ -57,7 +61,17 @@ const AdminPartners = () => {
                 <PresentationPage 
                     title="Partenaires" 
                     text="" />
+
                 <h2 className='section-title-left'>Partenaires Experts:</h2>
+                <button className="button-to-create"onClick={() => setShowCreatePopup(true)}>+</button>
+
+                {/*Quand la popUp de création est activée */}
+                {showCreatePopup && (
+                    <PartnerCreatePopUp
+                        onClose={() => setShowCreatePopup(false)}
+                        onCreate={(newPartner) => setPartners(prev => [...prev, newPartner])}
+                    />
+                )}
                 <div className="presentation-page">
                     <div className='item-align'>
                         {/* On parcourt l'objet avec map, on assigne un id pour identifier chaque partenaires*/}
