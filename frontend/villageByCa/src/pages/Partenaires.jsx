@@ -22,11 +22,11 @@ const Partenaires = () => {
                 setPartners(jsonResult);
                 }
                 /* On appelle la fonction */
-                fetchPartners();
+            fetchPartners();
     }, []);
 
     const experts = partners.filter(partner => (partner.financialAid > 0.00));
-    const classics = partners.filter(partner => (partner.financialAid === 0.00))
+    const classics = partners.filter(partner => (partner.financialAid === 0.00));
 
     return (
         <div className='page'>

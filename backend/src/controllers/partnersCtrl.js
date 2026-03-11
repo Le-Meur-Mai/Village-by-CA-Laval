@@ -11,14 +11,17 @@ const servicesPartner = new PartnerServices();
 const createPartner = async (req, res, next) => {
   try {
     req.body.financialAid = jsonParse(req.body.financialAid);
-    const newPartner = await servicesPartner.createPartner({
+    let newPartner = await servicesPartner.createPartner({
       name: req.body.name,
       description: req.body.description,
       website: req.body.website,
       financialAid: req.body.financialAid,
       logo: req.file
     });
-    res.status(201).json(`Le partenaire ${newPartner.name} a été créé`);
+    newPartner =  partnerReturn.getPartnerDetailsFormat(newPartner);
+    res.status(201).json({message: `Le partenaire ${newPartner.name} a été créé`,
+      newPartner}
+    );
   } catch (error) {
     next(error);
   }
@@ -57,8 +60,10 @@ const updatePartner = async (req, res, next) => {
     const id = req.params.id;
     const data = req.body;
     data.logo = req.file;
-    const partner = await servicesPartner.updatePartner(id, data);
-    res.status(200).json(`Le partenaire ${partner.name} a été mis à jour`);
+    let updatedPartner = await servicesPartner.updatePartner(id, data);
+    updatedPartner = partnerReturn.getPartnerDetailsFormat(updatedPartner);
+    res.status(200).json({message: `Le partenaire ${updatedPartner.name} a été mis à jour`,
+    updatedPartner});
   } catch (error) {
     next(error);
   }

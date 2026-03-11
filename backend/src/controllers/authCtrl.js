@@ -56,9 +56,22 @@ const verifyConnexion = async (req, res, next) => {
   }
 }
 
+const logout = async (req, res, next) => {
+  try {
+    res.clearCookie('jwtToken', {
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax"
+    });
+    res.status(200).json({message: 'Déconnecté'});
+  } catch (error) {
+    next(error);
+  }
+}
 
 export default {
   login,
   getProfile,
-  verifyConnexion
+  verifyConnexion,
+  logout
 }
