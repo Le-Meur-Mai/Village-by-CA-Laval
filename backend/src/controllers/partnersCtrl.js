@@ -11,14 +11,17 @@ const servicesPartner = new PartnerServices();
 const createPartner = async (req, res, next) => {
   try {
     req.body.financialAid = jsonParse(req.body.financialAid);
-    const newPartner = await servicesPartner.createPartner({
+    let newPartner = await servicesPartner.createPartner({
       name: req.body.name,
       description: req.body.description,
       website: req.body.website,
       financialAid: req.body.financialAid,
       logo: req.file
     });
-    res.status(201).json(`Le partenaire ${newPartner.name} a été créé`);
+    newPartner =  partnerReturn.getPartnerDetailsFormat(newPartner);
+    res.status(201).json({message: `Le partenaire ${newPartner.name} a été créé`,
+      newPartner}
+    );
   } catch (error) {
     next(error);
   }
