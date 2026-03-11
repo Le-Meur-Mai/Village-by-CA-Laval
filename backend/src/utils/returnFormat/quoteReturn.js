@@ -4,7 +4,8 @@
 function getQuoteDetailsFormat (quote) {
   try {
     return {
-      logo: quote.user.startUp?.logo.secureUrl,
+      id: quote.id,
+      logo: quote.user.startUp?.logo?.secureUrl,
       startUp: quote.user.startUp?.name,
       firstName: quote.firstName,
       lastName: quote.lastName,
