@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 
 // Composant QuoteCard pour afficher une citation
 import QuoteCard from '../../components/QuoteCard';
+import NewQuoteButton from '../../components/buttons/NewQuoteButton.jsx';
 
 const AdminQuotes = () => {
 
@@ -58,6 +59,8 @@ const AdminQuotes = () => {
                     title='Gestion des Citations'
                     text=''
                 />
+
+                <NewQuoteButton onUpdate={setQuotes} />
 
                 {/* Conteneur alignant les cartes de citations */}
                 <div className='quote-align'>
