@@ -52,12 +52,16 @@ const QuoteCard = ({
         return;
       }
 
-      onUpdate(prev => ({
-        ...prev,
-        quotes: prev.quotes.map(quote => {
-          return quote.id === id ? {...quote, ...formData} : quote
-        })
-      }));
+      onUpdate(prev => {
+        if(Array.isArray(prev)) {
+          return prev.map(quote => quote.id === id ? {...quote, ...formData} : quote);
+        }
+        return {
+          ...prev,
+          quotes: prev.quotes.map(quote => quote.id === id ? {...quote, ...formData} : quote)
+        }
+          
+      });
 
       setResponseType("success");
       setResponseMessage(data.message || "La citation a été mise à jour !");
