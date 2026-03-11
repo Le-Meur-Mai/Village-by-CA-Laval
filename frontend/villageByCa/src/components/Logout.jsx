@@ -5,7 +5,11 @@ const Logout = () => {
     const navigate = useNavigate();
     const { setAuth } = useAuth();
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        await fetch('http://localhost:3000/auth/logout', {
+            method: "POST",
+            credentials: "include",
+        });
         setAuth(null); // On vide le contexte
         // Le cookie va expirer naturellement
         navigate('/login');
