@@ -2,8 +2,11 @@ import { Link } from 'react-router-dom';
 
 import '../styles/Footer.css';
 import logoBlanc from '../assets/logo_blanc.png';
+import { useAuth } from "../contexts/AuthContext";
+import Logout from './Logout';
 
 const Footer = () => {
+    const { auth, loading } = useAuth();
     return (
         <footer>
             <div className='upperPart'>
@@ -17,7 +20,11 @@ const Footer = () => {
                         <li><Link to="/contact">Contact</Link></li>
                     </ul>
                     <div className='vl'></div>
-                    <Link to="/login">Connexion</Link>
+                    {!loading && (
+                        auth
+                            ? <Logout/>
+                            : <Link to="/login">Connexion</Link>
+                    )}
                 </div>
                 <div className='rightPart'>
                     <img src="/" alt="LinkedIn" />
