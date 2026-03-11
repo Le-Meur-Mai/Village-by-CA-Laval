@@ -2,6 +2,7 @@ import "../styles/StartupPopUp.css";
 import '../styles/StartUpInfoProfil.css';
 import "../styles/PopUpPartnerCard.css";
 import { useState, useEffect } from 'react';
+import PartnerForm from './PartnerForm.jsx';
 
 const PartnerPopUp = ({ partner, onClose, onUpdate, onDelete }) => {
     
@@ -74,19 +75,8 @@ const PartnerPopUp = ({ partner, onClose, onUpdate, onDelete }) => {
     };
     
     // Soumission du formulaire : envoie les données au serveur puis met à jour l'affichage
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        
-        // On utilise FormData pour pouvoir envoyer à la fois du texte et des fichiers
-        const fd = new FormData();
-        fd.append("name", formData.name);
-        fd.append("website", formData.website);
-        fd.append("description", formData.description);
-        fd.append("financialAid", formData.financialAid);
-        
-        // On n'ajoute le logo que si l'utilisateur en a sélectionné un nouveau
-        if (logoFile) fd.append("logo", logoFile);
-        
+    const handleSubmit = async (fd, updatedData) => {
+
         try {
             const response = await fetch(`http://localhost:3000/admin/partenaires/${partner.id}`, {
                 method: "PATCH",
@@ -116,7 +106,10 @@ const PartnerPopUp = ({ partner, onClose, onUpdate, onDelete }) => {
             
             // On remonte les nouvelles données au composant parent pour garder son state à jour
             onUpdate(prev => prev.map(
-                partnerElement => partnerElement.id === partner.id ? {...partnerElement, ...formData, logo: newLogo} : partnerElement));
+                partnerElement => partnerElement.id === partner.id 
+                    ? {...partnerElement, ...updatedData, logo: newLogo}  // ← updatedData au lieu de formData
+                    : partnerElement
+            ));
             
             setResponseType("success");
             setResponseMessage(data.message || "Mise à jour réussie !");
@@ -169,75 +162,14 @@ const PartnerPopUp = ({ partner, onClose, onUpdate, onDelete }) => {
                 )}
 
                 {/* ── Mode édition ── */}
-                {isEditing && (
-                    <form onSubmit={handleSubmit} className="edit-form">
-
-                        <label>
-                            Nom :
-                            <input
-                                type="text"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleChange}
-                            />
-                        </label>
-
-                        <label>
-                            Site web :
-                            <input
-                                type="text"
-                                name="website"
-                                value={formData.website}
-                                onChange={handleChange}
-                            />
-                        </label>
-
-                        <label>
-                            Aide financière :
-                            <input
-                                type="text"
-                                name="financialAid"
-                                value={formData.financialAid}
-                                onChange={handleChange}
-                            />
-                        </label>
-
-                        <label>
-                            Logo :
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={(e) => {
-                                    const file = e.target.files[0];
-                                    setLogoFile(file);
-                                    // Prévisualisation immédiate via une URL temporaire locale
-                                    setPreviewLogo(URL.createObjectURL(file));
-                                }}
-                            />
-                            <img
-                                src={previewLogo}
-                                alt="logo"
-                                className="preview-img"
-                            />
-                        </label>
-
-                        <label>
-                            Description :
-                            <textarea
-                                name="description"
-                                value={formData.description}
-                                onChange={handleChange}
-                                rows="4"
-                            />
-                        </label>
-
-                        <button type="submit">Enregistrer</button>
-                        {/* Annuler ne soumet pas le formulaire et repasse en mode lecture */}
-                        <button type="button" onClick={() => setIsEditing(false)}>
-                            Annuler
-                        </button>
-                    </form>
-                )}
+                    {isEditing && (
+                        <PartnerForm
+                            initialData={{...partner, logo: previewLogo}}
+                            onSubmit={handleSubmit}
+                            onCancel={() => setIsEditing(false)}
+                            required={false}
+                        />
+                    )}
 
                 {/* Message de retour affiché après soumission (succès ou erreur) */}
                 {responseMessage && (
@@ -250,6 +182,4 @@ const PartnerPopUp = ({ partner, onClose, onUpdate, onDelete }) => {
     );
 };
 
-
 export default PartnerPopUp;
-
