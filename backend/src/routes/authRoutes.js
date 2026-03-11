@@ -18,6 +18,8 @@ const authRouteur = express.Router();
 // Définitions des différentes routes et méthodes
 authRouteur.post('/login', authCtrl.login);
 
+authRouteur.get('/', authorizationConnexion, authCtrl.verifyConnexion);
+
 authRouteur.get('/profil', authorizationConnexion, authCtrl.getProfile);
 
 authRouteur.patch('/profil', authorizationConnexion, userCtrl.updateUser);

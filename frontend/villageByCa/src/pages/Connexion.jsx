@@ -4,11 +4,14 @@ import '../styles/Connexion.css'
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import {useAuth} from '../contexts/AuthContext.jsx';
 import Header from '../components/Header.jsx';
 import PresentationPage from '../components/PresentationPage.jsx'
 import Footer from '../components/Footer.jsx';
 
+
 const Connexion = () => {
+    const { setAuth } = useAuth();
     const [connexionForm, setConnexionForm] = useState({
         email: "",
         password: ""
@@ -37,11 +40,11 @@ const Connexion = () => {
                 setResponseMessage(data.message || "Une erreur est survenue.");
                 return;
             }
-
+            setAuth(data);
             setResponseType("success");
             setResponseMessage(data.message || "Connexion réussie !");
 
-            if (data) {
+            if (data.isAdmin) {
                 navigate("/admin");
             } else {
                 navigate("/profil")
@@ -66,7 +69,7 @@ const Connexion = () => {
                             <label htmlFor="email">Email : </label>
                             <input 
                                 id='email' 
-                                type="text"
+                                type="email"
                                 value={connexionForm.email}
                                 onChange={(e) => setConnexionForm({
                                     ...connexionForm,

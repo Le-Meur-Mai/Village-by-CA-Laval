@@ -27,7 +27,7 @@ const login = async (req, res, next) => {
       sameSite: "lax",
       maxAge: 24 * 60 * 60 * 1000 // 1 Journée
     });
-    res.status(200).json(user.isAdmin);
+    res.status(200).json({id: user.id, isAdmin: user.isAdmin});
   } catch (error) {
     next(error);
   }
@@ -45,8 +45,20 @@ const getProfile = async (req, res, next) => {
   }
 }
 
+const verifyConnexion = async (req, res, next) => {
+  try {
+    res.status(200).json({
+      id: req.user.id,
+      isAdmin: req.user.isAdmin
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 
 export default {
   login,
-  getProfile
+  getProfile,
+  verifyConnexion
 }
