@@ -1,0 +1,22 @@
+.button-to-create {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background-color: var(--green-borders);
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 0 auto ; /* ✔️ centre le bouton et le place sous la section */
+  transition: background 0.2s ease;
+}
+
+.button-to-create:hover {
+  background-color: #2e7d32; /* vert un peu plus foncé */
+}
