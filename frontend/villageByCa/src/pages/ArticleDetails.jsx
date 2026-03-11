@@ -17,7 +17,6 @@ const ArticleDetails = () => {
   useEffect(() => {
     const fetchPost = async () => {
       const result = await fetch(`http://localhost:3000/agenda/${id}`);
-      console.log(result);
       const json = await result.json();
       setPost(json);
     };
