@@ -63,11 +63,14 @@ const Profil = () => {
                             {userInfo.quotes.map((quote) => (
                                 <QuoteCard 
                                     key={quote.id}
+                                    id={quote.id}
                                     logo={quote.logo} 
                                     name={quote.startUp} 
                                     firstName={quote.firstName}
                                     lastName={quote.lastName}
                                     description={quote.description}
+                                    canBeModified={true}
+                                    onUpdate={setUserInfo}
                                 />
                             ))}
                         </div>
