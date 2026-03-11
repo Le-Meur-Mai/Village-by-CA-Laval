@@ -98,6 +98,53 @@ const QuoteCard = ({
     setIsEditing(false);
   };
 
+  const handleDelete = async (e) => {
+    e.preventDefault();
+
+    try {
+
+      // Envoi d'une requête DELETE pour supprimer la citation
+      const response = await fetch(`http://localhost:3000/auth/profil/citations/${id}`, {
+        method: 'DELETE',
+        credentials: "include",  // Envoie les cookies de session pour l'authentification
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      const data = await response.json();
+
+      // Si le serveur retourne une erreur HTTP (4xx, 5xx)
+      if (!response.ok) {
+        setResponseType("error");
+        setResponseMessage(data.message || "Une erreur est survenue.");
+        return; // On arrête ici sans fermer le formulaire
+      }
+
+      // On retire la citation supprimée de la liste parente
+      onUpdate(prev => {
+          if (Array.isArray(prev)) {
+              return prev.filter(quote => quote.id !== id);
+          }
+          return {
+              ...prev,
+              quotes: prev.quotes.filter(quote => quote.id !== id)
+          };
+      });
+
+      setResponseType("success");
+      setResponseMessage(data.message || "La citation a bien été supprimé");
+
+    } catch (error) {
+      // Erreur réseau ou autre exception inattendue
+      console.error(error);
+      setResponseType("error");
+      setResponseMessage("Une erreur est survenue.");
+    }
+
+    // Repasse en mode lecture dans tous les cas (succès ou erreur)
+    setIsEditing(false);
+  
+  }
+
 
   return (
     <div className="quote-component">
@@ -174,6 +221,7 @@ const QuoteCard = ({
             </label>
 
             <button type="submit">Enregistrer</button>
+            <button onClick={handleDelete}>Supprimer</button>
             {/* Annuler ne soumet pas le formulaire et repasse en mode lecture */}
             <button type="button" onClick={() => setIsEditing(false)}>
               Annuler
