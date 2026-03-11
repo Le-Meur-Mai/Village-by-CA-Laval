@@ -4,6 +4,7 @@
 function getPartnerDetailsFormat (partner) {
   try {
     return {
+      id: partner.id,
       name: partner.name,
       logo: partner.logo.secureUrl,
       description: partner.description,

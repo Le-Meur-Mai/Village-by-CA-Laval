@@ -57,8 +57,10 @@ const updatePartner = async (req, res, next) => {
     const id = req.params.id;
     const data = req.body;
     data.logo = req.file;
-    const partner = await servicesPartner.updatePartner(id, data);
-    res.status(200).json(`Le partenaire ${partner.name} a été mis à jour`);
+    let updatedPartner = await servicesPartner.updatePartner(id, data);
+    updatedPartner = partnerReturn.getPartnerDetailsFormat(updatedPartner);
+    res.status(200).json({message: `Le partenaire ${updatedPartner.name} a été mis à jour`,
+    updatedPartner});
   } catch (error) {
     next(error);
   }
