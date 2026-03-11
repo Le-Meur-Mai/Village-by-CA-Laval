@@ -2,7 +2,7 @@ header {
     position: sticky;
     top: 0;
     background-color: var(--primary-green);
-    padding: 0rem 3rem;
+    padding: 0rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -51,4 +51,27 @@ nav a:hover::after {
 .contact {
     text-decoration: none;
     cursor: pointer;
+    margin-left: 1rem;
+}
+
+.profil {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 3 zones */
+.navRight {
+  display: flex;
+  align-items: center;
+}
+.navLeft {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.navCenter {
+  flex: 1; /* prend tout l’espace restant */
+  display: flex;
+  justify-content: center; /* centre la navbar */
 }
