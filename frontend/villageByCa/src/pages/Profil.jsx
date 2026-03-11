@@ -59,9 +59,10 @@ const Profil = () => {
                     </div>
                     <div className='profil-quotes'>
                         <h2><strong>Mes Citations</strong></h2>
-                        <div className='profil-quote-container'>
+                        <div className='quote-align'>
                             {userInfo.quotes.map((quote) => (
                                 <QuoteCard 
+                                    key={quote.id}
                                     logo={quote.logo} 
                                     name={quote.startUp} 
                                     firstName={quote.firstName}
