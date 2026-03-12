@@ -48,7 +48,23 @@ function getAllUsersFormat (usersList) {
         id: user.id,
         name: user.name,
         email: user.email,
-        startUp: user.startup?.name
+        startUp: user.startUp?.name
+      }));
+    }
+  } catch (error) {
+    throw error;
+  }
+}
+
+function getAllUsersSelectionFormat (usersList) {
+  try {
+    if (!usersList.length) {
+      return [];
+    } else {
+      return usersList.map(user => ({
+        id: user.id,
+        name: user.name,
+        startUp: user.startUp?.name || null
       }));
     }
   } catch (error) {
@@ -58,5 +74,6 @@ function getAllUsersFormat (usersList) {
 
 export default {
   getAllUsersFormat,
-  getUserProfile
+  getUserProfile,
+  getAllUsersSelectionFormat
 }
