@@ -7,7 +7,15 @@ export default class QuoteRepository {
     const quote = await client.quote.create({
       data,
       include: {
-        user: true
+        user: {
+          include: {
+            startUp: {
+              include: {
+                logo: true
+              }
+            }
+          }
+        }
       }
     });
     return quote;

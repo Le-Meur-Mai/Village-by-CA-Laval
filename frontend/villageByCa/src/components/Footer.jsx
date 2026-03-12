@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 
 import '../styles/Footer.css';
 import logoBlanc from '../assets/logo_blanc.png';
+import linkedin from '../assets/linkedin.png'
+import instagram from '../assets/instagram.png'
 import { useAuth } from "../contexts/AuthContext";
 import Logout from './Logout';
 
@@ -27,8 +29,8 @@ const Footer = () => {
                     )}
                 </div>
                 <div className='rightPart'>
-                    <img src="/" alt="LinkedIn" />
-                    <img src="/" alt="Instagram" />
+                    <img src={ linkedin } alt="LinkedIn" />
+                    <img src= { instagram } alt="Instagram" />
                 </div>
             </div>
             <div className='bottomPart'>

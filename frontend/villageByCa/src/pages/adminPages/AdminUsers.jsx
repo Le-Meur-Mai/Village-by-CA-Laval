@@ -1,14 +1,55 @@
 import '../../styles/page.css'
 
+import '../../styles/AdminQuotes.css'
+
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import PresentationPage from '../../components/PresentationPage';
+import { useEffect, useState } from 'react';
+import UserInfoProfil from '../../components/UserInfoProfil';
+import NewUserButton from '../../components/buttons/NewUserButton';
 
 const AdminUsers = () => {
+
+    const [allUsers, setAllUsers] = useState([])
+
+    useEffect(() => {
+        const fetchAllUsers = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/admin/users', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                
+                const usersData = await response.json();
+    
+                setAllUsers(usersData);
+    
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        fetchAllUsers();
+
+    }, [])
+
     return (
         <div className="page">
             <Header />
             <main>
-    
+                <PresentationPage title='Gestion des Utilisateurs' text=''/>
+                <div className='new-quote-admin-section'>
+                    <NewUserButton onUpdate={setAllUsers} />
+                </div>
+                <div className='quote-align'>
+                    {allUsers
+                        .filter(user => !user.isAdmin)
+                        .map(user => (
+                            <UserInfoProfil key={user.id} user={user} onUpdate={setAllUsers}/>
+                        ))
+                    }
+                </div>
             </main>
             <Footer />
         </div>

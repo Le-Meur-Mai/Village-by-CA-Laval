@@ -7,12 +7,16 @@ const servicesUser = new UserServices();
 // Création d'un utilisateur
 const createUser = async (req, res, next) => {
   try {
-    const newUser = await servicesUser.createUser({
+    let newUser = await servicesUser.createUser({
       name: req.body.name,
       email: req.body.email,
       password: req.body.password
     });
-    res.status(201).json(`Le nouvel utilisateur ${newUser.name} a été créé.`);
+    newUser = userReturn.getAllUsersFormat([newUser]);
+    res.status(201).json({
+      message: `Le nouvel utilisateur ${newUser[0].name} a été créé.`,
+      user: newUser[0]
+    });
   } catch (error) {
     next(error);
   }

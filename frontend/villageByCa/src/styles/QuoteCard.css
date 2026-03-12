@@ -15,6 +15,17 @@
   transform: scale(1.01);
 }
 
+.quote-card-form {
+  width: 17rem;
+  height: auto;
+  background: var(--white-main);
+  border: 2px solid var(--black-main);
+  border-radius: 0.2rem;
+  padding: 0.7rem;
+  box-shadow: 0 0.1rem 0.2rem var(--black-main);
+  overflow: hidden;             /* empêche tout débordement */
+}
+
 /* --- Header : logo + nom/prénom + startup --- */
 .quote-header {
   display: flex;
@@ -58,6 +69,7 @@
 /* --- Description --- */
 .quote-description {
   font-size: 1rem;
+  text-align: justify;
   line-height: 1.4;
   color: var(--black-main);
   margin: 0;
@@ -88,3 +100,83 @@
     font-size: 0.95rem;
   }
 }
+
+/* Bouton principal */
+.quote-component button{
+    margin-top: 0.8rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+
+    border: none;
+    border-radius: 8px;
+
+    background: var(--light-blue);
+    color: var(--white-main);
+
+    cursor: pointer;
+    transition: 150ms;
+    box-shadow: 0 0.1rem 0.3rem rgb(169, 169, 169);
+}
+
+.quote-component button:hover{
+    transform: scale(1.03);
+    box-shadow: 0 0.1rem 0.2rem rgb(76, 76, 76);
+}
+
+/* --- Edit Form --- */
+.quote-edit-form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-top: 1rem;
+}
+
+/* Labels */
+.quote-edit-form label{
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    color: var(--black-main);
+    font-size: 1rem;
+}
+
+/* Inputs */
+.quote-edit-form input{
+    margin-top: 0.2rem;
+    padding: 0.6rem 0.8rem;
+
+    border: 1px solid var(--black-main);
+    border-radius: 8px;
+
+    font-size: 1rem;
+    background: var(--white-main);
+
+    transition: 150ms;
+}
+
+.quote-edit-form input:focus{
+    outline: none;
+    border-color: var(--light-blue);
+    box-shadow: 0 0 4px var(--light-blue);
+}
+
+.quote-edit-form textarea{
+    resize: vertical;
+    padding: 0.2rem 0.2rem;
+
+    border: 1px solid var(--black-main);
+    border-radius: 8px;
+
+    font-size: 0.8rem;
+    background: var(--white-main);
+
+    transition: 150ms;
+}
+
+.quote-edit-form textarea:focus{
+    outline: none;
+    border-color: var(--light-blue);
+    box-shadow: 0 0 4px var(--light-blue);
+}
+

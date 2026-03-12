@@ -9,6 +9,7 @@ import UserInfoProfil from '../components/UserInfoProfil';
 import StartUpInfoProfil from '../components/StartUpInfoProfil';
 import QuoteCard from '../components/QuoteCard';
 import Footer from '../components/Footer';
+import NewQuoteButton from '../components/buttons/NewQuoteButton';
 
 const Profil = () => {
 
@@ -58,16 +59,20 @@ const Profil = () => {
                         </div>
                     </div>
                     <div className='profil-quotes'>
-                        <h2><strong>Mes Citations</strong></h2>
+                        <h1>Mes Citations</h1>
+                        <NewQuoteButton user={userInfo.user} onUpdate={setUserInfo}/>
                         <div className='quote-align'>
                             {userInfo.quotes.map((quote) => (
                                 <QuoteCard 
                                     key={quote.id}
+                                    id={quote.id}
                                     logo={quote.logo} 
                                     name={quote.startUp} 
                                     firstName={quote.firstName}
                                     lastName={quote.lastName}
                                     description={quote.description}
+                                    canBeModified={true}
+                                    onUpdate={setUserInfo}
                                 />
                             ))}
                         </div>

@@ -13,13 +13,20 @@ const createQuote = async (req, res, next) => {
     if (req.user.isAdmin) {
       owner = req.body.userId;
     }
-    const newQuote = await servicesQuote.createQuote({
+    let newQuote = await servicesQuote.createQuote({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       description: req.body.description,
       userId: owner
     })
-    res.status(201).json(`La citation de ${newQuote.firstName} a été créé.`);
+    if (req.user.isAdmin) {
+      newQuote = quoteReturn.getQuoteDetailsFormatAdmin(newQuote);
+    } else {
+      newQuote = quoteReturn.getQuoteDetailsFormat(newQuote);
+    }
+    res.status(201).json({
+      message: `La citation de ${newQuote.firstName} a été créé.`,
+      quote: newQuote});
   } catch (error) {
     next(error);
   }
