@@ -41,9 +41,9 @@ adminRouteur.post('/startups', authorizationConnexion, authorizationAdmin,
   upload.fields([{name: 'logo', maxCount: 1}, {name: 'descriptionPicture', maxCount: 1}]),
   startUpsCtrl.createStartUp);
 
-adminRouteur.get('/startups/:id', authorizationConnexion, authorizationAdmin, startUpsCtrl.getStartUpById);
+adminRouteur.get('/startups/:id', authorizationConnexion, authorizationAdmin, startUpsCtrl.getStartUpByIdAdmin);
 
-adminRouteur.get('/startups', authorizationConnexion, authorizationAdmin, startUpsCtrl.getAllStartUps);
+adminRouteur.get('/startups', authorizationConnexion, authorizationAdmin, startUpsCtrl.getAllStartUpsAdmin);
 
 adminRouteur.patch('/startups/:id', authorizationConnexion, authorizationAdmin, upload.fields([
   {name: 'logo', maxCount: 1}, {name: 'descriptionPicture', maxCount: 1}]),
