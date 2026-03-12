@@ -1,6 +1,6 @@
 import '../styles/Tag.css';
 
-const Tag = ({ name = "Tag", color = "CCF2B1", active, onClick }) => {
+const Tag = ({ name = "Tag", color = "CCF2B1", active=true, onClick }) => {
     return (
         <div className="tag">
             <button

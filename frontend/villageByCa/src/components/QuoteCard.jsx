@@ -51,13 +51,23 @@ const QuoteCard = ({
     e.preventDefault();
 
     try {
+      let response = '';
       // Envoi d'une requête PATCH pour modifier uniquement les champs modifiés
-      const response = await fetch(`http://localhost:3000/auth/profil/citations/${id}`, {
-        method: 'PATCH',
-        credentials: "include",  // Envoie les cookies de session pour l'authentification
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
+      if(!loading && auth && auth.isAdmin) {
+          response = await fetch(`http://localhost:3000/admin/citations/${id}`, {
+          method: 'PATCH',
+          credentials: "include",  // Envoie les cookies de session pour l'authentification
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+      } else {
+          response = await fetch(`http://localhost:3000/auth/profil/citations/${id}`, {
+          method: 'PATCH',
+          credentials: "include",  // Envoie les cookies de session pour l'authentification
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+      }
 
       const data = await response.json();
 
@@ -102,13 +112,21 @@ const QuoteCard = ({
     e.preventDefault();
 
     try {
-
+      let response = '';
       // Envoi d'une requête DELETE pour supprimer la citation
-      const response = await fetch(`http://localhost:3000/auth/profil/citations/${id}`, {
-        method: 'DELETE',
-        credentials: "include",  // Envoie les cookies de session pour l'authentification
-        headers: { 'Content-Type': 'application/json' }
-      });
+      if(!loading && auth && auth.isAdmin) {
+          response = await fetch(`http://localhost:3000/admin/citations/${id}`, {
+          method: 'DELETE',
+          credentials: "include",  // Envoie les cookies de session pour l'authentification
+          headers: { 'Content-Type': 'application/json' }
+        });
+      } else {
+          response = await fetch(`http://localhost:3000/auth/profil/citations/${id}`, {
+          method: 'DELETE',
+          credentials: "include",  // Envoie les cookies de session pour l'authentification
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }
 
       const data = await response.json();
 

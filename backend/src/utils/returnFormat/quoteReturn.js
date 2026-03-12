@@ -16,6 +16,24 @@ function getQuoteDetailsFormat (quote) {
   }
 }
 
+// Retourne les détails d'une citation pour un admin
+function getQuoteDetailsFormatAdmin (quote) {
+  try {
+    return {
+      id: quote.id,
+      startUp: {
+        name: quote.user.startUp?.name,
+        logo: quote.user.startUp?.logo?.secureUrl,
+      },
+      firstName: quote.firstName,
+      lastName: quote.lastName,
+      description: quote.description
+    };
+  } catch (error) {
+    throw error;
+  }
+}
+
 // Retourne toutes les quotes
 function getAllQuotesFormat (quotes) {
   try {
@@ -40,5 +58,6 @@ function getAllQuotesFormat (quotes) {
 
 export default {
   getQuoteDetailsFormat,
+  getQuoteDetailsFormatAdmin,
   getAllQuotesFormat
 }

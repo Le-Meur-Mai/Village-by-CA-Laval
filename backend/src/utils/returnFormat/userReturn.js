@@ -48,7 +48,8 @@ function getAllUsersFormat (usersList) {
         id: user.id,
         name: user.name,
         email: user.email,
-        startUp: user.startup?.name
+        startUp: user.startUp?.name,
+        isAdmin: user.isAdmin
       }));
     }
   } catch (error) {

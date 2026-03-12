@@ -41,12 +41,12 @@ li {
 
 /* --- Right Part --- */
 .rightPart {
-    padding: 1rem;
     position: relative;
     display: flex;
-    flex: 0.12;
-    justify-content: space-between;
-    border: 2px solid var(--white-main);
+    justify-content: space-evenly;
+    padding: 1rem;
+    height: clamp(4rem, 6.5vw, 5rem);
+    gap: clamp(1rem, 2vw, 2rem);
 }
 
 /* --- Bottom Part --- */
@@ -55,6 +55,7 @@ li {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 1rem;
     padding: 0.8rem;
     gap: 5rem;
 }
