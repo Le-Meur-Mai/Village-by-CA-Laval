@@ -1,10 +1,14 @@
+import { useAuth } from '../contexts/AuthContext';
 import '../styles/UserInfoProfil.css';
 
 import { useState } from 'react';
 
 const UserInfoProfil = ( {user, onUpdate} ) => {
 
+    const { auth, loading } = useAuth();
+
     const [isEditing, setIsEditing] = useState(false);
+
     const [formData, setFormData] = useState({
         name: user?.name || "",
         email: user?.email || ""
@@ -33,12 +37,23 @@ const UserInfoProfil = ( {user, onUpdate} ) => {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:3000/auth/profil', {
-                method: 'PATCH',
-                credentials: "include", // Pour enregistrer les cookies crss-origin
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            });
+            let response = '';
+            if(!loading && auth && auth.isAdmin) {
+                    response = await fetch(`http://localhost:3000/admin/users/${user.id}`, {
+                    method: 'PATCH',
+                    credentials: "include", // Pour enregistrer les cookies crss-origin
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                
+            } else {
+                    response = await fetch('http://localhost:3000/auth/profil', {
+                    method: 'PATCH',
+                    credentials: "include", // Pour enregistrer les cookies crss-origin
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+            }
 
             const data = await response.json();
 
@@ -48,14 +63,18 @@ const UserInfoProfil = ( {user, onUpdate} ) => {
                 return;
             }
 
-            // Met à jour le props du parent avec les modifications, seulement pour les données utilisateur
-            onUpdate(prev => ({
-                ...prev,
-                user: {
-                    ...prev.user,
-                    ...formData
+            // Met à jour le props du parent avec les modifications
+            onUpdate(prev => {
+                if (Array.isArray(prev)) {
+                // Cas tableau : on remplace l'utilisateur modifié par ses nouvelles valeurs
+                return prev.map(prevUser => prevUser.id === user.id ? { ...prevUser, ...formData } : prevUser);
                 }
-            }));
+                // Cas objet : on met à jour uniquement le tableau utilisateur imbriqué
+                return {
+                ...prev,
+                user: { ...prev.user, ...formData }
+                };
+            });
             setResponseType("success");
             setResponseMessage(data.message || "Mise à jour réussie !");
             
@@ -67,6 +86,40 @@ const UserInfoProfil = ( {user, onUpdate} ) => {
 
         setIsEditing(false);
     };
+
+    const handleDelete = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch(`http://localhost:3000/admin/users/${user.id}`, {
+                method: 'DELETE',
+                credentials: 'include'
+            })
+
+            const data = await response.json();
+
+            // Si le serveur retourne une erreur HTTP (4xx, 5xx)
+            if (!response.ok) {
+                setResponseType("error");
+                setResponseMessage(data.message || "Une erreur est survenue.");
+                return; // On arrête ici sans fermer le formulaire
+            }
+
+            // On retire l'utilisateur supprimé de la liste parente
+            onUpdate(prev => prev.filter(prevUser => prevUser.id !== user.id));
+
+            setResponseType("success");
+            setResponseMessage(data.message || "La citation a bien été supprimé");
+
+        } catch (error) {
+            console.error(error);
+            setResponseType("error");
+            setResponseMessage("Impossible de contacter le serveur.");  
+        }
+
+        setIsEditing(false);
+
+    }
 
 
     return (
@@ -110,6 +163,9 @@ const UserInfoProfil = ( {user, onUpdate} ) => {
                     </label>
 
                     <button type="submit">Enregistrer</button>
+                    {!loading && auth && auth.isAdmin && (
+                        <button onClick={handleDelete}>Supprimer</button>
+                    )}
                     <button type="button" onClick={() => setIsEditing(false)}>
                         Annuler
                     </button>
