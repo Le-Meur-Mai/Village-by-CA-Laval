@@ -1,20 +1,17 @@
 import '../../styles/page.css'
 
+import '../../styles/AdminQuotes.css'
+
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import PresentationPage from '../../components/PresentationPage';
 import { useEffect, useState } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
 import UserInfoProfil from '../../components/UserInfoProfil';
+import NewUserButton from '../../components/buttons/NewUserButton';
 
 const AdminUsers = () => {
 
-    const { auth, login } = useAuth()
-
     const [allUsers, setAllUsers] = useState([])
-
-    const [responseType, setResponseType] = useState(null);
-    const [responseMessage, setResponseMessage] = useState("");
 
     useEffect(() => {
         const fetchAllUsers = async () => {
@@ -25,27 +22,34 @@ const AdminUsers = () => {
                 });
                 
                 const usersData = await response.json();
-
+    
                 setAllUsers(usersData);
-
+    
             } catch (error) {
                 console.error(error);
             }
         }
-        fetchAllUsers()
-    }, [login, auth]);
+
+        fetchAllUsers();
+
+    }, [])
 
     return (
         <div className="page">
             <Header />
             <main>
                 <PresentationPage title='Gestion des Utilisateurs' text=''/>
-                {allUsers.map(user => {
-                    if(!user.isAdmin) {
-                        return <UserInfoProfil key={user.id} user={user} onUpdate={setAllUsers}/>
+                <div className='new-quote-admin-section'>
+                    <NewUserButton onUpdate={setAllUsers} />
+                </div>
+                <div className='quote-align'>
+                    {allUsers
+                        .filter(user => !user.isAdmin)
+                        .map(user => (
+                            <UserInfoProfil key={user.id} user={user} onUpdate={setAllUsers}/>
+                        ))
                     }
-                }
-                )}
+                </div>
             </main>
             <Footer />
         </div>
