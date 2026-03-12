@@ -19,7 +19,11 @@ const createQuote = async (req, res, next) => {
       description: req.body.description,
       userId: owner
     })
-    newQuote = quoteReturn.getQuoteDetailsFormat(newQuote);
+    if (req.user.isAdmin) {
+      newQuote = quoteReturn.getQuoteDetailsFormatAdmin(newQuote);
+    } else {
+      newQuote = quoteReturn.getQuoteDetailsFormat(newQuote);
+    }
     res.status(201).json({
       message: `La citation de ${newQuote.firstName} a été créé.`,
       quote: newQuote});
