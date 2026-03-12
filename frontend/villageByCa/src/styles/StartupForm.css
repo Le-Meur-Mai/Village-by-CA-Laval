@@ -1,0 +1,147 @@
+/* --- FORMULAIRE GLOBAL --- */
+.edit-form-startup {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 10px;
+}
+
+.edit-form-startup label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    color: #333;
+    gap: 6px;
+}
+
+/* Inputs */
+.edit-form-startup input[type="text"],
+.edit-form-startup select,
+.edit-form-startup textarea {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--white-main);
+    font-size: 0.95rem;
+    background: var(--white-main);
+    transition: border-color 0.2s ease;
+}
+
+.edit-form-startup input[type="text"]:focus,
+.edit-form-startup select:focus,
+.edit-form-startup textarea:focus {
+    border-color: var(--green-borders);
+    outline: none;
+    background: var(--white-main);
+}
+
+/* Checkbox */
+.edit-form-startup input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+/* --- TYPES SELECTIONNÉS --- */
+.startup-type-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.startup-type-span {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 6px;
+    color: var(--white-main);
+    font-size: 0.85rem;
+    font-weight: 600;
+    gap: 6px;
+}
+
+.startup-type-button-delete {
+    background: rgba(0,0,0,0.25);
+    border: none;
+    color: var(--white-main);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0 4px;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+}
+
+.startup-type-button-delete:hover {
+    background: rgba(0,0,0,0.45);
+}
+
+/* --- TYPES À AJOUTER --- */
+.startup-type-adding {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.startup-type-span-adding {
+    padding: 6px 10px;
+    border-radius: 6px;
+    color: var(--white-main);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.startup-type-span-adding:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+.startup-allTypes-put {
+    font-size: 0.9rem;
+    color: var(--white-main);
+}
+
+/* --- IMAGES PREVIEW --- */
+.preview-img {
+    margin-top: 8px;
+    max-width: 140px;
+    max-height: 140px;
+    object-fit: contain;
+    border-radius: 8px;
+    border: 1px solid var(--grey-main);
+    background: var(--white-main);
+    padding: 6px;
+}
+
+/* --- BOUTONS --- */
+.edit-form-startup button {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.edit-form-startup button[type="submit"] {
+    background: var(--hoover-green);
+    color: var(--white-main);
+}
+
+.edit-form-startup button[type="submit"]:hover {
+    background: var(--green-borders);
+    transform: translateY(-1px);
+}
+
+.edit-form-startup button[type="button"] {
+    background: var(--hoover-green);
+    color: var(--white-main);
+}
+
+.edit-form-startup button[type="button"]:hover {
+    background: var(--green-borders);
+    transform: translateY(-1px);
+}
