@@ -1,15 +1,18 @@
 // Import des services que l'on va appeler dans les controllers
 import StartUpServices from "../services/startUpServices.js";
 import TypeServices from '../services/typeServices.js';
+import UserServices from "../services/userServices.js";
 // Import de la fonction utilitaire pour parser des champs
 import jsonParse from "../utils/jsonParse.js";
 // Importation des fonctions pour gérer le format renvoyé
 import startupReturn from "../utils/returnFormat/startupReturn.js";
 import typeReturn from '../utils/returnFormat/typeReturn.js';
+import userReturn from "../utils/returnFormat/userReturn.js";
 
 // Déclaration d'une nouvelle instance sur la classe Service
 const servicesStartUp = new StartUpServices();
 const servicesType = new TypeServices();
+const servicesUser = new UserServices();
 
 // Fonctions pour les routes Startups
 
@@ -30,7 +33,8 @@ const createStartUp = async (req, res, next) => {
         descriptionPicture: req.files?.descriptionPicture?.[0],
         types: req.body.types
       });
-      res.status(201).json(`La startup ${startUpCreated.name} a été créée.`);
+      res.status(201).json({message: `La startup ${startUpCreated.name} a été créée.`,
+        startUpCreated});
   } catch (error) {
     next(error);
   }
@@ -48,6 +52,32 @@ const getStartUpById = async (req, res, next) => {
   }
 }
 
+const getStartUpByIdAdmin = async (req, res, next) => {
+  // Enregistre l'id dans la variable id
+  try {
+    const id = req.params.id;
+    let startUp = await servicesStartUp.getStartUpById(id);
+    startUp = startupReturn.getStartupAdminDetailsFormat(startUp);
+    res.status(200).json(startUp);
+  } catch (error) {
+    next(error);
+  }
+}
+
+const getAllStartUpsAdmin = async (req, res, next) => {
+  try {
+    let startUps = await servicesStartUp.getAllStartUps();
+    startUps = startupReturn.getAllStartUpsFormat(startUps);
+    let types = await servicesType.getAllTypes();
+    types = typeReturn.getAllTypesFormat(types);
+    let users = await servicesUser.getAllUsers();
+    users = userReturn.getAllUsersSelectionFormat(users);
+    res.status(200).json({startUps: startUps, types: types, users: users});
+  } catch (error) {
+    next(error);
+  }
+}
+
 const getAllStartUps = async (req, res, next) => {
   try {
     let startUps = await servicesStartUp.getAllStartUps();
@@ -59,6 +89,7 @@ const getAllStartUps = async (req, res, next) => {
     next(error);
   }
 }
+
 
 const updateStartUp = async (req, res, next) => {
   try {
@@ -99,7 +130,9 @@ const deleteStartUp = async (req, res, next) => {
 export default {
   createStartUp,
   getStartUpById,
+  getStartUpByIdAdmin,
   getAllStartUps,
+  getAllStartUpsAdmin,
   updateStartUp,
   deleteStartUp
 }

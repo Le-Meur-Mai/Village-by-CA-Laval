@@ -1,0 +1,74 @@
+/* Carte de la popup */
+.popup-startup-card {
+    background: var(--grey-main);
+    width: 520px;
+    max-width: 90%;
+    padding: 28px 32px;
+    border-radius: 14px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+    animation: popupFadeIn 0.25s ease-out;
+    position: relative;
+
+    /* Empêche le dépassement vertical */
+    max-height: 90vh;
+    overflow-y: auto;
+
+    /* Pour un scroll plus joli */
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
+}
+
+/* Scrollbar Webkit (Chrome, Edge, Safari) */
+.popup-startup-card::-webkit-scrollbar {
+    width: 8px;
+}
+
+.popup-startup-card::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.popup-startup-card::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Titre */
+.popup-startup-card h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-align: center;
+    color: #222;
+}
+
+/* Message de réponse */
+.response-message {
+    margin-top: 18px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+.response-message.error {
+    background: #ffe5e5;
+    color: #b30000;
+}
+
+.response-message.success {
+    background: #e6ffe6;
+    color: #0f7a0f;
+}
+
+/* Animation d'apparition */
+@keyframes popupFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

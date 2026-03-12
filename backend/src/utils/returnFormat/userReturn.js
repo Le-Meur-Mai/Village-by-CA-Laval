@@ -57,7 +57,24 @@ function getAllUsersFormat (usersList) {
   }
 }
 
+function getAllUsersSelectionFormat (usersList) {
+  try {
+    if (!usersList.length) {
+      return [];
+    } else {
+      return usersList.map(user => ({
+        id: user.id,
+        name: user.name,
+        startUp: user.startUp?.name || null
+      }));
+    }
+  } catch (error) {
+    throw error;
+  }
+}
+
 export default {
   getAllUsersFormat,
-  getUserProfile
+  getUserProfile,
+  getAllUsersSelectionFormat
 }
