@@ -61,8 +61,37 @@ function getAllStartUpsIndexFormat (startUps) {
   }
 }
 
+// Retourne plus de détails pour l'admin
+
+function getStartupAdminDetailsFormat (startUp) {
+  try {
+    return {
+      id: startUp.id,
+      name: startUp.name,
+      logo: startUp.logo.secureUrl,
+      email: startUp.user.email,
+      website: startUp.website,
+      types: startUp.types.map(type => ({
+        name: type.name,
+        color: type.color,
+        id: type.id
+      })),
+      user: {
+        name: startUp.user.name,
+        id: startUp.user.id
+      },
+      descriptionPicture: startUp.descriptionPicture.secureUrl,
+      description: startUp.description
+    }
+    
+  } catch (error) {
+    throw error;
+  }
+}
+
 export default {
   getStartupDetailsFormat,
   getAllStartUpsFormat,
-  getAllStartUpsIndexFormat
+  getAllStartUpsIndexFormat,
+  getStartupAdminDetailsFormat
 }
