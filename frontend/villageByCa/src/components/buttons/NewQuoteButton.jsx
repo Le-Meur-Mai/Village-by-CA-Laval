@@ -59,41 +59,51 @@ const NewQuoteButton = ({onUpdate = null}) => {
     const handleSumbit = async (e) => {
         // Empêche le rechargement de la page à la soumission du formulaire
         e.preventDefault();
-
         try {
-        const response = await fetch(`http://localhost:3000/auth/profil/`, {
-            method: 'POST',
-            credentials: "include",  // Envoie les cookies de session pour l'authentification
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
-        });
-
-        const data = await response.json();
-
-        // Si le serveur retourne une erreur HTTP (4xx, 5xx)
-        if (!response.ok) {
-            setResponseType("error");
-            setResponseMessage(data.message || "Une erreur est survenue.");
-            return; // On arrête ici sans fermer le formulaire
-        }
-
-        const newQuote = data.quote;
-
-        onUpdate(prev => {
-            if (Array.isArray(prev)) {
-            // Cas tableau : on remplace la citation modifiée par ses nouvelles valeurs
-            return [...prev, newQuote];
+            let response = '';
+            // Utilise la route API correspondante si l'utilisateur est un utilisateur ou un admin
+            if(!loading && auth && auth.isAdmin) {
+                response = await fetch(`http://localhost:3000/admin/citations`, {
+                    method: 'POST',
+                    credentials: "include",  // Envoie les cookies de session pour l'authentification
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+            } else {
+                response = await fetch(`http://localhost:3000/auth/profil/`, {
+                    method: 'POST',
+                    credentials: "include",  // Envoie les cookies de session pour l'authentification
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
             }
-            // Cas objet : on met à jour uniquement le tableau quotes imbriqué
-            return {
-            ...prev,
-            quotes: [...prev.quotes, newQuote]
-            };
-        });
 
-        setResponseType("success");
-        setResponseMessage(data.message || "La citation a été créé !");
-        setFormData({ firstName: '', lastName: '', description: '', userId: '' });
+            const data = await response.json();
+
+            // Si le serveur retourne une erreur HTTP (4xx, 5xx)
+            if (!response.ok) {
+                setResponseType("error");
+                setResponseMessage(data.message || "Une erreur est survenue.");
+                return; // On arrête ici sans fermer le formulaire
+            }
+
+            const newQuote = data.quote;
+
+            onUpdate(prev => {
+                if (Array.isArray(prev)) {
+                // Cas tableau : on remplace la citation modifiée par ses nouvelles valeurs
+                return [...prev, newQuote];
+                }
+                // Cas objet : on met à jour uniquement le tableau quotes imbriqué
+                return {
+                ...prev,
+                quotes: [...prev.quotes, newQuote]
+                };
+            });
+
+            setResponseType("success");
+            setResponseMessage(data.message || "La citation a été créé !");
+            setFormData({ firstName: '', lastName: '', description: '', userId: '' });
 
         } catch (error) {
         // Erreur réseau ou autre exception inattendue
