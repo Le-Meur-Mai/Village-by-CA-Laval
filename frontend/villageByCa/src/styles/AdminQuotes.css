@@ -1,0 +1,18 @@
+.new-quote-admin-section {
+    margin: 1vw;
+    width: 30%;
+}
+
+.new-quote-admin-section select{
+    margin-top: 0.2rem;
+    padding: 0.6rem 0.8rem;
+
+    border: 1px solid var(--black-main);
+    border-radius: 8px;
+
+    font-size: 1rem;
+    background: var(--white-main);
+
+    transition: 150ms;
+}
+

@@ -1,6 +1,8 @@
 // Importation du fichier CSS global pour la mise en page
 import '../../styles/page.css'
 
+import '../../styles/AdminQuotes.css'
+
 // Importation des composants réutilisables de l'application
 import Header from "../../components/Header";
 import PresentationPage from '../../components/PresentationPage.jsx';
@@ -59,8 +61,9 @@ const AdminQuotes = () => {
                     title='Gestion des Citations'
                     text=''
                 />
-
-                <NewQuoteButton onUpdate={setQuotes} />
+                <div className='new-quote-admin-section'>
+                    <NewQuoteButton onUpdate={setQuotes} />
+                </div>
 
                 {/* Conteneur alignant les cartes de citations */}
                 <div className='quote-align'>
