@@ -1,0 +1,113 @@
+/* --- Carte principale du popup post --- */
+.popup-post-card {
+    background: #ffffff;
+    width: 600px;
+    max-width: 50%;
+    padding: 32px;
+    border-radius: 14px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+    animation: popupFadeIn 0.25s ease-out;
+    position: relative;
+
+    /* Empêche le débordement vertical */
+    max-height: 90vh;
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* --- Image de l'article --- */
+.popup-post-picture {
+    width: 260px;          /* Taille raisonnable */
+    max-height: 200px;     /* Limite stricte */
+    object-fit: cover;     /* Coupe proprement si besoin */
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+    padding: 6px;
+    margin: 0 auto;
+    display: block;
+}
+
+/* --- Texte --- */
+.popup-post-card p {
+    margin: 6px 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+.popup-post-card strong {
+    color: #111;
+}
+
+/* --- Boutons --- */
+.popup-post-card button {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+/* Modifier */
+.popup-post-card button:first-of-type {
+    background: #0077ff;
+    color: white;
+}
+
+.popup-post-card button:first-of-type:hover {
+    background: #005fcc;
+    transform: translateY(-1px);
+}
+
+/* Supprimer */
+.popup-post-card button:nth-of-type(2) {
+    background: #d9534f;
+    color: white;
+}
+
+.popup-post-card button:nth-of-type(2):hover {
+    background: #c9302c;
+    transform: translateY(-1px);
+}
+
+.post-description {
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;      /* empêche le scroll horizontal */
+    padding-right: 6px;
+    margin-top: 8px;
+    line-height: 1.5;
+    word-wrap: break-word;   /* casse les mots trop longs */
+    white-space: normal;     /* force les retours à la ligne */
+}
+
+/* Scrollbar plus propre */
+.post-popup-description::-webkit-scrollbar {
+    width: 6px;
+}
+
+.post-popup-description::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.post-popup-description::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* --- Animation d'apparition --- */
+@keyframes popupFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
