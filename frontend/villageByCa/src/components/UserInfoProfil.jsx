@@ -38,7 +38,7 @@ const UserInfoProfil = ( {user, onUpdate} ) => {
 
         try {
             let response = '';
-            if(!loading && auth && auth.isAdmin) {
+            if(!loading && auth && auth.isAdmin && !user.isAdmin) {
                     response = await fetch(`http://localhost:3000/admin/users/${user.id}`, {
                     method: 'PATCH',
                     credentials: "include", // Pour enregistrer les cookies crss-origin
@@ -163,7 +163,7 @@ const UserInfoProfil = ( {user, onUpdate} ) => {
                     </label>
 
                     <button type="submit">Enregistrer</button>
-                    {!loading && auth && auth.isAdmin && (
+                    {!loading && auth && auth.isAdmin && !user.isAdmin &&(
                         <button onClick={handleDelete}>Supprimer</button>
                     )}
                     <button type="button" onClick={() => setIsEditing(false)}>
