@@ -4,7 +4,11 @@
 function getUserProfile (existingUser) {
   try {
     const profile = {
-            user: {name: existingUser.name, email: existingUser.email}
+            user: {
+              name: existingUser.name, 
+              email: existingUser.email,
+              isAdmin: existingUser.isAdmin
+            }
           };
           if (existingUser.startUp) {
             profile.startUp = {
