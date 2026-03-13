@@ -74,8 +74,9 @@ const updateUserByAdmin = async (req, res, next) => {
 // Supression d'un utilisateur
 const deleteUser = async (req, res, next) => {
   try {
+    const currentUser = req.user;
     const id = req.params.id;
-    const deletedUser = await servicesUser.deleteUser(id);
+    const deletedUser = await servicesUser.deleteUser(id, currentUser);
     res.status(200).json(`Le nouvel utilisateur ${deletedUser.name} a été supprimé.`);
   } catch (error) {
     next(error);
