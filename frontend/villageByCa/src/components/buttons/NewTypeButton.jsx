@@ -1,18 +1,16 @@
-import { isValidElement, useState } from 'react';
-import '../styles/Tag.css';
+import { useState } from 'react';
 
-const Tag = ({id=null, name = "Tag", color = "CCF2B1", active=true, onClick, canBeDeleted = false, onUpdate=null }) => {
+import '../../styles/Button.css'
+import "../../styles/QuoteCard.css";
 
+const NewTypeButton = ({onUpdate = null}) => {
+    
     const [isEditing, setIsEditing] = useState(false);
-
-    // Données du formulaire, initialisées avec les props reçues
     const [formData, setFormData] = useState({
-        id: id || "",
-        name: name || "",
-        color: color || ""
-    });
+        name: '',
+        color: '#000000'
+    })
 
-    // Gestion du retour d'API : "success" | "error" | null
     const [responseType, setResponseType] = useState(null);
     const [responseMessage, setResponseMessage] = useState("");
 
@@ -24,7 +22,7 @@ const Tag = ({id=null, name = "Tag", color = "CCF2B1", active=true, onClick, can
     };
 
     const handleSumbit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
         try {
             // Enlève le # devant le code hexadecimal
@@ -32,82 +30,65 @@ const Tag = ({id=null, name = "Tag", color = "CCF2B1", active=true, onClick, can
                 ...formData,
                 color: formData.color.replace('#', '') // retire le #
             };
-            const response = await fetch(`http://localhost:3000/admin/types/${id}`, {
-                method: 'PATCH',
-                credentials: 'include', // Envoie les cookies de session pour l'authentification
+            // Utilise la route API correspondante
+            const response = await fetch(`http://localhost:3000/admin/types`, {
+                method: 'POST',
+                credentials: "include",  // Envoie les cookies de session pour l'authentification
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
 
             const data = await response.json();
 
-            // Si le serveur retourne une erreur HTTP (4xx, 5xx)
             if (!response.ok) {
                 setResponseType("error");
                 setResponseMessage(data.message || "Une erreur est survenue.");
                 return; // On arrête ici sans fermer le formulaire
             }
 
-            onUpdate(prev => 
-                prev.map(type => type.id === id ? { ...type, ...payload } : type)
-            );
+            onUpdate(prev => [...prev, data.type]);
 
             setResponseType("success");
-            setResponseMessage(data.message || "Le type a été mis à jour !");
+            setResponseMessage(data.message || "Le nouveau type a été créé !");
+            setFormData({ name: '', color: '#000000'});
+
 
         } catch (error) {
-            console.log(error);
+            // Erreur réseau ou autre exception inattendue
+            console.error(error);
+            setResponseType("error");
+            setResponseMessage("Une erreur est survenue.");
         }
 
         setIsEditing(false);
-    }
 
-    const handleDelete = async (e) => {
-        e.preventDefault();
-
-        try {
-            const response = await fetch(`http://localhost:3000/admin/types/${id}`, {
-                method: 'DELETE',
-                credentials: 'include'
-            });
-            // Si le serveur retourne une erreur HTTP (4xx, 5xx)
-            if (!response.ok) {
-                return; // On arrête ici sans fermer le formulaire
-            }
-            onUpdate(prev => 
-                prev.filter(type => type.id !== id)
-            );
-        } catch (error) {
-            console.error(error);
-        }
     }
 
     return (
-        <div className={isEditing ? "full-tag" : ""}>
-            <div className='tag'>
-                <button
-                    onClick={canBeDeleted ? () => setIsEditing(!isEditing) : onClick}
-                    className={active ? "tag-active" : "tag-inactive"}
-                    style={{ backgroundColor: `#${color}` }}
-                >
-                    {name}
-                </button>
-                {isEditing && (
-                    <div className="quote-component">
-                        <form onSubmit={handleSumbit} className="quote-edit-form">
+        <div>
+            {!isEditing && (
+                <div>
+                    <button onClick={() => setIsEditing(true)} className="button">Ajouter un Type</button>
+                </div>
+            )}
 
-                            <label>
-                            Nom :
-                            <input
-                                type="text"
-                                name="name"         // Correspond à la clé dans formData
-                                value={formData.name}
-                                onChange={handleChange}
-                                required
-                            />
-                            </label>
+            {/* MODE ÉDITION : affiché quand isEditing est true */}
+            {isEditing && (
+                <div className="quote-component">
+                    <form onSubmit={handleSumbit} className="quote-edit-form">
 
-                            <label>
+                        <label>
+                        Nom :
+                        <input
+                            type="text"
+                            name="name"         // Correspond à la clé dans formData
+                            value={formData.name}
+                            onChange={handleChange}
+                            required
+                        />
+                        </label>
+
+                        <label>
                             Couleur :
                             {/* 
                                 Conteneur relatif : sert de "ancre" pour positionner 
@@ -138,7 +119,7 @@ const Tag = ({id=null, name = "Tag", color = "CCF2B1", active=true, onClick, can
                                 <input
                                     type="color"
                                     name="color"
-                                    value={ formData.color }
+                                    value={formData.color}
                                     onChange={handleChange}
                                     required
                                     style={{
@@ -149,28 +130,27 @@ const Tag = ({id=null, name = "Tag", color = "CCF2B1", active=true, onClick, can
                                         cursor: 'pointer',    // indique que c'est cliquable
                                     }}
                                 />
-                                </div>
-                            </label>
+                            </div>
+                        </label>
 
-                            <button type="submit">Enregistrer</button>
-                            <button onClick={handleDelete}>Supprimer</button>
-                            {/* Annuler ne soumet pas le formulaire et repasse en mode lecture */}
-                            <button type="button" onClick={() => setIsEditing(false)}>
-                                Annuler
-                            </button>
-                        </form>
+                        <button type="submit">Enregistrer</button>
+                        {/* Annuler ne soumet pas le formulaire et repasse en mode lecture */}
+                        <button type="button" onClick={() => setIsEditing(false)}>
+                            Annuler
+                        </button>
 
-                    </div>
-                )}
-            {/* Message de retour après une tentative de modification */}
+                    </form>
+
+                </div>
+                )
+            }
             {responseMessage && (
                 <p className={`response-message ${responseType}`}>
-                {responseMessage}
+                    {responseMessage}
                 </p>
             )}
-            </div>
         </div>
-    );
-};
+    )
+}
 
-export default Tag;
+export default NewTypeButton;

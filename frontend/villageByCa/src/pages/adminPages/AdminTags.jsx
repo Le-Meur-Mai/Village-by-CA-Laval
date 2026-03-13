@@ -7,6 +7,7 @@ import Footer from "../../components/Footer";
 import PresentationPage from '../../components/PresentationPage';
 import { useEffect, useState } from 'react';
 import Tag from '../../components/Tag';
+import NewTypeButton from '../../components/buttons/NewTypeButton';
 
 const AdminTags = () => {
 
@@ -35,9 +36,18 @@ const AdminTags = () => {
             <Header />
             <main>
                 <PresentationPage title='Gestion des Types' text='' />
+                <div className='new-quote-admin-section'>
+                    <NewTypeButton onUpdate={setAllTypes} />
+                </div>
                 <div className='quote-align'>
                     {allTypes.map(type =>
-                        <Tag key={ type.id } name={ type.name } color={ type.color } />
+                        <Tag 
+                            key={ type.id } 
+                            id={type.id} 
+                            name={ type.name } 
+                            color={ type.color } 
+                            canBeDeleted={ true }
+                            onUpdate={setAllTypes} />
                     )}
                 </div>
     
