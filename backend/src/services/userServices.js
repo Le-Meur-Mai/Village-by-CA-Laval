@@ -83,7 +83,7 @@ export default class UserServices {
   }
 
   // DELETE Supression d'un user
-  async deleteUser(id) {
+  async deleteUser(id, currentUser) {
     try {
       return await prisma.$transaction(async (tx) => {
         const user = await this.userRepo.getUserById(id, tx);
@@ -91,7 +91,7 @@ export default class UserServices {
           throw new Errors.NotFoundError('User not found');
         }
         if (user.quotes && user.quotes.length > 0) {
-          await Promise.all(user.quotes.map(quote => this.quoteRepo.deleteQuote(quote.id)));
+          await Promise.all(user.quotes.map(quote => this.quoteRepo.deleteQuote(quote.id, currentUser)));
         }
         if (user.startUp?.id) {
           await this.startUpRepo.deleteStartUp(user.startUp.id, tx);
