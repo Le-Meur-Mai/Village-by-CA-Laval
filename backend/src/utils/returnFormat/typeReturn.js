@@ -4,6 +4,7 @@
 function getTypeDetailsFormat (type) {
   try {
     return {
+      id: type.id,
       name: type.name,
       color: type.color,
       startUps: type.startUps

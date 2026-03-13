@@ -14,12 +14,17 @@ const createType = async (req, res, next) => {
   try {
     req.body.startUps = jsonParse(req.body.startUps);
     const data = req.body;
-    const newType = await servicesType.createType({
+    let newType = await servicesType.createType({
       name: data.name,
       color: data.color,
       startUps: data.startUps
     });
-    res.status(201).json(`Le type ${newType.name} a été créé.`);
+    newType = typeReturn.getTypeDetailsFormat(newType);
+    res.status(201).json({
+      message: `Le type ${newType.name} a été créé.`,
+      type: newType
+    });
+      
   } catch (error) {
     next(error);
   }
