@@ -1,5 +1,7 @@
 import '../../styles/page.css'
 
+import '../../styles/AdminQuotes.css'
+
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import PresentationPage from '../../components/PresentationPage';
@@ -33,7 +35,7 @@ const AdminTags = () => {
             <Header />
             <main>
                 <PresentationPage title='Gestion des Types' text='' />
-                <div>
+                <div className='quote-align'>
                     {allTypes.map(type =>
                         <Tag key={ type.id } name={ type.name } color={ type.color } />
                     )}
