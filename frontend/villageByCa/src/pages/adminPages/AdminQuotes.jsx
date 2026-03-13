@@ -62,7 +62,7 @@ const AdminQuotes = () => {
                     text=''
                 />
                 <div className='new-quote-admin-section'>
-                    <NewQuoteButton onUpdate={setQuotes} />
+                    <NewQuoteButton onUpdate={setQuotes} chooseUser={ true }/>
                 </div>
 
                 {/* Conteneur alignant les cartes de citations */}

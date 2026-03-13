@@ -3,7 +3,7 @@ import { useAuth } from "../../contexts/AuthContext.jsx";
 import '../../styles/Button.css'
 import "../../styles/QuoteCard.css";
 
-const NewQuoteButton = ({onUpdate = null}) => {
+const NewQuoteButton = ({chooseUser = false, onUpdate = null}) => {
 
     const { auth, loading } = useAuth();
     
@@ -151,7 +151,7 @@ const NewQuoteButton = ({onUpdate = null}) => {
                     </label>
 
                     {!loading && auth &&
-                        auth.isAdmin && (
+                        auth.isAdmin && chooseUser && (
                             <label>
                                 Utilisateur :
                                 <select

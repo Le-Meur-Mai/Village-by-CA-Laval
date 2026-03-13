@@ -21,7 +21,6 @@ import AdminPartners from './pages/adminPages/AdminPartners.jsx';
 import AdminPosts from './pages/adminPages/AdminPosts.jsx';
 import AdminQuotes from './pages/adminPages/AdminQuotes.jsx';
 import AdminTags from './pages/adminPages/AdminTags.jsx';
-import AdminProfil from './pages/adminPages/AdminProfil.jsx';
 
 const App = () => {
   return (
@@ -48,7 +47,7 @@ const App = () => {
         <Route path='/admin/posts' element={<AdminPosts />} />
         <Route path='/admin/citations' element={<AdminQuotes />} />
         <Route path='/admin/types' element={<AdminTags />} />
-        <Route path='/admin/profil' element={<AdminProfil />} />
+        <Route path='/admin/profil' element={<Profil />} />
       </Routes>
     </>
   )

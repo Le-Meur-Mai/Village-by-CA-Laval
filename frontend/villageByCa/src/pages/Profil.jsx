@@ -60,7 +60,7 @@ const Profil = () => {
                     </div>
                     <div className='profil-quotes'>
                         <h1>Mes Citations</h1>
-                        <NewQuoteButton user={userInfo.user} onUpdate={setUserInfo}/>
+                        <NewQuoteButton chooseUser={ false } onUpdate={setUserInfo}/>
                         <div className='quote-align'>
                             {userInfo.quotes.map((quote) => (
                                 <QuoteCard 

@@ -11,8 +11,8 @@ const AdminWelcomePage = () => {
         <div className='page'>
             <Header/>
            <PresentationPage
-           title="Bonjour Amandine"
-           text="Que voulez-vous faire aujourd'hui ?"/>
+           title="Que voulez-vous faire aujourd'hui ?"
+           text=""/>
            <Link to='/admin/utilisateurs' className='section-admin-title-left'><h2>Gestion des utilisateurs</h2></Link>
            <Link to='/admin/startups' className='section-admin-title-left'><h2>Gestion des startups</h2></Link>
            <Link to='/admin/partenaires' className='section-admin-title-left'><h2>Gestion des partenaires</h2></Link>
