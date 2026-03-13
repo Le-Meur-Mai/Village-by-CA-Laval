@@ -35,7 +35,9 @@ const Agenda = () => {
                 <h2 className='section-title-right'>Actualités du Village</h2>
                 <div className='quote-align'>
                     {posts.map(post => (
-                        <PostCard post={post}/>
+                        <PostCard post={post}
+                        text={'Lire'}
+                        path={`/agenda/${post.id}`}/>
                     ))}
                 </div>
             </main>
