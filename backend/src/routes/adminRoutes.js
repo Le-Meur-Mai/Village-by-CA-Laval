@@ -102,7 +102,7 @@ adminRouteur.delete('/articles/:id', authorizationConnexion, authorizationAdmin,
 // --- LOCATIONS --- //
 
 // Multer va chercher le champs pictures avec plusieurs fichiers que l'on met dans req.files
-adminRouteur.post('/locations', authorizationConnexion, authorizationAdmin, upload.array('pictures', 5), locationCtrl.createLocation);
+adminRouteur.post('/locations', authorizationConnexion, authorizationAdmin, upload.array('newPictures', 5), locationCtrl.createLocation);
 
 adminRouteur.get('/locations/:id', authorizationConnexion, authorizationAdmin, locationCtrl.getLocationById);
 
