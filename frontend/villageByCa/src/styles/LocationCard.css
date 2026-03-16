@@ -13,7 +13,7 @@
 
 .location-card {
   width: 100%;
-  max-width: 320px;
+  width: 320px;
   border: 2px solid var(--black-main);
   border-radius: 12px;
   overflow: hidden;
