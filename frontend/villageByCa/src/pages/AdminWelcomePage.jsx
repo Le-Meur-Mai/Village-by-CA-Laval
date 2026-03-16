@@ -16,7 +16,7 @@ const AdminWelcomePage = () => {
            <Link to='/admin/utilisateurs' className='section-admin-title-left'><h2>Gestion des utilisateurs</h2></Link>
            <Link to='/admin/startups' className='section-admin-title-left'><h2>Gestion des startups</h2></Link>
            <Link to='/admin/partenaires' className='section-admin-title-left'><h2>Gestion des partenaires</h2></Link>
-           <Link to='/admin' className='section-admin-title-left'><h2>Gestion des évènements (à venir)</h2></Link>
+           <Link to='/admin/locations' className='section-admin-title-left'><h2>Gestion des locations</h2></Link>
            <Link to='/admin/posts' className='section-admin-title-left'><h2>Gestion des posts</h2></Link>
            <Link to='/admin/citations' className='section-admin-title-left'><h2>Gestion des citations</h2></Link>
            <Link to='/admin/types' className='section-admin-title-left'><h2>Gestion des types</h2></Link>
