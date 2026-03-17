@@ -14,33 +14,9 @@ const PostPopUp = ({ post, onClose, onUpdate, onDelete }) => {
     // Mise en place d'un valeur qui va confirmer le DELETE 
     const [confirmDelete, setConfirmDelete] = useState(false);
     
-    // Valeurs des champs texte du formulaire
-    const [formData, setFormData] = useState({
-        title: post?.title || "",
-        description: post?.description || ""
-    });
-    
-    // Fichier image sélectionné par l'utilisateur (pas encore envoyée au serveur)
-    const [pictureFile, setPictureFile] = useState(null);
-    
-    // URLs des images affichées (object URL local pendant la sélection, URL serveur après sauvegarde)
-    // Gérées localement pour éviter de dépendre du parent et ne pas avoir à recharger la page
-    const [previewPicture, setPreviewPicture] = useState(post?.picture || "");
-    
     // Message de retour après soumission du formulaire ("success" ou "error")
     const [responseType, setResponseType] = useState(null);
     const [responseMessage, setResponseMessage] = useState("");
-    
-    // Resynchronise formData si le parent met à jour `partner`,
-    // mais seulement quand on n'est pas en train d'éditer (pour ne pas écraser la saisie en cours)
-    useEffect(() => {
-        if (post && !isEditing) {
-            setFormData({
-                title: post.title || "",
-                description: post.description || ""
-            });
-        }
-    }, [post]);
 
     // Fonction pour gérer le Delete du partenaire:
     const handleDelete = async () => {
@@ -64,14 +40,6 @@ const PostPopUp = ({ post, onClose, onUpdate, onDelete }) => {
         }
     };
     
-    // Met à jour formData dynamiquement selon le champ modifié (name, website, description)
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
-    };
-    
     // Soumission du formulaire : envoie les données au serveur puis met à jour l'affichage
     const handleSubmit = async (fd, updatedData) => {
 
@@ -93,19 +61,12 @@ const PostPopUp = ({ post, onClose, onUpdate, onDelete }) => {
             
             // Le serveur renvoie les nouvelles URLs du logo si il a été modifié.
             // Sinon on conserve les previews actuelles.
-            const newPicture = data.updatedPost?.picture ?? previewPicture;
-            
-            // Mise à jour des previews locales avec les URLs définitives du serveur
-            // → l'image s'affiche correctement sans rechargement de page
-            setPreviewPicture(newPicture);
-            
-            // On vide le fichier sélectionné, il a été envoyé
-            setPictureFile(null);
-            
+            const newPicture = data.updatedPost?.picture.secureUrl ?? previewPicture;
+
             // On remonte les nouvelles données au composant parent pour garder son state à jour
             onUpdate(prev => prev.map(
                 postElement => postElement.id === post.id 
-                    ? {...postElement, ...updatedData, picture: newPicture}  // ← updatedData au lieu de formData
+                    ? {...postElement, ...updatedData, picture: newPicture}
                     : postElement
             ));
             
@@ -135,12 +96,12 @@ const PostPopUp = ({ post, onClose, onUpdate, onDelete }) => {
                 {!isEditing && (
                     <>
                         {/* Images gérées via les previews locales pour refléter les dernières modifications */}
-                        <img src={previewPicture || villageByCa} alt="image de l'article" className="popup-post-picture" />
+                        <img src={post.picture || villageByCa} alt="image de l'article" className="popup-post-picture" />
 
                         <div>
-                            <p><strong>Titre :</strong> {formData.title || post.title}</p>
+                            <p><strong>Titre :</strong> {post.title}</p>
                             <div className="post-popup-description">
-                                <p>{formData.description || post.description}</p>
+                                <p>{post.description}</p>
                             </div>
                         </div>
 
@@ -162,7 +123,7 @@ const PostPopUp = ({ post, onClose, onUpdate, onDelete }) => {
                 {/* ── Mode édition ── */}
                     {isEditing && (
                         <PostForm
-                            initialData={{...post, picture: previewPicture}}
+                            initialData={post}
                             onSubmit={handleSubmit}
                             onCancel={() => setIsEditing(false)}
                             required={false}
