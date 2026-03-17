@@ -12,43 +12,9 @@ const StartupPopUp = ({ startup, types, users, onClose, onUpdate, onDelete }) =>
     // Mise en place d'un valeur qui va confirmer le DELETE 
     const [confirmDelete, setConfirmDelete] = useState(false);
     
-    // Valeurs des champs texte du formulaire
-    const [formData, setFormData] = useState({
-        name: startup?.name || "",
-        website: startup?.website || "",
-        isAlumni: startup?.isAlumni ?? false,
-        description: startup?.description || "",
-        userId: startup?.user?.id || "",
-        types: startup?.types || []  
-    });
-    
-    // Fichier image sélectionnée par l'utilisateur (pas encore envoyée au serveur)
-    const [logoFile, setLogoFile] = useState(null);
-    const [descriptionPictureFile, setDescriptionPictureFile] = useState(null);
-    
-    // URLs des images affichées (object URL local pendant la sélection, URL serveur après sauvegarde)
-    // Gérées localement pour éviter de dépendre du parent et ne pas avoir à recharger la page
-    const [previewLogo, setPreviewLogo] = useState(startup?.logo || "");
-    const [previewDescriptionPicture, setPreviewDescriptionPicture] = useState(startup?.descriptionPicture || "");
-    
     // Message de retour après soumission du formulaire ("success" ou "error")
     const [responseType, setResponseType] = useState(null);
     const [responseMessage, setResponseMessage] = useState("");
-    
-    // Resynchronise formData si le parent met à jour `partner`,
-    // mais seulement quand on n'est pas en train d'éditer (pour ne pas écraser la saisie en cours)
-    useEffect(() => {
-        if (startup && !isEditing) {
-            setFormData({
-                name: startup.name || "",
-                isAlumni: startup.isAlumni ?? false,
-                website: startup.website || "",
-                description: startup.description || "",
-                userId: startup.user?.id || "",
-                types: startup.types || []
-            });
-        }
-    }, [startup]);
 
     // Fonction pour gérer le Delete du partenaire:
     const handleDelete = async () => {
@@ -72,14 +38,6 @@ const StartupPopUp = ({ startup, types, users, onClose, onUpdate, onDelete }) =>
         }
     };
     
-    // Met à jour formData dynamiquement selon le champ modifié (name, website, description)
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
-    };
-    
     // Soumission du formulaire : envoie les données au serveur puis met à jour l'affichage
     const handleSubmit = async (fd, updatedData) => {
 
@@ -100,23 +58,11 @@ const StartupPopUp = ({ startup, types, users, onClose, onUpdate, onDelete }) =>
             }
             
             // Le serveur renvoie les nouvelles URLs si elles été modifiées.
-            // Sinon on conserve les previews actuelles.
-            const newLogo = data.updatedStartUp?.logo ?? previewLogo;
-            const newDescriptionPicture = data.updatedStartUp.descriptionPicture ?? previewDescriptionPicture;
-
-            
-            // Mise à jour des previews locales avec les URLs définitives du serveur
-            // → l'image s'affiche correctement sans rechargement de page
-            setPreviewLogo(newLogo);
-            setPreviewDescriptionPicture(newDescriptionPicture);
+            const newLogo = data.updatedStartUp?.logo;
+            const newDescriptionPicture = data.updatedStartUp.descriptionPicture;
 
             // updatedData peut contenir les nouveaux types renvoyés par le serveur
-            const newTypes = data.updatedStartUp?.types ?? formData.types;
-            setFormData(prev => ({ ...prev, ...updatedData, types: newTypes }));
-            
-            // On vide le fichier sélectionné, il a été envoyé
-            setLogoFile(null);
-            setDescriptionPictureFile(null);
+            const newTypes = data.updatedStartUp?.types;
             
             // On remonte les nouvelles données au composant parent pour garder son state à jour
             onUpdate(prev => prev.map(
@@ -139,9 +85,9 @@ const StartupPopUp = ({ startup, types, users, onClose, onUpdate, onDelete }) =>
     };
 
     // Nom du propriétaire actuel pour l'affichage en mode lecture
-    const currentOwnerName = users?.find(u => u.id === formData.userId)?.name
+    const currentOwnerName = users?.find(u => u.id === startup.userId)?.name
         || startup.user?.name
-        || formData.userId;
+        || "Inconnu";
     
     if (!startup) {
         return null;
@@ -156,17 +102,17 @@ const StartupPopUp = ({ startup, types, users, onClose, onUpdate, onDelete }) =>
                 {!isEditing && (
                     <>
                         {/* Images gérées via les previews locales pour refléter les dernières modifications */}
-                        <img src={previewLogo} alt="logo" className="popup-startup-logo" />
+                        <img src={startup.logo} alt="logo" className="popup-startup-logo" />
 
                         <div>
-                            <p><strong>Nom :</strong> {formData.name || startup.name}</p>
-                            <p><strong>Site :</strong> {formData.website || startup.website}</p>
-                            <p><strong>Alumni :</strong> {formData.isAlumni || startup.isAlumni ? "Oui" : "Non"}</p>
+                            <p><strong>Nom :</strong> {startup.name}</p>
+                            <p><strong>Site :</strong> {startup.website}</p>
+                            <p><strong>Alumni :</strong> {startup.isAlumni ? "Oui" : "Non"}</p>
                             <p><strong>Propriétaire :</strong> {currentOwnerName}</p>
                             <div className='startup-type-form-popup'>
                                 <strong>Types :</strong>
-                                {formData.types.length > 0 ? (
-                                    formData.types.map(type => (
+                                {startup.types.length > 0 ? (
+                                    startup.types.map(type => (
                                         <span
                                             key={type.id}
                                             style={{
@@ -181,8 +127,8 @@ const StartupPopUp = ({ startup, types, users, onClose, onUpdate, onDelete }) =>
                                     <span>Aucun type</span>
                                 )}
                             </div>
-                            <img src={previewDescriptionPicture} alt="descriptionPicture" className="popup-startup-decriptionPicture" />
-                            <p><strong>Description : </strong>{formData.description || startup.description}</p>
+                            <img src={startup.descriptionPicture} alt="descriptionPicture" className="popup-startup-decriptionPicture" />
+                            <p><strong>Description : </strong>{startup.description}</p>
                         </div>
 
                         <button onClick={() => setIsEditing(true)}>
@@ -203,7 +149,7 @@ const StartupPopUp = ({ startup, types, users, onClose, onUpdate, onDelete }) =>
                 {/* ── Mode édition ── */}
                     {isEditing && (
                         <StartupForm
-                            initialData={{...startup, logo: previewLogo}}
+                            initialData={startup}
                             allTypes={types}
                             allUsers={users}
                             onSubmit={handleSubmit}
