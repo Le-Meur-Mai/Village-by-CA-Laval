@@ -4,6 +4,7 @@
 function getLocationDetailsFormat (location) {
   try {
     return {
+      id: location.id,
       title: location.title,
       pictures: location.pictures.map(picture => ({
         id: picture.id,

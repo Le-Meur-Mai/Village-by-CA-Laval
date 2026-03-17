@@ -13,7 +13,7 @@ const createLocation = async (req, res, next) => {
   try {
     req.body.price = jsonParse(req.body.price);
     req.body.size = jsonParse(req.body.size);
-    const newLocation = await servicesLocation.createLocation(
+    let newLocation = await servicesLocation.createLocation(
       {
         title: req.body.title,
         description: req.body.description,
@@ -22,7 +22,10 @@ const createLocation = async (req, res, next) => {
         pictures: req.files
       }
     )
-    res.status(201).json(`La location ${newLocation.title} a été créée.`);
+    newLocation = locationReturn.getLocationDetailsFormat(newLocation);
+    res.status(201).json({message: `La location ${newLocation.title} a été créée.`,
+      newLocation}
+    );
   } catch (error) {
     next(error);
   }
@@ -63,11 +66,12 @@ const updateLocation = async (req, res, next) => {
     });
     const id = req.params.id;
     const newData = req.body;
-    newData.newPictures = req.files;
     // On récupère les nouvelles images
     newData.newPictures = req.files;
-    const updatedLocation = await servicesLocation.updateLocation(id, newData);
-    res.status(200).json(`La location ${updatedLocation.title} a été mise à jour.`);
+    let updatedLocation = await servicesLocation.updateLocation(id, newData);
+    updatedLocation = locationReturn.getLocationDetailsFormat(updatedLocation);
+    res.status(200).json({message: `La location ${updatedLocation.title} a été mise à jour.`,
+      updatedLocation});
   } catch (error) {
     next(error);
   }
@@ -77,8 +81,10 @@ const updateLocation = async (req, res, next) => {
 const deleteLocation = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const deletedLocation = await servicesLocation.deleteLocation(id);
-    res.status(200).json(`La location ${deletedLocation.title} a été suprimée .`);
+    const location = await servicesLocation.deleteLocation(id);
+    res.status(200).json({message:`La location ${location.title} a été suprimée .`,
+      location}
+    );
   } catch (error) {
     next(error);
   }

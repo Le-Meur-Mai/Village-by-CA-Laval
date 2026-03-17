@@ -18,6 +18,7 @@ import AdminWelcomePage from './pages/AdminWelcomePage.jsx';
 import AdminUsers from './pages/adminPages/AdminUsers.jsx';
 import AdminStartups from './pages/adminPages/AdminStartups.jsx';
 import AdminPartners from './pages/adminPages/AdminPartners.jsx';
+import AdminLocations from './pages/adminPages/AdminLocations.jsx';
 import AdminPosts from './pages/adminPages/AdminPosts.jsx';
 import AdminQuotes from './pages/adminPages/AdminQuotes.jsx';
 import AdminTags from './pages/adminPages/AdminTags.jsx';
@@ -44,6 +45,7 @@ const App = () => {
         <Route path='/admin/utilisateurs' element={<AdminUsers />} />
         <Route path='/admin/startups' element={<AdminStartups />} />
         <Route path='/admin/partenaires' element={<AdminPartners />} />
+        <Route path='/admin/locations' element={<AdminLocations />} />
         <Route path='/admin/posts' element={<AdminPosts />} />
         <Route path='/admin/citations' element={<AdminQuotes />} />
         <Route path='/admin/types' element={<AdminTags />} />

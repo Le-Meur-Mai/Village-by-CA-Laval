@@ -46,7 +46,7 @@ const Locaux = () => {
                                 price={location.price}
                                 size={location.size}
                                 picture={location.picture}
-                                id={location.id}
+                                link={`http://localhost:5173/locations/${location.id}`}
                                 />
                     ))}
                 </div>

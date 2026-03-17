@@ -1,0 +1,26 @@
+/* Bouton supprimer image */
+.delete-location-pictures-button {
+    border: none;
+    border-radius: 50%;
+    background: var(--green-borders);
+    cursor: pointer;
+    font-size: 14px;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    justify-content: center; /*Le centrer horizontalement*/
+    align-items: center; /*Le centrer verticalement*/
+    transition: background 0.2s ease;
+}
+
+.delete-location-pictures-button:hover {
+    background: var(--green--hoover);
+}
+
+/*Preview des images*/
+.pictures-location-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+}

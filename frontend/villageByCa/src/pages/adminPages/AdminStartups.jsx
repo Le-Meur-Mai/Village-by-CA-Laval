@@ -111,11 +111,11 @@ const AdminStartups = () => {
                                 // met à jour aussi la popup avec les nouvelles données
                                 setPopupData(prev => ({
                                     ...prev,
-                                    ...updater(startups).find(p => p.id === popupData.id)
+                                    ...updater(startups).find(s => s.id === popupData.id)
                                 }));
                             }}
                             // On remonte le DELETE au composant parent
-                            onDelete={(id) => setStartups(prev => prev.filter(p => p.id !== id))}
+                            onDelete={(id) => setStartups(prev => prev.filter(s => s.id !== id))}
                         />
                     )}
             </main>

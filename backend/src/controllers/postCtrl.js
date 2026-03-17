@@ -13,7 +13,9 @@ const createPost = async (req, res, next) => {
       description: req.body.description,
       picture: req.file
     });
-    res.status(201).json(`Le post ${newPost.title} a été créé.`);
+    res.status(201).json({message: `Le post ${newPost.title} a été créé.`,
+      newPost}
+  );
   } catch (error) {
     next(error);
   }
@@ -49,7 +51,8 @@ const updatePost = async (req, res, next) => {
     const data = req.body;
     data.picture = req.file;
     const updatedPost = await servicesPost.updatePost(id, data);
-    res.status(200).json(`Le post ${updatedPost.title} a été mis à jour.`);
+    res.status(200).json({message: `Le post ${updatedPost.title} a été mis à jour.`,
+      updatedPost});
   } catch (error) {
     next(error);
   }

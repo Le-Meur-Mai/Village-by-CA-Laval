@@ -77,7 +77,10 @@ const Index = () => {
                 <h3 className='section-title-left'>Actualités</h3>
                 <div className='quote-align'>
                     {posts.map(post => (
-                        <PostCard post={post}/>
+                        <PostCard
+                        post={post}
+                        text='Lire'
+                        path={`/agenda/${post.id}`}/>
                     ))}
                 </div>
                 <div className="paragraph-center button-with-margin-bottom">

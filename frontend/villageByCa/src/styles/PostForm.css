@@ -1,0 +1,39 @@
+/* --- FORMULAIRE GLOBAL --- */
+.edit-form-post {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 10px;
+}
+
+.edit-form-post label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    color: #333;
+    gap: 6px;
+}
+
+/* Inputs */
+.edit-form-post input[type="text"],
+.edit-form-post textarea {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+    background: #fafafa;
+    transition: border-color 0.2s ease;
+}
+
+.edit-form-post input[type="text"]:focus,
+.edit-form-post textarea:focus {
+    border-color: #0077ff;
+    outline: none;
+    background: #fff;
+}
+
+/* Zone de texte */
+.edit-form-post textarea {
+    resize: vertical;
+    min-height: 100px;
+}
