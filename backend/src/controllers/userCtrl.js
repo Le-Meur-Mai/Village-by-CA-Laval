@@ -12,6 +12,8 @@ const createUser = async (req, res, next) => {
       email: req.body.email,
       password: req.body.password
     });
+    /*On veut un format similaire à celui du getAllUsersFormat donc on envoie notre
+    nouveau user dans un tableau au lieu de nous répéter dans le fichier returnFormat.*/ 
     newUser = userReturn.getAllUsersFormat([newUser]);
     res.status(201).json({
       message: `Le nouvel utilisateur ${newUser[0].name} a été créé.`,

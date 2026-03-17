@@ -5,6 +5,7 @@
 function getPostDetailsFormat (post) {
   try {
     return {
+      id: post.id,
       title: post.title,
       picture: post.picture?.secureUrl,
       description: post.description,
