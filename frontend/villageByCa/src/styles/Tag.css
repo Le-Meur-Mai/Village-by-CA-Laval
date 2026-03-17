@@ -1,3 +1,9 @@
+.full-tag {
+    border: 2px solid black;
+    border-radius: 1.5vw;
+    background-color: var(--grey-main);
+}
+
 .tag {
     display: inline-block;
 }
@@ -26,4 +32,13 @@
 
 .tag-inactive {
     opacity: 0.6;
+}
+
+.tag-delete-button {
+    cursor: pointer;
+    background-color: red;
+    font-size: 1rem;
+    border-radius: 2vw;
+    border: 2px solid var(--black-main);
+    transition: 180ms;
 }
