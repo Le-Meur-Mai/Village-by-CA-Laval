@@ -1,5 +1,6 @@
 import '../styles/page.css';
 
+import alternant from '../assets/user-male-circle.jpg';
 import amandine from '../assets/Amandine.jpeg';
 import events from '../assets/Events.png';
 
@@ -50,9 +51,9 @@ const Index = () => {
                     image={amandine}
                     job="Maire du Village by CA"/>
                     <CardStaff
-                    name="Amandine Chemin"
-                    image={amandine}
-                    job="Maire du Village by CA"/>
+                    name="Alternant"
+                    image={alternant}
+                    job="Assistant au Maire du Village by CA"/>
                 </div>
                 <h3 className='section-title-left'>Nous les accompagnons</h3>
                 <StartupCarrousel
