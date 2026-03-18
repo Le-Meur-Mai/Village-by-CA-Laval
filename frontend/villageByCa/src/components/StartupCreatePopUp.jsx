@@ -22,6 +22,7 @@ const StartupCreatePopUp = ({ onClose, onCreate, types, users }) => {
                 setResponseMessage(data.message || "Une erreur est survenue.");
                 return;
             }
+            data.startUpCreated.logo = data.startUpCreated.logo.secureUrl;
             onCreate(data.startUpCreated); // on remonte la nouvelle startup au parent
             onClose();
         } catch (error) {

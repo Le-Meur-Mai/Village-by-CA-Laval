@@ -2,7 +2,9 @@
   position: relative;
   width: 100%;
   max-width: 800px; /* largeur max du conteneur */
-  height: 500px; /* hauteur max du conteneur */
+  flex-shrink: 0; /* interdit au flex de réduire */
+  height: 350px; 
+  padding: 0.2rem;
   margin: 0 auto; /* centre le carousel */
   display: flex;
   justify-content: center;

@@ -1,6 +1,6 @@
 .post-card {
-  width: 23rem;
-  height: 25rem;
+  width: 25rem;
+  height: 30rem;
   background: var(--white-main);
   border: 2px solid var(--black-main);
   border-radius: 0.2rem;

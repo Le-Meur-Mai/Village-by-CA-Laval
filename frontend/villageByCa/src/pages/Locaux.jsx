@@ -36,7 +36,8 @@ const Locaux = () => {
                     se développer et créer un réseau. C’est un cadre idéal pour rassembler et développer 
                     votre startup." />
                 <h2 className='section-title-left'>Les Locaux:</h2>
-                <img className='paragraph-center' src={video} alt="Découverte des bureaux du Village by CA"/>
+                <img className='paragraph-center' src={video} alt="Découverte des bureaux du Village by CA"
+                style={{ width: "800px", height: "auto" }}/>
                 <h2 className='section-title-right'>Location de salles/bureaux:</h2>
                 <div className="locations-container">
                     {locations.map(location => (

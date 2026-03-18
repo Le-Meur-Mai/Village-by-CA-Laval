@@ -23,6 +23,10 @@ export default class UserServices {
   // POST Création d'un user
   async createUser(data) {
     try {
+      const user = await this.userRepo.findUserByEmail(data.email);
+      if (user) {
+        throw new Errors.ValidationError("Cet email est déjà utilisé.");
+      }
       // Crée une nouvelle instance pour vérifier la conformité des données
       new User(data);
       data.password = await hashPassword(data.password); 
@@ -62,6 +66,11 @@ export default class UserServices {
       const existingUser = await this.userRepo.getUserById(id);
       if (!existingUser) {
         throw new Errors.NotFoundError('User not found');
+      }
+
+      const user = await this.userRepo.findUserByEmail(data.email);
+      if (user) {
+        throw new Errors.ValidationError("Cet email est déjà utilisé.");
       }
 
       // Avant de modifier le mot de passe, vérifier que c'est bien un admin.

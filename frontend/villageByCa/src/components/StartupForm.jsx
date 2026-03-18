@@ -53,7 +53,7 @@ const StartupForm = ({ initialData = {}, allTypes = [], allUsers = [], onSubmit,
     };
 
     // Nom du propriétaire actuel pour l'affichage par défaut du select
-    const currentUserId = allUsers.find(user => user.id === formData.userId);
+    const currentUserId = formData.userId;
 
     // Garde les users sans startup + le propriétaire actuel (update)
     const availableUsers = allUsers.filter(u => !u.startUp || u.id === currentUserId);

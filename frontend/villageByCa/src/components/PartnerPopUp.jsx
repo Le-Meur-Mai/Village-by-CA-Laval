@@ -1,7 +1,7 @@
 import "../styles/StartupPopUp.css";
 import '../styles/StartUpInfoProfil.css';
 import "../styles/PopUpPartnerCard.css";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import PartnerForm from './PartnerForm.jsx';
 
 const PartnerPopUp = ({ partner, onClose, onUpdate, onDelete }) => {
@@ -11,38 +11,10 @@ const PartnerPopUp = ({ partner, onClose, onUpdate, onDelete }) => {
 
     // Mise en place d'un valeur qui va confirmer le DELETE 
     const [confirmDelete, setConfirmDelete] = useState(false);
-    
-    // Valeurs des champs texte du formulaire
-    const [formData, setFormData] = useState({
-        name: partner?.name || "",
-        website: partner?.website || "",
-        description: partner?.description || "",
-        financialAid: partner?.financialAid || ""
-    });
-    
-    // Fichier image sélectionnéé par l'utilisateur (pas encore envoyée au serveur)
-    const [logoFile, setLogoFile] = useState(null);
-    
-    // URLs des images affichées (object URL local pendant la sélection, URL serveur après sauvegarde)
-    // Gérées localement pour éviter de dépendre du parent et ne pas avoir à recharger la page
-    const [previewLogo, setPreviewLogo] = useState(partner?.logo || "");
-    
+ 
     // Message de retour après soumission du formulaire ("success" ou "error")
     const [responseType, setResponseType] = useState(null);
     const [responseMessage, setResponseMessage] = useState("");
-    
-    // Resynchronise formData si le parent met à jour `partner`,
-    // mais seulement quand on n'est pas en train d'éditer (pour ne pas écraser la saisie en cours)
-    useEffect(() => {
-        if (partner && !isEditing) {
-            setFormData({
-                name: partner.name || "",
-                website: partner.website || "",
-                description: partner.description || "",
-                financialAid: partner.financialAid || ""
-            });
-        }
-    }, [partner]);
 
     // Fonction pour gérer le Delete du partenaire:
     const handleDelete = async () => {
@@ -64,14 +36,6 @@ const PartnerPopUp = ({ partner, onClose, onUpdate, onDelete }) => {
             setResponseType("error");
             setResponseMessage("Impossible de contacter le serveur.");
         }
-    };
-    
-    // Met à jour formData dynamiquement selon le champ modifié (name, website, description)
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
     };
     
     // Soumission du formulaire : envoie les données au serveur puis met à jour l'affichage
@@ -97,17 +61,10 @@ const PartnerPopUp = ({ partner, onClose, onUpdate, onDelete }) => {
             // Sinon on conserve les previews actuelles.
             const newLogo = data.updatedPartner?.logo ?? previewLogo;
             
-            // Mise à jour des previews locales avec les URLs définitives du serveur
-            // → l'image s'affiche correctement sans rechargement de page
-            setPreviewLogo(newLogo);
-            
-            // On vide le fichier sélectionné, il a été envoyé
-            setLogoFile(null);
-            
             // On remonte les nouvelles données au composant parent pour garder son state à jour
             onUpdate(prev => prev.map(
                 partnerElement => partnerElement.id === partner.id 
-                    ? {...partnerElement, ...updatedData, logo: newLogo}  // ← updatedData au lieu de formData
+                    ? {...partnerElement, ...updatedData, logo: newLogo}
                     : partnerElement
             ));
             
@@ -137,13 +94,13 @@ const PartnerPopUp = ({ partner, onClose, onUpdate, onDelete }) => {
                 {!isEditing && (
                     <>
                         {/* Images gérées via les previews locales pour refléter les dernières modifications */}
-                        <img src={previewLogo} alt="logo" className="popup-partner-logo" />
+                        <img src={partner.logo} alt="logo" className="popup-partner-logo" />
 
                         <div>
-                            <p><strong>Nom :</strong> {formData.name || partner.name}</p>
-                            <p><strong>Site :</strong> {formData.website || partner.website}</p>
-                            <p><strong>Aide financière :</strong> {formData.financialAid || partner.financialAid}</p>
-                            <p>{formData.description || partner.description}</p>
+                            <p><strong>Nom :</strong> {partner.name}</p>
+                            <p><strong>Site :</strong> {partner.website}</p>
+                            <p><strong>Aide financière :</strong> {partner.financialAid}</p>
+                            <p>{partner.description}</p>
                         </div>
 
                         <button onClick={() => setIsEditing(true)}>
@@ -164,7 +121,7 @@ const PartnerPopUp = ({ partner, onClose, onUpdate, onDelete }) => {
                 {/* ── Mode édition ── */}
                     {isEditing && (
                         <PartnerForm
-                            initialData={{...partner, logo: previewLogo}}
+                            initialData={partner}
                             onSubmit={handleSubmit}
                             onCancel={() => setIsEditing(false)}
                             required={false}

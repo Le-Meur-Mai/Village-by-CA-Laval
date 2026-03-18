@@ -20,7 +20,8 @@ const PostCreatePopUp = ({ onClose, onCreate }) => {
                 setResponseMessage(data.message || "Une erreur est survenue.");
                 return;
             }
-            onCreate(data.newPost); // on remonte le nouveau partenaire au parent
+            data.newPost.picture = data.newPost.picture?.secureUrl;
+            onCreate(data.newPost); // on remonte le nouveau post au parent
             onClose();
         } catch (error) {
             setResponseType("error");
