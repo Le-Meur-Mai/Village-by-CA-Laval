@@ -125,7 +125,7 @@ const UserInfoProfil = ( {user, onUpdate} ) => {
     return (
         <div className="user-card">
     
-            <h2><strong>Mon Profil</strong></h2>
+            <h2><strong>Profil</strong></h2>
 
             {!isEditing && (
                 <>
