@@ -10,12 +10,14 @@ import Footer from "../../components/Footer";
 
 // Hooks React : useEffect pour les effets de bord, useState pour l'état local
 import { useEffect, useState } from 'react';
+import { useNavigate} from "react-router-dom";
 
 // Composant QuoteCard pour afficher une citation
 import QuoteCard from '../../components/QuoteCard';
 import NewQuoteButton from '../../components/buttons/NewQuoteButton.jsx';
 
 const AdminQuotes = () => {
+    const navigate = useNavigate();
 
     // État local contenant la liste des citations récupérées depuis l'API
     const [quotes, setQuotes] = useState([]);
@@ -34,6 +36,10 @@ const AdminQuotes = () => {
                     credentials: 'include'
                 });
 
+                if (!response.ok) {
+                    throw new Error('Admin non connecté.');
+                }
+
                 // Conversion de la réponse HTTP en objet JavaScript
                 const allQuotes = await response.json();
 
@@ -43,6 +49,7 @@ const AdminQuotes = () => {
             } catch (error) {
                 // En cas d'erreur réseau ou de parsing, on log sans crasher l'app
                 console.error(error);
+                navigate('/login');
             }
         }
 
