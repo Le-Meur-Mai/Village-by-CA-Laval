@@ -41,6 +41,7 @@ const AdminPosts = () => {
         getAllPosts()
     }, [])
 
+    // On va récupérer les détails de l'article
     const openPopup = async (id) => {
         const res = await fetch(`http://localhost:3000/admin/articles/${id}`, {
             credentials: "include"
@@ -62,6 +63,7 @@ const AdminPosts = () => {
                 {showCreatePopup && (
                     <PostCreatePopUp
                         onClose={() => setShowCreatePopup(false)}
+                        // On utilise l'opérateur spread pour recréer le tableau de tous les posts en rajoutant le nouveau
                         onCreate={(newPost) => setAllPosts(prev => [...prev, newPost])}
                     />
                 )}
@@ -82,15 +84,18 @@ const AdminPosts = () => {
                         <PostPopUp
                             post={popupData}
                             onClose={() => setShowPopup(false)}
-                            onUpdate={(updater) => {
-                                // updater représente la fonction passée en argument dans PostPopUp
-                                setAllPosts(updater);  // met à jour la liste des cartes
-                                // met à jour aussi la popup avec les nouvelles données
-                                setPopupData(prev => ({
-                                    ...prev,
-                                    ...updater(posts).find(p => p.id === popupData.id)
-                                }));
+                            /* updater est une fonction qui sait comment modifier la liste des posts.
+                            Le parent l’utilise pour mettre à jour l’état global et l’état de la popup.*/
+                            onUpdate={(updatedPost) => {
+                                // 1. Mettre à jour la liste globale
+                                setAllPosts(prev =>
+                                    prev.map(p => p.id === updatedPost.id ? updatedPost : p)
+                                );
+
+                                // 2. Mettre à jour la popup
+                                setPopupData(updatedPost);
                             }}
+
                             // On remonte le DELETE au composant parent
                             onDelete={(id) => setAllPosts(prev => prev.filter(p => p.id !== id))}
                         />
