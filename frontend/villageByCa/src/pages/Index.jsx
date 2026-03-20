@@ -61,6 +61,7 @@ const Index = () => {
                 <div className='quote-align'>
                     {quotes.map(quote => (
                         <QuoteCard
+                        key={quote.id}
                         logo={quote.startUp?.logo}
                         name={quote.startUp?.name}
                         firstName={quote.firstName}
@@ -79,6 +80,7 @@ const Index = () => {
                 <div className='quote-align'>
                     {posts.map(post => (
                         <PostCard
+                        key={post.id}
                         post={post}
                         text='Lire'
                         path={`/agenda/${post.id}`}/>
