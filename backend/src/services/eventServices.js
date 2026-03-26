@@ -23,8 +23,9 @@ export default class EventServices {
     try {
       const event = await this.eventRepo.getEventById(id);
       if (!event) {
-        throw new Errors.NotFoundError("Event doesn't exist.");
+        throw new Errors.NotFoundError("L'évènement n'existe pas.");
       }
+      return event;
     } catch (error) {
       throw error;
     }
@@ -42,7 +43,7 @@ export default class EventServices {
     try {
       const existingEvent = await this.eventRepo.getEventById(id);
       if (!existingEvent) {
-        throw new Errors.NotFoundError("The event doesn't exist");
+        throw new Errors.NotFoundError("L'évènement n'existe pas.");
       }
       const newEvent = {...existingEvent, ...data};
       new Event(newEvent);
@@ -56,7 +57,7 @@ export default class EventServices {
     try {
       const existingEvent = await this.eventRepo.getEventById(id);
       if (!existingEvent) {
-        throw new Errors.NotFoundError("The event doesn't exist");
+        throw new Errors.NotFoundError("L'évènement n'existe pas.");
       }
       return await this.eventRepo.deleteEvent(id);
     } catch (error) {
