@@ -16,7 +16,7 @@ export default class ContactServices {
         replyTo: formulaire.email, // L'email auquel le destinataire va répondre
         to: `${process.env.RECEIVER}`, // L'email du destinataire
         subject: `${formulaire.subject}`, // L'objet du mail
-        text: `${formulaire.message}`
+        text: `${formulaire.message}\n${formulaire.name}`
       });
     } catch (error) {
       throw error;

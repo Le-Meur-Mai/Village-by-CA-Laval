@@ -6,10 +6,12 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import PresentationPage from '../../components/PresentationPage';
 import { useEffect, useState } from 'react';
+import { useNavigate} from "react-router-dom";
 import UserInfoProfil from '../../components/UserInfoProfil';
 import NewUserButton from '../../components/buttons/NewUserButton';
 
 const AdminUsers = () => {
+    const navigate = useNavigate();
 
     const [allUsers, setAllUsers] = useState([])
 
@@ -20,6 +22,10 @@ const AdminUsers = () => {
                     method: 'GET',
                     credentials: 'include'
                 });
+
+                if (!response.ok) {
+                    throw new Error('Admin non connecté.');
+                }
                 
                 const usersData = await response.json();
     
@@ -27,6 +33,7 @@ const AdminUsers = () => {
     
             } catch (error) {
                 console.error(error);
+                navigate('/login');
             }
         }
 

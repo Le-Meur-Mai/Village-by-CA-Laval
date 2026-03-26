@@ -64,11 +64,11 @@ const PostPopUp = ({ post, onClose, onUpdate, onDelete }) => {
             const newPicture = data.updatedPost?.picture.secureUrl ?? previewPicture;
 
             // On remonte les nouvelles données au composant parent pour garder son state à jour
-            onUpdate(prev => prev.map(
-                postElement => postElement.id === post.id 
-                    ? {...postElement, ...updatedData, picture: newPicture}
-                    : postElement
-            ));
+            onUpdate({
+                ...post,
+                ...updatedData,
+                picture: newPicture
+            });
             
             setResponseType("success");
             setResponseMessage(data.message || "Mise à jour réussie !");
