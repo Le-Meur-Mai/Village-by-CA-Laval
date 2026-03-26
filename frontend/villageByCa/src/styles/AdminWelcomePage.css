@@ -23,11 +23,11 @@
 parmi les éléments du même type.*/
 
 /* On incrémente automatiquement */
-.section-admin-title-left:nth-of-type(1) { --i: 3; }
-.section-admin-title-left:nth-of-type(2) { --i: 3.5; }
-.section-admin-title-left:nth-of-type(3) { --i: 4; }
-.section-admin-title-left:nth-of-type(4) { --i: 4.5; }
-.section-admin-title-left:nth-of-type(5) { --i: 5; }
-.section-admin-title-left:nth-of-type(6) { --i: 5.5; }
-.section-admin-title-left:nth-of-type(7) { --i: 6; }
-.section-admin-title-left:nth-of-type(8) { --i: 6.5; }
+.section-admin-title-left:nth-of-type(1) { --i: 3.5; }
+.section-admin-title-left:nth-of-type(2) { --i: 4; }
+.section-admin-title-left:nth-of-type(3) { --i: 4.5; }
+.section-admin-title-left:nth-of-type(4) { --i: 5; }
+.section-admin-title-left:nth-of-type(5) { --i: 5.5; }
+.section-admin-title-left:nth-of-type(6) { --i: 6; }
+.section-admin-title-left:nth-of-type(7) { --i: 6.5; }
+.section-admin-title-left:nth-of-type(8) { --i: 7; }

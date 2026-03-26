@@ -6,10 +6,12 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import PresentationPage from '../../components/PresentationPage';
 import { useEffect, useState } from 'react';
+import { useNavigate} from "react-router-dom";
 import Tag from '../../components/Tag';
 import NewTypeButton from '../../components/buttons/NewTypeButton';
 
 const AdminTags = () => {
+    const navigate = useNavigate();
 
     const [allTypes, setAllTypes] = useState([]);
 
@@ -20,12 +22,17 @@ const AdminTags = () => {
                     method: 'GET',
                     credentials: 'include'
                 })
+
+                if (!response.ok) {
+                    throw new Error('Admin non connecté.');
+                }
     
                 const data = await response.json();
     
                 setAllTypes(data)
             } catch (error) {
                 console.error(error);
+                navigate('/login');
             }
         }
         getAllTypes()
