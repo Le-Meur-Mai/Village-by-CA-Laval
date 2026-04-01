@@ -14,6 +14,11 @@
     border-radius: 1.5vw;
 }
 
+.card-flip:hover {
+    transform: scale(1.05);
+    z-index: 10; /* Pour éviter que la carte passe sous les autres */
+}
+
 /* ─── Face interne (pivot 3D) ─── */
 .card-inner {
     border: 2px solid var(--black-main);

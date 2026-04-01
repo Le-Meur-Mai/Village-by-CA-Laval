@@ -8,7 +8,7 @@ const CardFlip = ({ titleFront = 'Front', titleBack = 'Back', icon = null, child
         <div className="card-flip" onClick={() => setIsFlipped(!isFlipped)}>
             <div className={`card-inner ${isFlipped ? "flipped" : ""}`}>
                 <div className="card-face card-front">
-                    <h2>{titleFront}</h2>
+                    <h2><b>{titleFront}</b></h2>
                     <img src={icon} alt="" />
                 </div>
                 <div className="card-face card-back">
