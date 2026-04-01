@@ -3,7 +3,10 @@ import '../styles/page.css';
 import alternant from '../assets/user-male-circle.jpg';
 import amandine from '../assets/Amandine.jpeg';
 import events from '../assets/Events.png';
+import startup_icon from '../assets/startup_icon.png';
+import entreprise_icon from '../assets/entreprise_icon.png';
 
+import CardFlip from '../components/CardFlip.jsx'
 import PostCard from '../components/PostCard.jsx';
 import QuoteCard from '../components/QuoteCard.jsx';
 import Button from '../components/buttons/button.jsx';
@@ -44,6 +47,22 @@ const Index = () => {
                     personnalisé, allant du mentorat à l’accès à un réseau solide d’acteurs économiques. Le Village 
                     crée ainsi un environnement propice au développement, à l’expérimentation et à la réussite 
                     entrepreneuriale.</p>
+                <div className='index-cards-container'>
+                    <CardFlip titleFront='Startups' titleBack="Notre programme d'accompagnement" icon={startup_icon}>
+                        <div>
+                            <p>Le Village vous propose un accompagnement adapté au besoin de votre entreprise.</p>
+                            <p><strong>Financement</strong>, <strong>Développement</strong>, <strong>Structuration</strong> ou 
+                            <strong>Visibilité</strong>, nous intervenons à chaque étape de votre parcours.</p>
+                        </div>
+                    </CardFlip>
+                    <CardFlip titleFront='Entreprise' titleBack="Nos services professionnels" icon={entreprise_icon}>
+                        <div>
+                            <p>Besoin d'aide pour développer votre activité ?</p>
+                            <p><strong>Location de salles</strong>, <strong>Visibilité</strong>, <strong>Organisation d'évènement</strong>, 
+                            nous permettons à votre entreprise de gagner sur tout les tableaux !</p>
+                        </div>
+                    </CardFlip>
+                </div>
                 <h3 className='section-title-right'>Rencontrez l'équipe</h3>
                 <div className='card-staff-section'>
                     <CardStaff
