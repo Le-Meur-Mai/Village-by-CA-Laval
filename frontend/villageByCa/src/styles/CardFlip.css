@@ -1,0 +1,67 @@
+/* ─── Conteneur principal de la carte ─── */
+.card-flip {
+    position: relative;        /* Référence pour les enfants positionnés */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: clamp(16rem, 18vw, 18rem);  /* Largeur fluide : min 16rem, idéal 18vw, max 18rem */
+    height: clamp(18rem, 20vw, 20rem); /* Hauteur fluide : même logique */
+    cursor: pointer;
+    transition: 150ms;         /* Animation rapide (ex: hover scale) */
+    margin: 4.5vw;               /* Espacement relatif à la largeur du viewport */
+    z-index: 1;                /* Passe au-dessus des éléments de base */
+    perspective: 1000px;         /* Active la profondeur 3D pour les enfants */
+    border-radius: 1.5vw;
+}
+
+/* ─── Face interne (pivot 3D) ─── */
+.card-inner {
+    border: 2px solid var(--black-main);
+    border-radius: 1.5vw;      /* Coins arrondis proportionnels à la fenêtre */
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.6s; /* Durée de l'animation de retournement */
+    transform-style: preserve-3d; /* Les faces enfants existent dans l'espace 3D */
+}
+.card-inner img{
+    width: clamp(10rem, 12vw, 12rem);
+}
+
+/* ─── État retourné ─── */
+.card-inner.flipped {
+    transform: rotateY(180deg); /* Fait pivoter la carte de 180° sur l'axe Y */
+}
+
+/* ─── Style commun aux deux faces ─── */
+.card-face {
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 1rem;
+    position: absolute;        /* Les deux faces se superposent exactement */
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Cache la face quand elle est "dos à l'écran" */
+    border-radius: 1.5vw;
+    box-shadow: 5px 5px 5px var(--black-main);
+}
+
+/* ─── Face avant (visible par défaut) ─── */
+.card-front {
+    background: var(--light-blue);       /* Bleu */
+}
+
+.card-front h2{
+    font-size: 2rem;      /* Bleu */
+}
+
+/* ─── Face arrière (cachée par défaut) ─── */
+.card-back {
+    background: var(--grey-main);       /* Rouge */
+    transform: rotateY(180deg); /* Pré-retournée pour être dans le bon sens après le flip */
+}
+
+.card-back h3, .card-back p{
+    padding-bottom: clamp(1rem, 2vw, 2rem)
+}
