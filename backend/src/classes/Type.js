@@ -29,8 +29,8 @@ export default class Type extends BaseModel {
     if (typeof value !== "string") {
       throw new Errors.ValidationError("Color must be a string.");
     }
-    else if (value.length !== 6) {
-      throw new Errors.ValidationError("Color must be composed of 6 characters.");
+    else if (value.length !== 7) {
+      throw new Errors.ValidationError("Color must be composed of 7 characters.");
     }
     this._color = value;
   }
