@@ -55,7 +55,7 @@ model StartUp {
 model Type {
   id        String    @id @default(uuid()) @db.Char(36)
   name      String    @db.VarChar(30)
-  color     String    @db.Char(6)
+  color     String    @db.Char(7)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   startUps  StartUp[] @relation("StartUpToType")
@@ -114,7 +114,7 @@ model Event {
   id          String   @id @default(uuid()) @db.Char(36)
   title       String   @db.VarChar(80)
   description String?  @db.VarChar(200)
-  color       String   @db.Char(6)
+  color       String   @db.Char(7)
   date        DateTime
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
