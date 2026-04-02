@@ -27,16 +27,11 @@ const Tag = ({id=null, name = "Tag", color = "CCF2B1", active=true, onClick, can
         e.preventDefault()
 
         try {
-            // Enlève le # devant le code hexadecimal
-            const payload = {
-                ...formData,
-                color: formData.color.replace('#', '') // retire le #
-            };
             const response = await fetch(`http://localhost:3000/admin/types/${id}`, {
                 method: 'PATCH',
                 credentials: 'include', // Envoie les cookies de session pour l'authentification
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(formData)
             });
 
             const data = await response.json();
@@ -49,7 +44,7 @@ const Tag = ({id=null, name = "Tag", color = "CCF2B1", active=true, onClick, can
             }
 
             onUpdate(prev => 
-                prev.map(type => type.id === id ? { ...type, ...payload } : type)
+                prev.map(type => type.id === id ? { ...type, ...formData } : type)
             );
 
             setResponseType("success");
@@ -88,7 +83,7 @@ const Tag = ({id=null, name = "Tag", color = "CCF2B1", active=true, onClick, can
                 <button
                     onClick={canBeDeleted ? () => setIsEditing(!isEditing) : onClick}
                     className={active ? "tag-active" : "tag-inactive"}
-                    style={{ backgroundColor: `#${color}` }}
+                    style={{ backgroundColor: `${color}` }}
                 >
                     {name}
                 </button>
