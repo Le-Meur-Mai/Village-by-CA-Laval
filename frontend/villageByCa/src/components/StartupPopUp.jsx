@@ -15,7 +15,7 @@ const StartupPopup = ({ data, onClose }) => {
             <div className="popup-card" onClick={(e) => e.stopPropagation()}>
 
                 {/* Bandeau coloré */}
-                <div className="popup-color" style={{ backgroundColor: `#${color}` }}></div>
+                <div className="popup-color" style={{ backgroundColor: `${color}` }}></div>
 
                 <div className="popup-content">
 

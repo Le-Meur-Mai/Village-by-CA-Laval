@@ -116,7 +116,7 @@ const StartupPopUp = ({ startup, types, users, onClose, onUpdate, onDelete }) =>
                                         <span
                                             key={type.id}
                                             style={{
-                                                backgroundColor: `#${type.color}`
+                                                backgroundColor: `${type.color}`
                                             }}
                                             className="startup-type-span-popup"
                                         >
