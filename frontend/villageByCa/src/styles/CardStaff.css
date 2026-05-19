@@ -9,7 +9,7 @@
 
 
 .card-staff {
-  width: 300px;
+  max-width: 300px;
   padding: 1.2rem;
   border-radius: 0.2rem;
   background: var(--grey-main);
