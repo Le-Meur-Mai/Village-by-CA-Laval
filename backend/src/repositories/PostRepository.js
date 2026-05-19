@@ -25,6 +25,22 @@ export default class PostRepository {
 
   async getAllPost(client = this.prisma) { 
     const posts = await client.post.findMany({
+      orderBy: {
+        createdAt: 'desc'
+      },
+      include: {
+        picture: true
+      }
+    });
+    return posts;
+  }
+
+  async getTwoRecentPosts(client = this.prisma) {
+    const posts = await client.post.findMany({
+      take: 2,
+      orderBy: {
+        createdAt: 'desc'
+      },
       include: {
         picture: true
       }

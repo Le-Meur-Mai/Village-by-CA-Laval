@@ -59,6 +59,15 @@ export default class PostServices {
     }
   }
 
+  // GET Retourne les deux derniers posts qui ont été créés
+  async getTwoRecentPosts () {
+    try {
+      return await this.postRepo.getTwoRecentPosts();
+    } catch (error) {
+      return error;
+    }
+  }
+
   // GET Retourne tous les posts existants
   async getAllPosts () {
     try {
