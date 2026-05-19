@@ -47,10 +47,14 @@ const getProfile = async (req, res, next) => {
 
 const verifyConnexion = async (req, res, next) => {
   try {
-    res.status(200).json({
-      id: req.user.id,
-      isAdmin: req.user.isAdmin
-    });
+    if (req.user) {
+      res.status(200).json({
+        id: req.user.id,
+        isAdmin: req.user.isAdmin
+      });
+    } else {
+      res.status(200).json(null);
+    }
   } catch (error) {
     next(error);
   }
