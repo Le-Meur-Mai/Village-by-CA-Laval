@@ -2,9 +2,11 @@ import "../styles/StartupPopUp.css";
 import '../styles/StartUpInfoProfil.css';
 import "../styles/PopUpPartnerCard.css";
 import "../styles/PostPopUp.css";
-import villageByCa from '../assets/logo_village_by_ca.png';
 import { useState, useEffect } from 'react';
 import PostForm from './PostForm.jsx';
+
+// Logo par défaut si aucune image de post n'est fourni, host sur Cloudinary pour pouvoir l'optimiser
+const villageByCa = "https://res.cloudinary.com/dwc7gkjyk/image/upload/w_365,dpr_auto,f_auto,q_auto/v1779287482/logo_village_by_ca_e3pngc.webp"
 
 const PostPopUp = ({ post, onClose, onUpdate, onDelete }) => {
     
