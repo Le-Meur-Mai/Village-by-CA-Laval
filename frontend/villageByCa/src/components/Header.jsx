@@ -3,7 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
 
 import '../styles/Header.css'
-import logoBlanc from '../assets/logo_blanc.png';
+import logoBlanc from '../assets/logo_blanc.webp';
 
 const Header = () => {
     const { auth, loading } = useAuth();
