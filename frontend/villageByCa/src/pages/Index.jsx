@@ -1,8 +1,7 @@
 import '../styles/page.css';
 
-import alternant from '../assets/user-male-circle.jpg';
-import amandine from '../assets/Amandine.jpeg';
-import events from '../assets/Events.png';
+import amandine from '../assets/Amandine.avif';
+import ibrahima from '../assets/Ibrahima Barry.avif';
 
 import PostCard from '../components/PostCard.jsx';
 import QuoteCard from '../components/QuoteCard.jsx';
@@ -51,8 +50,8 @@ const Index = () => {
                     image={amandine}
                     job="Maire du Village by CA"/>
                     <CardStaff
-                    name="Alternant"
-                    image={alternant}
+                    name="Ibrahima Barry"
+                    image={ibrahima}
                     job="Assistant au Maire du Village by CA"/>
                 </div>
                 <h3 className='section-title-left'>Nous les accompagnons</h3>
@@ -75,7 +74,6 @@ const Index = () => {
                     path="http://localhost:5173/startups"/>
                 </div>
                 <h3 className='section-title-right'>Agenda</h3>
-                <img className='paragraph-center' src={events} alt="Evenements à venir du Village by CA"/>
                 <h3 className='section-title-left'>Actualités</h3>
                 <div className='quote-align'>
                     {posts.map(post => (
