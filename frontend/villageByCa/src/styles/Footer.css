@@ -52,6 +52,11 @@ li {
     gap: clamp(1rem, 2vw, 2rem);
 }
 
+.rightPart img {
+    width: 3rem;
+    height: 3rem;
+}
+
 /* --- Bottom Part --- */
 .bottomPart {
     background-color: var(--white-main);
