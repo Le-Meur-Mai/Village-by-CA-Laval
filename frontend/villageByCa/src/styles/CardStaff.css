@@ -26,7 +26,7 @@
 }
 
 .card-staff-image {
-  width: 100%;
+  width: 250px;
   height: 220px;
   object-fit: cover;
   border-radius: 12px;
