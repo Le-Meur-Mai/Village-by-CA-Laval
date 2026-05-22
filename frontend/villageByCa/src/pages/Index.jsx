@@ -36,6 +36,7 @@ const Index = () => {
             <Header />
             <main>
                 <HeroSection />
+                <h2 className='title-h2-center'>Le Village by CA de Laval</h2> 
                 <h3 className='section-title-left'>Coopérer pour Innover</h3>
                 <p className='paragraph-center'>Le Village by CA de Laval est un écosystème dynamique dédié à l’accompagnement des startups 
                     en phase de croissance. Cet espace favorise les rencontres entre jeunes entreprises, experts 
