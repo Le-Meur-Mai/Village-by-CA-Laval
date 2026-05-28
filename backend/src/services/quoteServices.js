@@ -2,10 +2,13 @@ import QuoteRepository from "../repositories/QuoteRepository.js";
 import UserRepository from "../repositories/UserRepository.js";
 // Importation de la classe Quote et User repo
 import Quote from "../classes/Quote.js";
+import validFields from "../utils/validFields.js";
 import prisma from "../prismaClient.js";
 // importation de l'instance du prisma client
 import * as Errors from "../errors/errorsClasses.js";
 // importation de toutes nos classes d'erreurs personnalisées
+
+const allowedFields = ["firstName", "lastName", "description", "userId"];
 
 export default class QuoteServices {
   constructor() {
@@ -18,8 +21,11 @@ export default class QuoteServices {
     try {
       const user = await this.userRepo.getUserById(data.userId);
       if (!user) {
-        throw new Errors.NotFoundError("The user doesn't exist.");
+        throw new Errors.NotFoundError("L'utilisateur n'existe pas.");
       }
+
+      validFields(data, allowedFields);
+
       new Quote(data);
       return await this.quoteRepo.createQuote(data);
     } catch (error) {
@@ -32,7 +38,7 @@ export default class QuoteServices {
     try {
       const quote = await this.quoteRepo.getQuoteById(id);
       if (!quote) {
-        throw new Errors.NotFoundError("The quote doesn't exist.");
+        throw new Errors.NotFoundError("La citation n'existe pas.");
       }
       return quote;
     } catch (error) {
@@ -45,7 +51,7 @@ export default class QuoteServices {
     try {
       const user = await this.userRepo.getUserById(userId);
       if (!user) {
-        throw new Errors.NotFoundError("The user is not found.");
+        throw new Errors.NotFoundError("L'utilisateur n'existe pas.");
       }
       return await this.quoteRepo.getQuotesByUser(userId);
     } catch (error) {
@@ -67,18 +73,20 @@ export default class QuoteServices {
     try {
       const existingQuote = await this.quoteRepo.getQuoteById(id);
       if (!existingQuote) {
-        throw new Errors.NotFoundError("This quote doesn't exist");
+        throw new Errors.NotFoundError("La citation n'existe pas.");
       }
+
+      validFields(data, allowedFields);
 
       // Changement de propriétaire
       if (data.userId && currentUser.isAdmin) {
         const user = await this.userRepo.getUserById(data.userId);
         if (!user) {
-          throw new Errors.NotFoundError("The user is not found.");
+          throw new Errors.NotFoundError("L'utilisateur n'existe pas.");
         }
       } else if (data.userId && data.userId !== existingQuote.userId && !currentUser.isAdmin) {
         throw new Errors.ForbiddenError(
-          'You have to be an admin to change the owner of the quote.');
+          'Vous devez être un administrateur pour changer le propriétaire de la citation.');
       }
       const newQuote = {...existingQuote, ...data};
       // On fusionne les anciennes données avec les nouveaux champs.
@@ -94,7 +102,7 @@ export default class QuoteServices {
     try {
       const existingQuote = await this.quoteRepo.getQuoteById(id);
       if (!existingQuote) {
-        throw new Errors.NotFoundError("The quote doesn't exist.");
+        throw new Errors.NotFoundError("La citation n'existe pas.");
       }
       if (!currentUser.isAdmin && currentUser.id !== existingQuote.user.id) {
         throw new Errors.ForbiddenError(

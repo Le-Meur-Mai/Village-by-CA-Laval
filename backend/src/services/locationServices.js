@@ -4,6 +4,7 @@ import LocationRepository from "../repositories/LocationRepository.js";
 import PictureRepository from "../repositories/PictureRepository.js"
 //Import de la classe pour vérifier la conformité des données
 import Location from "../classes/Location.js";
+import validFields from "../utils/validFields.js";
 // Import du client prisma pour créer une nouvelle instance du Repo
 import prisma from "../prismaClient.js";
 // Import de la classe erreur renvoyant des erreurs personnalisées
@@ -12,6 +13,8 @@ import * as Errors from "../errors/errorsClasses.js"
 import uploadPictureToCloudinary from "../utils/uploadToCloudinary.js";
 // Importation de la config Cloudinary pour pouvoir supprimer des images
 import cloudinary from "../../config/cloudinary.js";
+
+const allowedFields = ["title", "description", "price", "size", "pictures", "newPictures"];
 
 export default class LocationServices{
   constructor() {
