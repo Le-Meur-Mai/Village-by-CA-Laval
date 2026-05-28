@@ -15,14 +15,19 @@ export default class EventRepository {
     return event;
   }
 
+  // On retourne des évenements sur trois mois
   async getAllEvents(client = this.prisma) {
-    const events = await client.event.findMany({});
-    return events;
-  }
-
-  async getEventByDate(date, client = this.prisma) {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), now.getMonth(), 1);
+    const end = new Date(now.getFullYear(), now.getMonth() + 3, 0);
     const events = await client.event.findMany({
-      where: {date}
+      where: {
+      date: {
+        gte: start,
+        lte: end
+      }
+      },
+      orderBy: { date: "asc" }
     });
     return events;
   }
@@ -40,5 +45,15 @@ export default class EventRepository {
       where: {id}
     });
     return event;
+  }
+
+  // lt = Less Than
+  async deleteBefore(date, client = this.prisma) {
+    const events = await client.event.deleteMany({
+      where: {
+        date: { lt: date },
+      },
+    });
+    return events;
   }
 }
