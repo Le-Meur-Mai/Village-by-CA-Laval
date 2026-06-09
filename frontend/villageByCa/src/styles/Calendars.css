@@ -1,0 +1,87 @@
+/*Filtres du calendrier*/
+
+.calendar-buttons {
+  display: flex;
+  gap: 10px;
+  margin: 20px;
+}
+
+.month-btn {
+  padding: 10px 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: var(--black-main);
+  color: var(--white-main);
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: capitalize;
+  transition: 0.2s ease;
+}
+
+.month-btn:hover {
+  background: var(--light-blue);
+  transform: scale(110%);
+}
+
+.month-btn.active {
+  background: var(--light-blue);
+  color: white;
+  border-color: #333;
+}
+
+/*Calendrier Global*/
+
+.calendar-container {
+  padding: 20px;        /* espace intérieur */
+  margin: 0 auto;       /* centre le calendrier */
+  max-width: 900px;     /* limite la largeur */
+}
+
+
+/* Fond général du calendrier */
+.fc {
+  background-color: var(--light-blue);
+  display: flex;
+  align-items: center;
+  padding-top: 20px;
+}
+
+/*Header du calendrier*/
+
+.fc-toolbar {
+  display: flex;
+  align-items: center; /* centre verticalement */
+  justify-content: center; /* centre horizontalement */
+}
+
+.fc-toolbar-chunk {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*Mois*/
+
+.fc-toolbar-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-transform: capitalize; /* Juin au lieu de JUIN */
+  color: var(--white-main);
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+/* Fond de la grille */
+.fc-scrollgrid {
+  background-color: white;
+  width: 100%;
+}
+
+/* Fond des cases */
+.fc-daygrid-day,
+.fc-daygrid-day-frame {
+  background-color: white;
+}
