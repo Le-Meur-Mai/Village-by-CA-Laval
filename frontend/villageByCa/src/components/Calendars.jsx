@@ -9,13 +9,19 @@ import interactionPlugin from "@fullcalendar/interaction";
 import frLocale from "@fullcalendar/core/locales/fr";
 // On import le composant Pop-up d'évènement
 import EventPopUp from "./EventPopUp.jsx";
+import EventFormPopUp from "./EventFormPopUp.jsx";
 import "../styles/Calendars.css"
 import { useState } from "react";
 
-export default function ThreeCalendars({ events }) {
+export default function ThreeCalendars({ events, admin = false }) {
 
+  // On passe en mode édition
+  const [editingEvent, setEditingEvent] = useState(null);
+
+  // On passe toutes les infos de l'évenement qui est sélectionné
   const [selectedEvent, setSelectedEvent] = useState(null);
 
+  // On change le calendrier en fonction du mois sélectionné
   const [activeMonth, setActiveMonth] = useState(0);
 
   // Fonction pour récupérer la date de début du calendrier en format Date
@@ -33,12 +39,16 @@ export default function ThreeCalendars({ events }) {
 
   // Full calendar passe un objet info qui a plus que les propriétés de l'objet event de base
   const handleEventClick = async (info) => {
-    const id = info.event.id;
-
-    const res = await fetch(`http://localhost:3000/agenda/event/${id}`);
-    const event = await res.json();
-
-    setSelectedEvent(event);
+    try {
+      const id = info.event.id;
+  
+      const res = await fetch(`http://localhost:3000/agenda/event/${id}`);
+      const event = await res.json();
+  
+      setSelectedEvent(event);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const calendarOptions = {
@@ -70,12 +80,37 @@ export default function ThreeCalendars({ events }) {
             </button>
             ))}
         </div>
+        {/* Bouton créer (admin uniquement) */}
+        {admin && (
+          <button className="create-btn" 
+          onClick={() => setEditingEvent({ id: null, title: "", date: "", description: "", color: "#000000" })}
+          >
+            + Créer un événement
+          </button>
+        )}
         <div className="calendar-container">
         {/* On met key pour forcer REACT à rerender le composant de fullCalendar, pour pouvoir changer de mois */}
         <FullCalendar key={activeMonth} {...calendarOptions} initialDate={getMonthDate(activeMonth)} />
         </div>
+
         {/* Pop-up */}
-        <EventPopUp event={selectedEvent} onClose={() => setSelectedEvent(null)} />
+        <EventPopUp
+          event={selectedEvent}
+          admin={admin}
+          onClose={() => setSelectedEvent(null)}
+          setEditingEvent={setEditingEvent}
+        />
+
+
+
+        {/* Pop-up formulaire admin */}
+        {admin && editingEvent && (
+          <EventFormPopUp
+            key={editingEvent?.id || "new"}
+            event={editingEvent}
+            onClose={() => setEditingEvent(null)}
+          />
+        )}
     </>
   );
 }
