@@ -85,3 +85,31 @@
 .fc-daygrid-day-frame {
   background-color: white;
 }
+
+/*Bouton create*/
+
+.create-btn {
+  display: inline-block;
+  margin: 15px 0 15px 15px;
+  padding: 10px 18px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.create-btn:hover {
+  background: var(--light-blue);
+  transform: scale(110%);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.create-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
