@@ -31,3 +31,4 @@ parmi les éléments du même type.*/
 .section-admin-title-left:nth-of-type(6) { --i: 6; }
 .section-admin-title-left:nth-of-type(7) { --i: 6.5; }
 .section-admin-title-left:nth-of-type(8) { --i: 7; }
+.section-admin-title-left:nth-of-type(9) { --i: 7.5; }
