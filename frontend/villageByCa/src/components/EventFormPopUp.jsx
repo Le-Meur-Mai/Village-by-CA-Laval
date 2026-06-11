@@ -11,6 +11,9 @@ export default function EventFormPopUp({ event, onClose }) {
 
   const isEditing = Boolean(event?.id); // true = mise à jour, false = création
 
+  const [errorMessage, setErrorMessage] = useState("");
+
+
   const [title, setTitle] = useState(event.title || "");
   const [date, setDate] = useState(toInputDate(event?.date || ""));
   const [description, setDescription] = useState(event.description || "");
@@ -45,8 +48,8 @@ export default function EventFormPopUp({ event, onClose }) {
       });
 
       if (!res.ok) {
-      const err = await res.text();
-        console.error("Erreur serveur :", res.status, err);
+        const err = await res.json();
+        setErrorMessage(err);
         return; // ← on ne ferme pas la popup si ça a échoué
         }
 
@@ -57,7 +60,7 @@ export default function EventFormPopUp({ event, onClose }) {
       console.error("Erreur création/mise à jour :", error);
     }
   };
-
+  
   if (event === null) return null; // null = fermé
 
   return (
@@ -71,32 +74,44 @@ export default function EventFormPopUp({ event, onClose }) {
           {isEditing ? "Modifier l’événement" : "Créer un événement"}
         </h2>
 
-        <label>Titre</label>
+        <label htmlFor="title">Titre</label>
         <input
+          id="title"
+          name="title"
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
 
-        <label>Date</label>
+        <label htmlFor="date">Date</label>
         <input
+          id="date"
+          name="date"
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />
 
-        <label>Description</label>
+        <label htmlFor="description">Description</label>
         <textarea
+          id="description"
+          name="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
 
-        <label>Couleur</label>
+        <label htmlFor="color">Couleur</label>
         <input
+          id="color"
+          name="color"
           type="color"
           value={color}
           onChange={(e) => setColor(e.target.value)}
         />
+
+        {errorMessage && (
+          <p className="event-pop-up-error">{errorMessage?.message}</p>
+        )}
 
         <button className="event-pop-up-submit" onClick={handleSubmit}>
           {isEditing ? "Enregistrer" : "Créer"}

@@ -137,6 +137,18 @@
   resize: none;
 }
 
+/*Message d'erreur*/
+.event-pop-up-error {
+  color: #d9534f;
+  background: #fbeaea;
+  border: 1px solid #d9534f;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+
 /* Bouton valider */
 .event-pop-up-submit {
   width: 100%;
