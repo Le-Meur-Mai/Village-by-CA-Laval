@@ -8,7 +8,7 @@ const Card = ({name = "Startup", description = "Description", logo, color = "CCF
                 <div className='card_logo'>
                     {logo && <img src={logo} alt={name} />}
                 </div>
-                <h4 className="card-title">{ name }</h4>
+                <h2 className="card-title">{ name }</h2>
                 <p className="card-description">{ description.length > 100
                 ? description.slice(0, 200) + "..."
                 : description}</p>
