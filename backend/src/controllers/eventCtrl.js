@@ -21,7 +21,7 @@ const createEvent = async (req, res, next) => {
       heure, minutes, secondes-fuseau horaire*/
       date: new Date(data.date)
     });
-    res.status(201).json({message: "Le nouvel évènement a été créé.", newEvent});
+    res.status(201).json({newEvent});
   } catch (error) {
     next(error)
   }
@@ -41,7 +41,7 @@ const getEventById = async (req, res, next) => {
 // Renvoie tous les évènements
 const getAllEvents = async (req, res, next) => {
   try {
-    const allEvents = await servicesEvent.getAllEvents();
+    let allEvents = await servicesEvent.getAllEvents();
     allEvents = EventReturn.getAllEvents(allEvents);
     res.status(200).json(allEvents);
   } catch (error) {

@@ -1,13 +1,13 @@
 // Importation du CSS spécifique à ce composant
 import "../styles/QuoteCard.css";
 
-// Logo par défaut si aucun logo de startup n'est fourni
-import logoVillageByCa from "../assets/logo_village_by_ca.png";
-
 // Contexte d'authentification pour savoir si l'utilisateur est connecté
 import { useAuth } from "../contexts/AuthContext";
 
 import { useState } from "react";
+
+// Logo par défaut si aucun logo de startup n'est fourni au cas où, host sur Cloudinary pour pouvoir l'optimiser
+const logoVillageByCa = "https://res.cloudinary.com/dwc7gkjyk/image/upload/w_55,dpr_auto,f_auto,q_auto/v1779287482/logo_village_by_ca_e3pngc.webp"
 
 const QuoteCard = ({
   id = null,
@@ -19,6 +19,7 @@ const QuoteCard = ({
   canBeModified = false,    // Affiche le bouton "Modifier" uniquement si true
   onUpdate = null           // Callback pour mettre à jour la liste parente après modification
 }) => {
+
 
   // auth = utilisateur connecté (ou null), loading = état de chargement de l'auth
   const { auth, loading } = useAuth();
@@ -173,7 +174,7 @@ const QuoteCard = ({
           <div>
             <div className="quote-header">
               <div className="quote-logo">
-                <img src={logo} alt={name} />
+                <img src={logo.replace('/upload/', '/upload/w_55,dpr_auto,f_auto,q_auto/')} alt={name} />
               </div>
               <div className="quote-person">
                 <p className="quote-name">{firstName} {lastName}</p>

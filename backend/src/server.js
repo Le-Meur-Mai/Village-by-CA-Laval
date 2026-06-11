@@ -3,6 +3,10 @@ import http from 'http';
 // Importe l'application du fichier app, qu'on va créer après
 import app from './app.js';
 
+/* Importe la fonction cron qui va nettoyer automatiquement
+les évenements tous les mois */
+import "../cron/cleanupEvents.cron.js";
+
 /* 
 Défini un port d'écoute
 process.env.PORT prend le port d'écoute envoyé par l'environnement, sinon prend

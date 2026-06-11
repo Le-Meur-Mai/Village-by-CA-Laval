@@ -1,0 +1,39 @@
+/* Ce document est un fichier XML en UTF-8, c'est une sitemap pour 
+éviter que google référence toutes les pages et c'est les pages
+auxquelles les robots sont autorisés à naviguer*/
+<?xml version="1.0" encoding="UTF-8"?>
+/*urlset conteneur principal du sitemap, xmlns standard officiel de google,
+obligatoire pour que google comprenne le fichier */
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://villagebycalaval.fr/</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://villagebycalaval.fr/contact</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://villagebycalaval.fr/startups</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://villagebycalaval.fr/agenda</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://villagebycalaval.fr/partenaires</loc>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://villagebycalaval.fr/locations</loc>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>

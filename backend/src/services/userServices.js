@@ -2,6 +2,8 @@
 import UserRepository from "../repositories/UserRepository.js";
 //Import de la classe pour vérifier la conformité des données
 import User from "../classes/User.js";
+//Import de la fonction pour contre l'injection de clés suplémmentaires
+import validFields from "../utils/validFields.js";
 // Import du service Startup et Quote pour la supression d'un user
 import StartUpServices from "./startUpServices.js";
 import QuoteServices from "./quoteServices.js";
@@ -11,6 +13,8 @@ import prisma from "../prismaClient.js";
 import * as Errors from "../errors/errorsClasses.js";
 // Import de la fonction de hashage du mot de passe
 import hashPassword from "../utils/hashPassword.js";
+
+const allowedFields = ["isAdmin", "name", "email", "password"];
 
 export default class UserServices {
   constructor() {
@@ -27,6 +31,7 @@ export default class UserServices {
       if (user) {
         throw new Errors.ValidationError("Cet email est déjà utilisé.");
       }
+      validFields(data, allowedFields);
       // Crée une nouvelle instance pour vérifier la conformité des données
       new User(data);
       data.password = await hashPassword(data.password); 
@@ -42,7 +47,7 @@ export default class UserServices {
     try {
       const user = await this.userRepo.getUserById(id);
       if (!user) {
-        throw new Errors.NotFoundError('User not found');
+        throw new Errors.NotFoundError("L'utilisateur n'existe pas.");
       }
       return user;
     } catch (error) {
@@ -65,8 +70,10 @@ export default class UserServices {
       // Vérifie que le User existe
       const existingUser = await this.userRepo.getUserById(id);
       if (!existingUser) {
-        throw new Errors.NotFoundError('User not found');
+        throw new Errors.NotFoundError("L'utilisateur n'existe pas.");
       }
+
+      validFields(data, allowedFields);
 
       const user = await this.userRepo.findUserByEmail(data.email);
       if (user) {
@@ -77,7 +84,7 @@ export default class UserServices {
       if (data.password && isAdmin) {
         data.password = await hashPassword(data.password);
       } else if (data.password && !isAdmin) {
-        throw new Errors.ForbiddenError('Only an admin can modify the password');
+        throw new Errors.ForbiddenError('Seul un admin peut modifier le mot de passe');
       }
       /*On va merge les données de l'utilisateur existant avec les nouvelles
       données dans un nouvel objet avec l'operateur spread de js, s'il y a des
@@ -97,7 +104,7 @@ export default class UserServices {
       return await prisma.$transaction(async (tx) => {
         const user = await this.userRepo.getUserById(id, tx);
         if(!user) {
-          throw new Errors.NotFoundError('User not found');
+          throw new Errors.NotFoundError("L'utilisateur n'existe pas.");
         }
         if (user.quotes && user.quotes.length > 0) {
           await Promise.all(user.quotes.map(quote => this.quoteRepo.deleteQuote(quote.id, currentUser)));

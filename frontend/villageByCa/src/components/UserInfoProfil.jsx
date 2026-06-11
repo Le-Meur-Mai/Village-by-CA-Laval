@@ -146,7 +146,8 @@ const UserInfoProfil = ( {user, onUpdate} ) => {
                         Nom :
                         <input 
                             type="text" 
-                            name="name" 
+                            name="name"
+                            autoComplete="name"
                             value={formData.name}
                             onChange={handleChange}
                         />
@@ -156,7 +157,8 @@ const UserInfoProfil = ( {user, onUpdate} ) => {
                         Email :
                         <input 
                             type="email" 
-                            name="email" 
+                            name="email"
+                            autoComplete="email"
                             value={formData.email}
                             onChange={handleChange}
                         />

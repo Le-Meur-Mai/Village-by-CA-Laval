@@ -1,10 +1,13 @@
 import TypeRepository from "../repositories/TypeRepository.js";
 import StartUpRepository from "../repositories/StartUpRepository.js";
 import Type from "../classes/Type.js";
+import validFields from "../utils/validFields.js";
 import prisma from "../prismaClient.js";
 // importation de l'instance du prisma client
 import * as Errors from "../errors/errorsClasses.js";
 // importation de toutes nos classes d'erreurs personnalisées
+
+const allowedFields = ["name", "color", "startUps"];
 
 export default class TypeServices {
   constructor() {
@@ -23,6 +26,7 @@ export default class TypeServices {
           }
         }
       }
+      validFields(data, allowedFields);
       new Type(data);
       return await this.typeRepo.createType(data);
     } catch (error) {

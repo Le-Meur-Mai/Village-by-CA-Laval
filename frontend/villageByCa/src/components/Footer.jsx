@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 
 import '../styles/Footer.css';
-import logoBlanc from '../assets/logo_blanc.png';
-import linkedin from '../assets/linkedin.png'
-import instagram from '../assets/instagram.png'
+import logoBlanc from '../assets/logo_blanc.webp';
+import linkedin from '../assets/linkedin.webp'
+import instagram from '../assets/instagram.webp'
 import { useAuth } from "../contexts/AuthContext";
 import Logout from './Logout';
 
@@ -13,7 +13,7 @@ const Footer = () => {
         <footer>
             <div className='upperPart'>
                 <div className='leftPart'>
-                    <Link to="/"><img src = { logoBlanc } alt="logo du Village By CA" className='logo' /></Link>
+                    <Link to="/"><img src = { logoBlanc } alt="logo du Village By CA" loading="lazy" className='logo' /></Link>
                     <ul>
                         <li><Link to="/startups">Startups</Link></li>
                         <li><Link to="/partenaires">Partenaires</Link></li>
@@ -29,8 +29,8 @@ const Footer = () => {
                     )}
                 </div>
                 <div className='rightPart'>
-                    <img src={ linkedin } alt="LinkedIn" />
-                    <img src= { instagram } alt="Instagram" />
+                    <img src={ linkedin } alt="LinkedIn" loading="lazy"/>
+                    <img src= { instagram } alt="Instagram" loading="lazy"/>
                 </div>
             </div>
             <div className='bottomPart'>

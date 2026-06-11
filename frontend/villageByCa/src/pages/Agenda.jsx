@@ -7,20 +7,23 @@ import Header from '../components/Header.jsx';
 import Footer from '../components/Footer.jsx';
 import PreFooter from '../components/PreFooter.jsx';
 import PostCard from '../components/PostCard.jsx';
+import Calendars from '../components/Calendars.jsx';
 
 import { useEffect, useState } from 'react';
 
 const Agenda = () => {
     const [posts, setPosts] = useState([]);
+    const [events, setEvents] = useState([]);
     useEffect (() => {
-                const fetchStartupsPostsAndQuotes = async () => {
+                const fetchStartupsPostsAndEvents = async () => {
                     const result = await fetch('http://localhost:3000/agenda');
                     /* On convertit la promesse en json*/
                     const jsonResult = await result.json()
-                    setPosts(jsonResult);
+                    setPosts(jsonResult.posts);
+                    setEvents(jsonResult.events);
                     }
                     /* On appelle la fonction */
-                    fetchStartupsPostsAndQuotes();
+                    fetchStartupsPostsAndEvents();
                 }, []);
     return (
         <div className='page'>
@@ -31,8 +34,9 @@ const Agenda = () => {
                     text="Le Village by Ca participe à de nombreux évenements et propose
                     des ateliers personnalisés pour accompagner chaque startup, afin de faciliter leur évolution." />
                 <h2 className='section-title-left'>Calendrier</h2>
-                <img className='paragraph-center' src={events} alt="Evenements à venir du Village by CA"/>
+                <Calendars events={events}/>
                 <h2 className='section-title-right'>Actualités du Village</h2>
+
                 <div className='quote-align'>
                     {posts.map(post => (
                         <PostCard

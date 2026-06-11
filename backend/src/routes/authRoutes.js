@@ -8,6 +8,7 @@ import startupsCtrl from '../controllers/startupsCtrl.js';
 import quoteCtrl from '../controllers/quoteCtrl.js';
 // Importation des middlewares nécéssaires
 import authorizationConnexion from "../middlewares/authorizationConnexion.js";
+import connexionContext from '../middlewares/connexionContext.js';
 import upload from "../middlewares/multer.js";
 /*
 Créer un router avec le module express.Router, permet de définir les routes
@@ -20,7 +21,7 @@ authRouteur.post('/login', authCtrl.login);
 
 authRouteur.post('/logout', authCtrl.logout);
 
-authRouteur.get('/', authorizationConnexion, authCtrl.verifyConnexion);
+authRouteur.get('/', connexionContext, authCtrl.verifyConnexion);
 
 authRouteur.get('/profil', authorizationConnexion, authCtrl.getProfile);
 

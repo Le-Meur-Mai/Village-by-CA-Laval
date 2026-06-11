@@ -4,6 +4,7 @@ import PartnerRepository from "../repositories/PartnerRepository.js";
 import PictureRepository from "../repositories/PictureRepository.js";
 //Import des classes pour vérifier la conformité des données
 import Partner from "../classes/Partner.js";
+import validFields from "../utils/validFields.js";
 // Import du client prisma pour créer une nouvelle instance du Repo
 import prisma from "../prismaClient.js";
 // Import de la classe erreur renvoyant des erreurs personnalisées
@@ -12,6 +13,8 @@ import * as Errors from "../errors/errorsClasses.js";
 import uploadPictureToCloudinary from "../utils/uploadToCloudinary.js";
 // Importation de la config Cloudinary pour pouvoir supprimer des images
 import cloudinary from "../../config/cloudinary.js";
+
+const allowedFields = ["name", "description", "website", "financialAid", "logo"];
 
 export default class PartnerServices {
   constructor() {
@@ -26,6 +29,9 @@ export default class PartnerServices {
     // On déclare la variable pour qu'elle soit détectée dans le catch
     try {
       return await prisma.$transaction( async (tx) => {
+
+        validFields(data, allowedFields);
+
         if(!data.logo) {
           data.logoId = process.env.LOGO_ID_DEFAULT;
         } else {
@@ -83,6 +89,8 @@ export default class PartnerServices {
         if (!existingPartner) {
           throw new Errors.NotFoundError('Partner not found');
         }
+
+        validFields(data, allowedFields);
   
         // Creation du nouveau logo et supression de l'ancien
         if(data.logo) {
