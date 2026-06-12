@@ -13,7 +13,7 @@ const CardFlip = ({ titleFront = 'Front', titleBack = 'Back', icon = null, child
                 </div>
                 <div className="card-face card-back">
                     <h3>{titleBack}</h3>
-                    <p>{children}</p>
+                    <div>{children}</div>
                 </div>
             </div>
         </div>
