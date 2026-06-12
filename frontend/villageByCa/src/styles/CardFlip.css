@@ -54,19 +54,26 @@
 
 /* ─── Face avant (visible par défaut) ─── */
 .card-front {
-    background: var(--light-blue);       /* Bleu */
+    background: var(--light-blue);
 }
 
-.card-front h2{
-    font-size: 2rem;      /* Bleu */
+.card-front h2 b {
+    font-size: 2rem;
+    color: var(--grey-main);
 }
 
 /* ─── Face arrière (cachée par défaut) ─── */
 .card-back {
-    background: var(--grey-main);       /* Rouge */
+    background: var(--grey-main);
     transform: rotateY(180deg); /* Pré-retournée pour être dans le bon sens après le flip */
 }
 
 .card-back h3, .card-back p{
-    padding-bottom: clamp(1rem, 2vw, 2rem)
+    padding-bottom: clamp(1rem, 2vw, 2rem);
+}
+
+/* - Inverse la couleur des images et donne la même teinte que le texte - */
+
+.card-front img {
+    filter: invert(92%) sepia(6%) saturate(300%) hue-rotate(65deg) brightness(105%) contrast(95%);
 }
