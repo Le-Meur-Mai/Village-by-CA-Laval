@@ -8,8 +8,10 @@ const PostDetails = ({ title="L'article n'existe pas ou n'a pas été trouvé", 
         {picture && (
             <div className="post-details-image-wrapper">
                     <img
-                    src={picture}
+                    src={picture.replace('/upload/', '/upload/w_850,dpr_auto,f_auto,q_auto/')}
                     alt={title}
+                    fetchPriority="high"
+                    decoding="async"
                     className="post-image"
                     />
             </div>

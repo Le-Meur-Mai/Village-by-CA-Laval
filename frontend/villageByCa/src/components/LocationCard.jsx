@@ -14,7 +14,7 @@ export default function LocationCard({ title="Salle", price=0.00, size=0, pictur
     <Link to={link} className="location-card__link" onClick={handleClick}>
         <div className="location-card">
             <img
-                src={picture}
+                src={picture.replace('/upload/', '/upload/w_400,dpr_auto,f_auto,q_auto/')}
                 alt={title}
                 className="location-card__image"
             />

@@ -19,7 +19,7 @@ export default function ImageCarousel({ pictures }) {
       <button className="arrow left" onClick={prev}>❮</button>
 
       <img
-        src={pictures[index].secureUrl}
+        src={pictures[index].secureUrl.replace('/upload/', '/upload/w_600,dpr_auto,f_auto,q_auto/')}
         alt={`photo-${index}`}
         className="carousel-location-image"
       />
