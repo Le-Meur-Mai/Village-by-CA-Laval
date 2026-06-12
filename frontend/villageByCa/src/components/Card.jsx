@@ -6,7 +6,7 @@ const Card = ({name = "Startup", description = "Description", logo, color = "#CC
             <div className='color-card' style={{ backgroundColor: `${color}` }}></div>
             <div className='card-content'>
                 <div className='card_logo'>
-                    {logo && <img src={logo} alt={name} />}
+                    {logo && <img src={logo.replace('/upload/', '/upload/w_150,dpr_auto,f_auto,q_auto/')} alt={name} />}
                 </div>
                 <h2 className="card-title">{ name }</h2>
                 <p className="card-description">{ description.length > 100
