@@ -63,7 +63,22 @@ export default function ThreeCalendars({ events, admin = false }) {
       right: ""
     },
     events,
-    eventClick: handleEventClick,
+    eventInteractive: false, // Rend les events en <div> au lieu de <a>
+    /* FullCalendar met par défaut des <a></a> pour les éléments du calendrier
+    sauf que l'on a pas de vrais liens qui mènent vers d'autres pages et le SEO
+    du navigateur n'aime pas ça. Info c'est un objet que renvoie fullCalendar
+    quand un évènement est cliqué ou rendu avec bcp d'infos.*/
+    // On empêche de reload toute la page quand on clique sur un évènement car on ne change pas de page
+    eventClick: (info) => {
+      info.jsEvent.preventDefault();
+      handleEventClick(info);
+    },
+    // On garde les évènements clickables en enlevant href, car ça ne mène pas vers une autre page
+    // eventDidMount fonction de callback qui permet de modifier l'élément rendu par fullCalendar
+    eventDidMount: (info) => {
+      // Garde le curseur cliquable
+      info.el.style.cursor = "pointer";
+  },
     height: "auto",
   };
 
