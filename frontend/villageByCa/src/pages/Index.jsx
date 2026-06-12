@@ -50,14 +50,14 @@ const Index = () => {
                     crée ainsi un environnement propice au développement, à l’expérimentation et à la réussite 
                     entrepreneuriale.</p>
                 <div className='index-cards-container'>
-                    <CardFlip titleFront='Startups' titleBack="Notre programme d'accompagnement" icon={startup_icon}>
+                    <CardFlip titleFront='Startups' titleBack="Notre programme d'accompagnement" icon={startup_icon} altText="Illustration de la carte Startups">
                         <div>
                             <p>Le Village vous propose un accompagnement adapté au besoin de votre entreprise.</p>
                             <p><strong>Financement</strong>, <strong>Développement</strong>, <strong>Structuration</strong> ou 
                             <strong>Visibilité</strong>, nous intervenons à chaque étape de votre parcours.</p>
                         </div>
                     </CardFlip>
-                    <CardFlip titleFront='Entreprise' titleBack="Nos services professionnels" icon={entreprise_icon}>
+                    <CardFlip titleFront='Entreprise' titleBack="Nos services professionnels" icon={entreprise_icon} altText="Illustration de la carte Entreprise">
                         <div>
                             <p>Besoin d'aide pour développer votre activité ?</p>
                             <p><strong>Location de salles</strong>, <strong>Visibilité</strong>, <strong>Organisation d'évènement</strong>, 
