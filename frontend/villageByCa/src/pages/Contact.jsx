@@ -65,26 +65,31 @@ const Contact = () => {
 
                     <form onSubmit={handleSubmit} className="contact-form">
 
-                        <label>Nom</label>
-                        <input 
+                        <label htmlFor="name">Nom</label>
+                        <input
+                            id="name"
                             type="text" 
-                            name="name" 
+                            name="name"
+                            autoComplete="name"
                             value={formData.name}
                             onChange={handleChange}
                             required
                         />
 
-                        <label>Email</label>
-                        <input 
+                        <label htmlFor="email">Email</label>
+                        <input
+                            id="email"
                             type="email" 
-                            name="email" 
+                            name="email"
+                            autoComplete="email"
                             value={formData.email}
                             onChange={handleChange}
                             required
                         />
 
-                        <label>Sujet</label>
-                        <select 
+                        <label htmlFor="subject">Sujet</label>
+                        <select
+                            id="subject"
                             name="subject" 
                             value={formData.subject}
                             onChange={handleChange}
@@ -105,8 +110,9 @@ const Contact = () => {
                             <option value="Autre">Autre</option>
                         </select>
 
-                        <label>Message</label>
-                        <textarea 
+                        <label htmlFor="message" >Message</label>
+                        <textarea
+                            id="message"
                             name="message" 
                             value={formData.message}
                             onChange={handleChange}
