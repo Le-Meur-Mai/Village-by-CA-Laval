@@ -19,7 +19,7 @@ const getIndex = async (req, res, next) => {
     startUps = startupReturn.getAllStartUpsIndexFormat(startUps);
     let quotes = await serviceQuotes.getAllQuotes();
     quotes = quoteReturn.getAllQuotesFormat(quotes);
-    let posts = await servicePosts.getAllPosts();
+    let posts = await servicePosts.getTwoRecentPosts();
     posts = postReturn.getAllPostsFormat(posts);
   
     res.status(200).json({

@@ -1,3 +1,7 @@
+/* ========================
+   HEADER BASE
+   ======================== */
+
 header {
     position: sticky;
     top: 0;
@@ -11,12 +15,37 @@ header {
 
 .logo-header {
     width: 5rem;
+    height: 5rem;
 }
+
+/* ========================
+   NAVIGATION ZONES
+   ======================== */
+
+.navLeft {
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.navCenter {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.navRight {
+    display: flex;
+    align-items: center;
+}
+
+/* ========================
+   NAV LINKS
+   ======================== */
 
 .navBox {
     max-width: 500px;
     width: 100%;
-
 }
 
 .navbar {
@@ -59,19 +88,99 @@ nav a:hover::after {
     cursor: pointer;
 }
 
-/* 3 zones */
-.navRight {
-  display: flex;
-  align-items: center;
-}
-.navLeft {
-  margin: 0;
-  display: flex;
-  align-items: center;
+/* ========================
+   BURGER BUTTON (caché sur desktop)
+   ======================== */
+
+.burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 1100;
+    padding: 4px;
 }
 
-.navCenter {
-  flex: 1; /* prend tout l’espace restant */
-  display: flex;
-  justify-content: center; /* centre la navbar */
+.burger span {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background-color: var(--white-main);
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* ========================
+   RESPONSIVE — MOBILE
+   ======================== */
+
+@media (max-width: 900px) {
+
+    /* Affiche le burger */
+    .burger {
+        display: flex;
+    }
+
+    /* Cache les zones nav par défaut */
+    .navCenter,
+    .navRight {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        background-color: var(--primary-green);
+        padding: 1.5rem 0 2rem;
+        gap: 1.2rem;
+
+        /* État fermé */
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-8px);
+        transition: opacity 0.4s ease, transform 0.3s ease;
+    }
+
+    .navBox {
+        max-width: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .navbar {
+        flex-direction: column;  /*liens en colonne */
+        gap: 1.2rem;
+        margin-top: 3rem;
+        padding: 0;
+        align-items: center;
+    }
+
+    /* Retire le margin-left du .contact en mobile */
+    .contact {
+        margin-left: 0;
+    }
+
+    /* État ouvert */
+    .header.open .navCenter,
+    .header.open .navRight {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    /* ---- Animation burger → croix on anime les trois lignes ---- */
+
+    .header.open .burger span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 6px);
+    }
+
+    .header.open .burger span:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+
+    .header.open .burger span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -6px);
+    }
 }

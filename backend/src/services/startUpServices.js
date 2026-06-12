@@ -5,6 +5,7 @@ import UserRepository from "../repositories/UserRepository.js";
 import PictureRepository from "../repositories/PictureRepository.js";
 // Importation de classe pour les verifications de format.
 import StartUp from "../classes/StartUp.js";
+import validFields from "../utils/validFields.js";
 // importation de l'instance du prisma client
 import prisma from "../prismaClient.js";
 // importation de toutes nos classes d'erreurs personnalisées
@@ -13,6 +14,8 @@ import * as Errors from "../errors/errorsClasses.js";
 import uploadPictureToCloudinary from "../utils/uploadToCloudinary.js";
 // Importation de la config Cloudinary pour pouvoir supprimer des images
 import cloudinary from "../../config/cloudinary.js";
+
+const allowedFields = ["name", "description", "isAlumni", "website", "userId", "descriptionPicture", "logo", "types"];
 
 export default class StartUpServices {
   constructor() {
@@ -34,6 +37,8 @@ export default class StartUpServices {
         if (!user) {
           throw new Errors.NotFoundError("The owner of the startup doesn't exist.");
         }
+
+        validFields(data, allowedFields);
   
         // Verification de chaque type associé à la startup
         if (data.types && data.types.length > 0) {

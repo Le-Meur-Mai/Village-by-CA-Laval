@@ -4,6 +4,7 @@ import PictureRepository from "../repositories/PictureRepository.js";
 // importation de la classe post
 import Post from "../classes/Post.js";
 // importation de l'instance du prisma client
+import validFields from "../utils/validFields.js";
 import prisma from "../prismaClient.js";
 // importation de toutes nos classes d'erreurs personnalisées
 import * as Errors from "../errors/errorsClasses.js";
@@ -11,6 +12,8 @@ import * as Errors from "../errors/errorsClasses.js";
 import uploadPictureToCloudinary from "../utils/uploadToCloudinary.js";
 // Importation de la config Cloudinary pour pouvoir supprimer des images
 import cloudinary from "../../config/cloudinary.js";
+
+const allowedFields = ["title", "description", "picture"];
 
 export default class PostServices {
   constructor() {
@@ -23,6 +26,7 @@ export default class PostServices {
     let uploadPicture = null;
     try {
       return await prisma.$transaction(async (tx) => {
+        validFields(data, allowedFields);
         if (data.picture) {
           // Création de l'image dans Cloudinary
           uploadPicture = await uploadPictureToCloudinary(data.picture, "Posts");
@@ -59,6 +63,15 @@ export default class PostServices {
     }
   }
 
+  // GET Retourne les deux derniers posts qui ont été créés
+  async getTwoRecentPosts () {
+    try {
+      return await this.postRepo.getTwoRecentPosts();
+    } catch (error) {
+      return error;
+    }
+  }
+
   // GET Retourne tous les posts existants
   async getAllPosts () {
     try {
@@ -79,6 +92,8 @@ export default class PostServices {
         if (!existingPost) {
           throw new Errors.NotFoundError("The post doesn't exist.");
         }
+
+        validFields(data, allowedFields);
   
         // On cree une nouvelle image s'il y en a une et on va suprimmer l'ancienne
         if (data.picture) {

@@ -14,10 +14,10 @@ export default class Event extends BaseModel {
 
   set title(value) {
     if (typeof value !== "string") {
-      throw new Errors.ValidationError("Title must be a string.");
+      throw new Errors.ValidationError("Le titre doit être une chaîne de caractères");
     }
     else if (value.length > 80 || value.length < 1) {
-      throw new Errors.ValidationError("The length of the title is too long or too short.");
+      throw new Errors.ValidationError("Le titre est trop long ou trop court.");
     }
     this._title = value;
   }
@@ -28,20 +28,20 @@ export default class Event extends BaseModel {
 
   set description(value) {
     if (typeof value !== "string") {
-      throw new Errors.ValidationError("Description must be a string.");
+      throw new Errors.ValidationError("La description doit être un chaîne de caractères.");
     }
     else if (value.length > 200) {
-      throw new Errors.ValidationError("The length of the description is too long.");
+      throw new Errors.ValidationError("La longueur de la description est trop longue");
     }
     this._description = value;
   }
 
   set color(value) {
     if (typeof value !== "string") {
-      throw new Errors.ValidationError("Color must be a string.");
+      throw new Errors.ValidationError("La couleur doit être une chaîne de caractères");
     }
     else if (value.length !== 7) {
-      throw new Errors.ValidationError("Color must be composed of 7 characters.");
+      throw new Errors.ValidationError("La couleur doit contenir un code hexadécimal.");
     }
     this._color = value;
   }
@@ -51,12 +51,21 @@ export default class Event extends BaseModel {
   }
 
   set date(value) {
+    const now = new Date();
+    const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    // Dernier jour du mois + 2 mois
+    const lastAllowedDay = new Date(now.getFullYear(), now.getMonth() + 3, 0);
+
     if (value instanceof Date !== true) {
-      throw new Errors.ValidationError("date must be an instance of Date.");
+      throw new Errors.ValidationError("La date doit être une instance de Date.");
     }
-    else if (new Date() > value) {
-      throw new Errors.ValidationError("The date has passed.");
+    else if (firstDayOfMonth > value) {
+      throw new Errors.ValidationError("La date est antérieure au mois actuel.");
     }
+    else if (value > lastAllowedDay) {
+      throw new Errors.ValidationError("La date dépasse la limite de trois mois.");
+    }
+    
     this._date = value;
   }
 

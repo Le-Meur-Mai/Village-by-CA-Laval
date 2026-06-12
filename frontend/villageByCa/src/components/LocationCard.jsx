@@ -1,5 +1,5 @@
 import "../styles/LocationCard.css";
-import heroImage from "../assets/HeroImage.png";
+import heroImage from "../assets/HeroImage.avif";
 import { Link } from 'react-router-dom';
 
 export default function LocationCard({ title="Salle", price=0.00, size=0, picture=heroImage, link="/", onClick=null}) {

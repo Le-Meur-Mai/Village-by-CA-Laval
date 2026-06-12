@@ -62,7 +62,7 @@ const StartupForm = ({ initialData = {}, allTypes = [], allUsers = [], onSubmit,
         <form onSubmit={handleSubmit} className="edit-form-startup">
             <label>
                 Nom :
-                <input type="text" name="name" value={formData.name} onChange={handleChange} required={required}/>
+                <input type="text" name="name" autoComplete="name" value={formData.name} onChange={handleChange} required={required}/>
             </label>
             <label>
                 Site web :

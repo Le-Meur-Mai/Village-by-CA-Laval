@@ -1,7 +1,8 @@
 import '../styles/page.css';
 
-import alternant from '../assets/user-male-circle.jpg';
-import amandine from '../assets/Amandine.jpeg';
+
+import amandine from '../assets/Amandine.avif';
+import ibrahima from '../assets/Ibrahima Barry.avif';
 import events from '../assets/Events.png';
 import startup_icon from '../assets/startup_icon.png';
 import entreprise_icon from '../assets/entreprise_icon.png';
@@ -40,6 +41,7 @@ const Index = () => {
             <Header />
             <main>
                 <HeroSection />
+                <h2 className='title-h2-center'>Le Village by CA de Laval</h2> 
                 <h3 className='section-title-left'>Coopérer pour Innover</h3>
                 <p className='paragraph-center'>Le Village by CA de Laval est un écosystème dynamique dédié à l’accompagnement des startups 
                     en phase de croissance. Cet espace favorise les rencontres entre jeunes entreprises, experts 
@@ -70,8 +72,8 @@ const Index = () => {
                     image={amandine}
                     job="Maire du Village by CA"/>
                     <CardStaff
-                    name="Alternant"
-                    image={alternant}
+                    name="Ibrahima Barry"
+                    image={ibrahima}
                     job="Assistant au Maire du Village by CA"/>
                 </div>
                 <h3 className='section-title-left'>Nous les accompagnons</h3>
@@ -94,7 +96,6 @@ const Index = () => {
                     path="http://localhost:5173/startups"/>
                 </div>
                 <h3 className='section-title-right'>Agenda</h3>
-                <img className='paragraph-center' src={events} alt="Evenements à venir du Village by CA"/>
                 <h3 className='section-title-left'>Actualités</h3>
                 <div className='quote-align'>
                     {posts.map(post => (

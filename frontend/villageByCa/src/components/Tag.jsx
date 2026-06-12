@@ -95,7 +95,8 @@ const Tag = ({id=null, name = "Tag", color = "CCF2B1", active=true, onClick, can
                             Nom :
                             <input
                                 type="text"
-                                name="name"         // Correspond à la clé dans formData
+                                name="name"  // Correspond à la clé dans formData
+                                autoComplete="name"
                                 value={formData.name}
                                 onChange={handleChange}
                                 required
@@ -133,6 +134,7 @@ const Tag = ({id=null, name = "Tag", color = "CCF2B1", active=true, onClick, can
                                 <input
                                     type="color"
                                     name="color"
+                                    autoComplete="off"
                                     value={ formData.color }
                                     onChange={handleChange}
                                     required

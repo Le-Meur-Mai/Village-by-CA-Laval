@@ -2,18 +2,18 @@ import '../../styles/page.css'
 
 import '../../styles/AdminQuotes.css'
 
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import PresentationPage from '../../components/PresentationPage';
+import Header from "../../components/Header.jsx";
+import Footer from "../../components/Footer.jsx";
+import PresentationPage from '../../components/PresentationPage.jsx';
 import { useEffect, useState } from 'react';
 import { useNavigate} from "react-router-dom";
-import UserInfoProfil from '../../components/UserInfoProfil';
-import NewUserButton from '../../components/buttons/NewUserButton';
+import UserInfoProfil from '../../components/UserInfoProfil.jsx';
+import NewUserButton from '../../components/buttons/NewUserButton.jsx';
 
 const AdminUsers = () => {
     const navigate = useNavigate();
 
-    const [allUsers, setAllUsers] = useState([])
+    const [allUsers, setAllUsers] = useState([]);
 
     useEffect(() => {
         const fetchAllUsers = async () => {
