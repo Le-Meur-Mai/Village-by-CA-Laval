@@ -102,7 +102,7 @@ const StartupForm = ({ initialData = {}, allTypes = [], allUsers = [], onSubmit,
                                 className='startup-type-span'
                                 key={type.id}
                                 style={{
-                                    backgroundColor: `#${type.color}`
+                                    backgroundColor: `${type.color}`
                                 }}
                             >
                                 {type.name}
@@ -129,7 +129,7 @@ const StartupForm = ({ initialData = {}, allTypes = [], allUsers = [], onSubmit,
                                 key={type.id}
                                 onClick={() => handleAddType(type)}
                                 style={{
-                                    backgroundColor: `#${type.color}` || '#ccc',
+                                    backgroundColor: `${type.color}` || '#ccc',
                                 }}
                                 className='startup-type-span-adding'
                             >

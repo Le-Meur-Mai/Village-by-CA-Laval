@@ -25,17 +25,12 @@ const NewTypeButton = ({onUpdate = null}) => {
         e.preventDefault();
 
         try {
-            // Enlève le # devant le code hexadecimal
-            const payload = {
-                ...formData,
-                color: formData.color.replace('#', '') // retire le #
-            };
             // Utilise la route API correspondante
             const response = await fetch(`http://localhost:3000/admin/types`, {
                 method: 'POST',
                 credentials: "include",  // Envoie les cookies de session pour l'authentification
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(formData)
             });
 
             const data = await response.json();

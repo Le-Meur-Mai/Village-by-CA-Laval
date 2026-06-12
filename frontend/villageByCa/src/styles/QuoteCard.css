@@ -26,6 +26,13 @@
   overflow: hidden;             /* empêche tout débordement */
 }
 
+.quote-card-center-element {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
 /* --- Header : logo + nom/prénom + startup --- */
 .quote-header {
   display: flex;

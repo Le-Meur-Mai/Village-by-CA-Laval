@@ -182,17 +182,20 @@ const QuoteCard = ({
               </div>
             </div>
 
-            <p className="quote-description">{description}</p>
+            <div className="quote-card-center-element">
+              <p className="quote-description">{description}</p>
 
-            {/* Le bouton "Modifier" n'est visible que si :
-                - canBeModified est true (prop passée par le parent)
-                - l'auth n'est pas en cours de chargement
-                - l'utilisateur est bien authentifié */}
-            {canBeModified && !loading && (
-              auth
-                ? <button onClick={() => setIsEditing(true)}>Modifier</button>
-                : null
-            )}
+              {/* Le bouton "Modifier" n'est visible que si :
+                  - canBeModified est true (prop passée par le parent)
+                  - l'auth n'est pas en cours de chargement
+                  - l'utilisateur est bien authentifié */}
+              {canBeModified && !loading && (
+                auth
+                  ? <button onClick={() => setIsEditing(true)}>Modifier</button>
+                  : null
+                )}
+            </div>
+
           </div>
 
           {/* Message de retour après une tentative de modification */}
