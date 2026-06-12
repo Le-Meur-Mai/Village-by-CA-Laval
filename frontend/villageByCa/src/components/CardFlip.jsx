@@ -9,7 +9,7 @@ const CardFlip = ({ titleFront = 'Front', titleBack = 'Back', icon = null, altTe
             <div className={`card-inner ${isFlipped ? "flipped" : ""}`}>
                 <div className="card-face card-front">
                     <h2><b>{titleFront}</b></h2>
-                    <img src={icon} alt={altText} />
+                    <img src={icon} alt={altText} width="200" height="200" />
                 </div>
                 <div className="card-face card-back">
                     <h3>{titleBack}</h3>

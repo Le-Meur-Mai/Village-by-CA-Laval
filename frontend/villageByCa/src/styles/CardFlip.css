@@ -31,6 +31,9 @@
 }
 .card-inner img{
     width: clamp(10rem, 12vw, 12rem);
+    height: auto;
+    /* Inverse la couleur des images et donne la même teinte que le texte */
+    filter: invert(92%) sepia(6%) saturate(300%) hue-rotate(65deg) brightness(105%) contrast(95%);
 }
 
 /* ─── État retourné ─── */
@@ -70,10 +73,4 @@
 
 .card-back h3, .card-back p{
     padding-bottom: clamp(1rem, 2vw, 2rem);
-}
-
-/* - Inverse la couleur des images et donne la même teinte que le texte - */
-
-.card-front img {
-    filter: invert(92%) sepia(6%) saturate(300%) hue-rotate(65deg) brightness(105%) contrast(95%);
 }

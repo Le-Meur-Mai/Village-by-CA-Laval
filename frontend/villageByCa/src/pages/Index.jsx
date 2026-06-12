@@ -4,8 +4,8 @@ import '../styles/page.css';
 import amandine from '../assets/Amandine.avif';
 import ibrahima from '../assets/Ibrahima Barry.avif';
 import events from '../assets/Events.png';
-import startup_icon from '../assets/startup_icon.png';
-import entreprise_icon from '../assets/entreprise_icon.png';
+import startup_icon from '../assets/startup_icon.webp';
+import entreprise_icon from '../assets/entreprise_icon.webp';
 
 import CardFlip from '../components/CardFlip.jsx'
 import PostCard from '../components/PostCard.jsx';
