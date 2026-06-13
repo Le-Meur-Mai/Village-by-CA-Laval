@@ -40,6 +40,7 @@ li {
 .logo {
     width: 8rem;
     height: 8rem;
+    filter: invert(100%) brightness(120%);
 }
 
 /* --- Right Part --- */

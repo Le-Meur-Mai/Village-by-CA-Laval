@@ -35,7 +35,7 @@ const Footer = () => {
             </div>
             <div className='bottomPart'>
                 <p>2024 Village By CA - TOUS DROITS RESERVES</p>
-                <Link to="/">Mention Légales</Link>
+                <Link to="/">Mentions Légales</Link>
             </div>
         </footer>
     )
