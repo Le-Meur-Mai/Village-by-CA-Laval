@@ -4,7 +4,8 @@
     flex-direction: column;
     align-items: center;
     width: clamp(16rem, 18vw, 18rem);
-    height: clamp(21rem, 20vw, 20rem);
+    height: auto;
+    min-height: 21rem; /* Garde une taille minimale */
     border: 2px solid var(--black-main);
     border-radius: 1.5vw;
     cursor: pointer;
@@ -44,14 +45,10 @@
 }
 
 .card_logo {
-    width: 40%;
-    aspect-ratio: 1;
+    width: 6rem; /* taille fixe */
+    height: 6rem;
     border-radius: 50%;
-    background-color: var(--black-main);
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 
