@@ -1,6 +1,6 @@
 .section-admin-title-left {
   text-decoration: none;
-    display: inline-block;        /* pour que la bande s’adapte au contenu */
+    display: block;        /* pour que chaque lien prenne toute la ligne */
     background-color: var(--primary-green);
     padding: 0.4rem 1rem;         /* espace autour du texte */
     border-radius: 0 2rem 2rem 0; /* arrondi à droite */
