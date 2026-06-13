@@ -20,8 +20,8 @@
 
 /* --- Image de l'article --- */
 .popup-post-picture {
-    width: 260px;          /* Taille raisonnable */
-    max-height: 200px;     /* Limite stricte */
+    width: 100%;          /* Taille raisonnable */
+    max-height: 400px;     /* Limite stricte */
     object-fit: cover;     /* Coupe proprement si besoin */
     border-radius: 10px;
     border: 1px solid #ddd;
@@ -110,4 +110,23 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+@media (max-width: 800px) {
+
+  /* Pop-up responsive */
+  .popup-post-card {
+    width: 80%;          /* prend presque toute la largeur */
+    max-width: 90%;      /* empêche tout débordement */
+    padding: 20px;       /* padding réduit */
+  }
+
+  /* Image responsive */
+  .popup-post-picture {
+    width: 100%;         /* l’image prend toute la largeur dispo */
+    max-width: 100%;     /* empêche tout dépassement */
+    height: auto;        /* garde le ratio */
+    max-height: none;    /* supprime la limite trop stricte */
+    object-fit: contain; /* l’image reste entière */
+  }
 }

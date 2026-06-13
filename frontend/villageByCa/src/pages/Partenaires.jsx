@@ -48,7 +48,6 @@ const Partenaires = () => {
                             name={partner.name}
                             description={partner.description}
                             logo={partner.logo}
-                            color="CCF2B1"
                             // ouvre dans un nouvel onglet, et ça coupe tout lien avec le nouveau site ouvert
                             onClick={() => window.open(partner.website, "_blank", "noopener,noreferrer")}
                             />
@@ -64,7 +63,6 @@ const Partenaires = () => {
                             name={partner.name}
                             description={partner.description}
                             logo={partner.logo}
-                            color="CCF2B1"
                             onClick={() => window.open(partner.website, "_blank", "noopener,noreferrer")}
                             />
                         ))}

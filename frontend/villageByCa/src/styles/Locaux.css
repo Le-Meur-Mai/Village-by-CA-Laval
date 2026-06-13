@@ -1,0 +1,7 @@
+.youtube-video-container {
+  display: flex;
+  justify-content: center; /* centre horizontalement */
+  padding: 0 1rem; /* marge interne à gauche et droite */
+  width: 100%;
+  box-sizing: border-box; /* évite les débordements */
+}

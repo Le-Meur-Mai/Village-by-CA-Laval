@@ -58,6 +58,7 @@ const LocationDetails = () => {
                         text="Retour →"
                         path="http://localhost:5173/locations"/>
                     </div>
+                    <br></br>
                     <div className="location-details-page">
                         <PicturesLocation pictures={location.pictures} />
                         <LocationInfo

@@ -1,10 +1,10 @@
 .section-admin-title-left {
   text-decoration: none;
-    display: inline-block;        /* pour que la bande s’adapte au contenu */
+    display: block;        /* pour que chaque lien prenne toute la ligne */
     background-color: var(--primary-green);
     padding: 0.4rem 1rem;         /* espace autour du texte */
     border-radius: 0 2rem 2rem 0; /* arrondi à droite */
-    font-size: clamp(1.5rem, 4vw, 1.5rem);
+    font-size: clamp(0.5rem, 4vw, 1.5rem);
     margin: 2rem 0 1rem 0;        /* espace autour du titre */
     margin-top: 2rem;
     margin-bottom: 1rem;
@@ -32,3 +32,9 @@ parmi les éléments du même type.*/
 .section-admin-title-left:nth-of-type(7) { --i: 6.5; }
 .section-admin-title-left:nth-of-type(8) { --i: 7; }
 .section-admin-title-left:nth-of-type(9) { --i: 7.5; }
+
+@media (max-width: 600px) {
+  .section-admin-title-left {
+    width: 90% !important; /* toutes les bandes font la même largeur */
+  }
+}

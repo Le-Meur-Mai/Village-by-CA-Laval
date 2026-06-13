@@ -1,9 +1,11 @@
 import '../styles/page.css';
 import '../styles/LocationCard.css';
+import '../styles/Locaux.css';
 import video from "../assets/videoVillageByCa.png";
 
 import LocationCard from '../components/LocationCard.jsx';
 import Header from '../components/Header.jsx';
+import LazyYouTube from '../components/LazyYoutube.jsx';
 import PresentationPage from '../components/PresentationPage.jsx';
 import PreFooter from '../components/PreFooter.jsx';
 import Footer from '../components/Footer.jsx';
@@ -36,8 +38,9 @@ const Locaux = () => {
                     se développer et créer un réseau. C’est un cadre idéal pour rassembler et développer 
                     votre startup." />
                 <h2 className='section-title-left'>Les Locaux:</h2>
-                <img className='paragraph-center' src={video} alt="Découverte des bureaux du Village by CA"
-                style={{ width: "800px", height: "auto" }}/>
+                <div className='youtube-video-container'>
+                    <LazyYouTube videoId="7MEqwSoohi8" />
+                </div>
                 <h2 className='section-title-right'>Location de salles/bureaux:</h2>
                 <div className="locations-container">
                     {locations.map(location => (
