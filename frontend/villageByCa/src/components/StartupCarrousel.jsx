@@ -20,8 +20,12 @@ export default function StartupCarrousel({ startups }) {
   // +1 pour éviter tout vide à la fin
   const repeatCount = Math.ceil((window.innerWidth * 2) / setWidth) + 1;
 
-  // On crée un tableau contenant les logos répétés plusieurs fois
-  // Chaque logo reçoit une clé unique pour React
+  // On crée un grand tableau contenant plusieurs copies de la liste des startups.
+  // Array.from répète la liste "repeatCount" fois : i représente le numéro de la répétition (0, 1, 2, ...).
+  // i s'incrémente automatiquement grâce au fonctionnement de Array.from.
+  // Pour chaque startup, on ajoute une clé unique (_key) basée sur i + son id,
+  // ce qui permet à React d'afficher correctement les éléments répétés.
+  // .flat() sert simplement à transformer le tableau de tableaux en un seul tableau continu.
   const repeated = Array.from({ length: repeatCount }, (_, i) =>
     startups.map((startup) => ({ ...startup, _key: `${i}-${startup.id}` }))
   ).flat();
