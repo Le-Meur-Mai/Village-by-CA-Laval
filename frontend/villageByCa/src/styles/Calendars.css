@@ -92,7 +92,7 @@
   display: inline-block;
   margin: 15px 0 15px 15px;
   padding: 10px 18px;
-  background: #007bff;
+  background: var(--green-borders);
   color: white;
   border: none;
   border-radius: 6px;
