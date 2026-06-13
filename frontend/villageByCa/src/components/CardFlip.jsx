@@ -1,7 +1,7 @@
 import '../styles/CardFlip.css'
 import { useState } from "react";
 
-const CardFlip = ({ titleFront = 'Front', titleBack = 'Back', icon = null, children = 'text' }) => {
+const CardFlip = ({ titleFront = 'Front', titleBack = 'Back', icon = null, altText = "Illustration", children = 'text' }) => {
     const [isFlipped, setIsFlipped] = useState(false);
 
     return (
@@ -9,11 +9,11 @@ const CardFlip = ({ titleFront = 'Front', titleBack = 'Back', icon = null, child
             <div className={`card-inner ${isFlipped ? "flipped" : ""}`}>
                 <div className="card-face card-front">
                     <h2><b>{titleFront}</b></h2>
-                    <img src={icon} alt="" />
+                    <img src={icon} alt={altText} width="200" height="200" />
                 </div>
                 <div className="card-face card-back">
                     <h3>{titleBack}</h3>
-                    <p>{children}</p>
+                    <div>{children}</div>
                 </div>
             </div>
         </div>
