@@ -1,26 +1,25 @@
-/* La fenêtre qui affiche seulement 4 logos */
 .carousel-window {
   width: 100%;
-  max-width: 900px; /* largeur du cadre */
+  max-width: 900px;
   margin: 0.5rem auto;
   overflow: hidden;
   padding: 1rem 0;
   border-radius: 25rem;
 }
 
-/* La bande qui défile */
 .carousel-track {
   display: flex;
   gap: 3rem;
-  animation: scroll 20s linear infinite;
+  width: max-content; /* ← important */
+  animation: scroll 25s linear infinite;
+  will-change: transform;
 }
 
-/* Chaque logo */
 .carousel-logo {
-  width: 150px;       /* taille du logo */
+  width: 150px;
   height: 150px;
   object-fit: contain;
-  flex-shrink: 0;     /* empêche les logos de se réduire */
+  flex-shrink: 0;
   transition: transform 0.3s ease;
 }
 
@@ -28,14 +27,9 @@
   transform: scale(1.1);
 }
 
-/* Animation */
 @keyframes scroll {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(-1 * var(--set-width))); }
 }
 
 @media (max-width: 600px) {
