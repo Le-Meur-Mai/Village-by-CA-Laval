@@ -1,6 +1,7 @@
 /* --- Carte portrait (desktop/tablette) --- */
 .quote-card {
-  width: 17rem;
+  width: 100%;
+  max-width: 17rem;
   height: 20rem;
   background: var(--white-main);
   border: 2px solid var(--black-main);
@@ -89,7 +90,8 @@
 /* --- Responsive mobile --- */
 @media (max-width: 900px) {
   .quote-card {
-    width: 90vw;        /* prend presque toute la largeur */
+    width: 100%;
+    max-width: 90vw;    /* prend presque toute la largeur */
     height: auto;       /* s’adapte au contenu */
     padding: 1rem;
   }
