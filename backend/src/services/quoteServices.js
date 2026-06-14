@@ -106,7 +106,7 @@ export default class QuoteServices {
       }
       if (!currentUser.isAdmin && currentUser.id !== existingQuote.user.id) {
         throw new Errors.ForbiddenError(
-          'You have to be an admin or the owner to delete this quote.');
+          'Vous devez être le créateur de la citation ou un admin pour la supprimer.');
       }
       return await this.quoteRepo.deleteQuote(id);
     } catch (error) {

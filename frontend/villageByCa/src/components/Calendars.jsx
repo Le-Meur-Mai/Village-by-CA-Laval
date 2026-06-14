@@ -63,6 +63,7 @@ export default function ThreeCalendars({ events, admin = false }) {
       right: ""
     },
     events,
+    displayEventTime:false, // ← retire l’heure
     eventInteractive: false, // Rend les events en <div> au lieu de <a>
     /* FullCalendar met par défaut des <a></a> pour les éléments du calendrier
     sauf que l'on a pas de vrais liens qui mènent vers d'autres pages et le SEO

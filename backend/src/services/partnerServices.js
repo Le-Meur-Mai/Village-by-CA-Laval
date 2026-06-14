@@ -33,7 +33,7 @@ export default class PartnerServices {
         validFields(data, allowedFields);
 
         if(!data.logo) {
-          data.logoId = process.env.LOGO_ID_DEFAULT;
+          data.logoId = global.DEFAULT_LOGO_ID;
         } else {
           // On crée l'image dans notre db et dans notre serveur cloudinary
           uploadLogo = await uploadPictureToCloudinary(data.logo, "Partners");
@@ -114,7 +114,7 @@ export default class PartnerServices {
        const updatedPartner = await this.partnerRepo.updatePartner(id, data, tx);
        
        // On supprime l'ancien logo
-       if (uploadLogo && existingPartner.logoId !== process.env.LOGO_ID_DEFAULT) {
+       if (uploadLogo && existingPartner.logoId !== global.DEFAULT_LOGO_ID) {
            await cloudinary.uploader.destroy(existingPartner.logo.publicId)
            await this.pictureRepo.deletePicture(existingPartner.logoId, tx);
          }
@@ -139,7 +139,7 @@ export default class PartnerServices {
         }
         const deletedPartner = await this.partnerRepo.deletePartner(id, tx);
         // Suppression de l'image si elle n'est pas l'image par défaut
-        if(partner.logoId !== process.env.LOGO_ID_DEFAULT) {
+        if(partner.logoId !== global.DEFAULT_LOGO_ID) {
           await cloudinary.uploader.destroy(partner.logo.publicId);
           await this.pictureRepo.deletePicture(partner.logoId, tx);
         }

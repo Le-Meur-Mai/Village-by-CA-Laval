@@ -15,10 +15,10 @@ export default class Quote extends BaseModel {
 
   set firstName(value) {
     if (typeof value !== "string") {
-      throw new Errors.ValidationError("First Name must be a string.");
+      throw new Errors.ValidationError("Le prénom doit être une chaîne de caractères.");
     }
     else if (value.length > 20 || value.length < 1) {
-      throw new Errors.ValidationError("The length of the first name is too long or too short.");
+      throw new Errors.ValidationError("La longueur du prénom est trop petite ou trop longue.");
     }
     this._firstName = value;
   }
@@ -29,10 +29,10 @@ export default class Quote extends BaseModel {
 
   set lastName(value) {
     if (typeof value !== "string") {
-      throw new Errors.ValidationError("Last name must be a string.");
+      throw new Errors.ValidationError("Le nom de famille doit être une chaîne de caractères.");
     }
     else if (value.length > 20 || value.length < 1) {
-      throw new Errors.ValidationError("The length of the last name is too long or too short.");
+      throw new Errors.ValidationError("La longueur du nom de famille est trop petite ou trop longue.");
     }
     this._lastName = value;
   }
@@ -43,10 +43,10 @@ export default class Quote extends BaseModel {
 
   set description(value) {
     if (typeof value !== "string") {
-      throw new Errors.ValidationError("Description must be a string.");
+      throw new Errors.ValidationError("La description doit être une chaîne de caractères.");
     }
     else if (value.length > 200 || value.length < 10) {
-      throw new Errors.ValidationError("The length of the description is too long or too short.");
+      throw new Errors.ValidationError("La description est trop courte ou trop longue.");
     }
     this._description = value;
   }

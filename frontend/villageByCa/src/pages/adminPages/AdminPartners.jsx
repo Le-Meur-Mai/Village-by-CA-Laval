@@ -95,7 +95,6 @@ const AdminPartners = () => {
                                 name={partner.name}
                                 description={partner.description}
                                 logo={partner.logo}
-                                color="CCF2B1"
                                 onClick={() => openPopup(partner.id)}
                             />
                         ))}
