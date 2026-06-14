@@ -1,48 +1,59 @@
 .carousel-window {
-  width: 100%;
-  max-width: 900px;
-  margin: 0.5rem auto;
-  overflow: hidden;
-  padding: 1rem 0;
-  border-radius: 25rem;
+  width: 90%;              /* Le carrousel prend toute la largeur disponible */
+  max-width: 65rem;         /* Mais ne dépasse jamais 65rem */
+  margin: 0.5rem auto;      /* Centré horizontalement */
+  overflow: hidden;         /* Cache les logos qui dépassent */
+  padding: 1rem 0;          /* Un peu d’espace autour */
+  border-radius: 25rem;     /* Donne un effet de “capsule” arrondie */
 }
 
 .carousel-track {
-  display: flex;
-  gap: 3rem;
-  width: max-content; /* ← important */
-  animation: scroll 25s linear infinite;
-  will-change: transform;
+  display: flex;            /* Les logos sont alignés en ligne */
+  gap: 3rem;                /* Espace horizontal entre les logos */
+  width: max-content;       /* La largeur s’adapte à la taille totale des logos */
+  animation: scroll 15s linear infinite; /* Animation de défilement */
+  will-change: transform;   /* Optimisation pour une animation plus fluide */
 }
 
 .carousel-logo {
-  width: 150px;
+  width: 150px;             /* Taille d’un logo en desktop */
   height: 150px;
-  object-fit: contain;
-  flex-shrink: 0;
-  transition: transform 0.3s ease;
+  object-fit: contain;      /* Garde les proportions du logo */
+  flex-shrink: 0;           /* Empêche les logos de se réduire */
+  transition: transform 0.3s ease; /* Animation du hover */
 }
 
 .carousel-logo:hover {
-  transform: scale(1.1);
+  transform: scale(1.1);    /* Zoom léger au survol */
 }
 
+/* Animation du défilement */
 @keyframes scroll {
   from { transform: translateX(0); }
+
+  /*
+    → var(--set-width) est une variable CSS envoyée depuis le JS.
+    → Elle contient la largeur exacte d’un “set” complet de logos.
+
+    L’animation déplace la piste vers la gauche de cette largeur,
+    ce qui correspond pile à la longueur d’un cycle.
+
+    Résultat :
+    - quand l’animation recommence, on retombe exactement sur le même visuel
+    - pas de saut, pas de coupure, effet infini parfaitement fluide
+  */
   to   { transform: translateX(calc(-1 * var(--set-width))); }
 }
 
-@media (max-width: 600px) {
-  .carousel-window {
-    max-width: 350px;
-  }
+/* Version mobile */
+@media (max-width: 900px) {
 
   .carousel-logo {
-    width: 100px;
+    width: 100px;           /* Logos plus petits */
     height: 100px;
   }
 
   .carousel-track {
-    gap: 1.5rem;
+    gap: 1.5rem;            /* Espace réduit entre les logos */
   }
 }

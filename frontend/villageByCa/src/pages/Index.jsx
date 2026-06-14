@@ -9,7 +9,7 @@ import entreprise_icon from '../assets/entreprise_icon.webp';
 
 import CardFlip from '../components/CardFlip.jsx'
 import PostCard from '../components/PostCard.jsx';
-import QuoteCard from '../components/QuoteCard.jsx';
+import QuoteCarrousel from '../components/QuoteCarrousel.jsx';
 import Button from '../components/buttons/button.jsx';
 import StartupCarrousel from '../components/StartupCarrousel.jsx';
 import Header from '../components/Header.jsx';
@@ -79,17 +79,8 @@ const Index = () => {
                 <h3 className='section-title-left'>Nous les accompagnons</h3>
                 <StartupCarrousel
                 startups={startups}/>
-                <div className='quote-align'>
-                    {quotes.map(quote => (
-                        <QuoteCard
-                        key={quote.id}
-                        logo={quote.startUp?.logo}
-                        name={quote.startUp?.name}
-                        firstName={quote.firstName}
-                        lastName={quote.lastName}
-                        description={quote.description}/>
-                    ))}
-                </div>
+                <QuoteCarrousel quotes={quotes} />
+
                 <div className="paragraph-center">
                     <Button 
                     text="En savoir plus"

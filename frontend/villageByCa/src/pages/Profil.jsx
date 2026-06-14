@@ -2,6 +2,7 @@ import '../styles/page.css';
 import '../styles/Profil.css';
 
 import { useEffect, useState } from 'react';
+import { useAuth } from "../contexts/AuthContext.jsx";
 
 import Header from '../components/Header';
 import PresentationPage from '../components/PresentationPage';
@@ -12,6 +13,8 @@ import Footer from '../components/Footer';
 import NewQuoteButton from '../components/buttons/NewQuoteButton';
 
 const Profil = () => {
+
+    const { auth, loading } = useAuth();
 
     const [userInfo, setUserInfo] = useState(null);
 
@@ -58,25 +61,27 @@ const Profil = () => {
                             <StartUpInfoProfil startup={userInfo.startUp} onUpdate={setUserInfo} />
                         </div>
                     </div>
-                    <div className='profil-quotes'>
-                        <h1>Mes Citations</h1>
-                        <NewQuoteButton chooseUser={ false } onUpdate={setUserInfo}/>
-                        <div className='quote-align'>
-                            {userInfo.quotes.map((quote) => (
-                                <QuoteCard 
-                                    key={quote.id}
-                                    id={quote.id}
-                                    logo={quote.logo} 
-                                    name={quote.startUp} 
-                                    firstName={quote.firstName}
-                                    lastName={quote.lastName}
-                                    description={quote.description}
-                                    canBeModified={true}
-                                    onUpdate={setUserInfo}
-                                />
-                            ))}
+                    {!loading && auth && !auth.isAdmin && (
+                        <div className='profil-quotes'>
+                            <h1>Mes Citations</h1>
+                            <NewQuoteButton chooseUser={ false } onUpdate={setUserInfo}/>
+                            <div className='quote-align'>
+                                {userInfo.quotes.map((quote) => (
+                                    <QuoteCard 
+                                        key={quote.id}
+                                        id={quote.id}
+                                        logo={quote.logo} 
+                                        name={quote.startUp} 
+                                        firstName={quote.firstName}
+                                        lastName={quote.lastName}
+                                        description={quote.description}
+                                        canBeModified={true}
+                                        onUpdate={setUserInfo}
+                                    />
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
             </main>
             <Footer />   
