@@ -1,6 +1,6 @@
 .carousel-window {
-  width: 100%;              /* Le carrousel prend toute la largeur disponible */
-  max-width: 900px;         /* Mais ne dépasse jamais 900px */
+  width: 90%;              /* Le carrousel prend toute la largeur disponible */
+  max-width: 65rem;         /* Mais ne dépasse jamais 65rem */
   margin: 0.5rem auto;      /* Centré horizontalement */
   overflow: hidden;         /* Cache les logos qui dépassent */
   padding: 1rem 0;          /* Un peu d’espace autour */
@@ -46,10 +46,7 @@
 }
 
 /* Version mobile */
-@media (max-width: 600px) {
-  .carousel-window {
-    max-width: 350px;       /* Carrousel plus compact */
-  }
+@media (max-width: 900px) {
 
   .carousel-logo {
     width: 100px;           /* Logos plus petits */
