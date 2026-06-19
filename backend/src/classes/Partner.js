@@ -16,10 +16,10 @@ export default class Partner extends BaseModel {
 
   set name(value) {
     if (typeof value !== "string") {
-      throw new Errors.ValidationError("Name must be a string.");
+      throw new Errors.ValidationError("Le nom doit être une chaîne de caractères.");
     }
     else if (value.length > 100 || value.length < 1) {
-      throw new Errors.ValidationError("The length of the name is too long or too short.");
+      throw new Errors.ValidationError("La longueur du nom est trop courte ou trop longue.");
     }
     this._name = value;
   }
@@ -30,10 +30,10 @@ export default class Partner extends BaseModel {
 
   set description(value) {
     if (typeof value !== "string") {
-      throw new Errors.ValidationError("Description must be a string.");
+      throw new Errors.ValidationError("La description doit être une chaîne de caractères.");
     }
     else if (value.length > 200 || value.length < 10) {
-      throw new Errors.ValidationError("The length of the description is too long or too short.");
+      throw new Errors.ValidationError("La longueur de la description est trop courte ou trop longue (200 caractères max).");
     }
     this._description = value;
   }
@@ -47,7 +47,7 @@ export default class Partner extends BaseModel {
       throw new Errors.ValidationError("Website must be a string.");
     }
     else if (value.length > 200 || value.length < 1) {
-      throw new Errors.ValidationError("The length of the website is too long or too short.");
+      throw new Errors.ValidationError("La longueur du lien du site web est trop courte ou trop longue.");
     }
     this._website = value;
   }
