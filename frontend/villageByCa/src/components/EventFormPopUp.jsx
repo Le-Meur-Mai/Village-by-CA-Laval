@@ -3,11 +3,11 @@ import "../styles/EventPopUp.css";
 
 export default function EventFormPopUp({ event, onClose }) {
 
-    // Fonction utilitaire à mettre en haut du composant
-    const toInputDate = (val) => {
+  // Fonction pour afficher seulement l'année, le mois et le jour
+  const toInputDate = (val) => {
     if (!val) return "";
     return val.slice(0, 10); // "2025-06-10T00:00:00.000Z" → "2025-06-10"
-    };
+  };
 
   const isEditing = Boolean(event?.id); // true = mise à jour, false = création
 
