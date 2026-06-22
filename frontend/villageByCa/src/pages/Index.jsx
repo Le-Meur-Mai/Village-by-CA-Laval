@@ -7,7 +7,8 @@ import events from '../assets/Events.png';
 import startup_icon from '../assets/startup_icon.webp';
 import entreprise_icon from '../assets/entreprise_icon.webp';
 
-import CardFlip from '../components/CardFlip.jsx'
+import Calendars from '../components/Calendars.jsx';
+import CardFlip from '../components/CardFlip.jsx';
 import PostCard from '../components/PostCard.jsx';
 import QuoteCarrousel from '../components/QuoteCarrousel.jsx';
 import Button from '../components/buttons/button.jsx';
@@ -23,19 +24,21 @@ const Index = () => {
     const [startups, setStartups] = useState([]);
     const [posts, setPosts] = useState([]);
     const [quotes, setQuotes] = useState([]);
+    const [events, setEvents] = useState([]);
 
     useEffect (() => {
-            const fetchStartupsPostsAndQuotes = async () => {
+        const fetchStartupsPostsAndQuotes = async () => {
                 const result = await fetch('http://localhost:3000/');
                 /* On convertit la promesse en json*/
                 const jsonResult = await result.json()
                 setStartups(jsonResult.startUps);
                 setPosts(jsonResult.posts);
                 setQuotes(jsonResult.quotes);
-                }
-                /* On appelle la fonction */
-                fetchStartupsPostsAndQuotes();
-            }, []);
+                setEvents(jsonResult.events);
+            }
+            /* On appelle la fonction */
+            fetchStartupsPostsAndQuotes();
+    }, []);
     return (
         <div className='page'>
             <Header />
@@ -87,6 +90,7 @@ const Index = () => {
                     path="http://localhost:5173/startups"/>
                 </div>
                 <h3 className='section-title-right'>Agenda</h3>
+                <Calendars events={events}/>
                 <h3 className='section-title-left'>Actualités</h3>
                 <div className='quote-align'>
                     {posts.map(post => (
