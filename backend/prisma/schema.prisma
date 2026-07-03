@@ -122,6 +122,6 @@ model Event {
 
 model Config {
   id               Int     @id @default(1)
-  defaultLogoId    String?
-  defaultDescriptionPictureId    String?
+  defaultLogoId    String
+  defaultDescriptionPictureId    String
 }
