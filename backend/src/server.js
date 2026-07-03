@@ -33,7 +33,7 @@ async function init() {
 
   // 2. Stocker dans global
   global.DEFAULT_LOGO_ID = config.defaultLogoId;
-  global.DEFAULT_DESC_ID = config.defaultDescId;
+  global.DEFAULT_DESC_ID = config.defaultDescriptionPictureId;
 
   console.log("Images par défaut chargées");
 
