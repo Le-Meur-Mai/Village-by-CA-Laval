@@ -20,6 +20,11 @@ services:
     env_file:
       - ./backend/.env
       # Le backend se connecte à MySQL via le nom du service Docker : db + charge le .env
+    command: >
+      sh -c "
+        npx prisma db seed &&
+        npm run dev
+      "
     
   frontend:
     build: ./frontend
