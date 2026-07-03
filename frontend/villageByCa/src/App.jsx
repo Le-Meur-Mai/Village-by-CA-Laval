@@ -1,4 +1,3 @@
-import './App.css'
 import { Routes, Route } from "react-router-dom";
 // Pour que la fenêtre remonte en haut de la page
 import ScrollToTop from "./components/ScrollToTop";
