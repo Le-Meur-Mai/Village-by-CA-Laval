@@ -33,6 +33,13 @@ export default class TypeRepository{
     });
     return type;
   }
+
+  async getTypeByName(typeName, client = this.prisma) {
+    const type = await client.type.findUnique({
+      where: {name: typeName}
+    });
+    return type;
+  }
   
   async updateType(id, data, client = this.prisma) {
     const {startUps, ...dataType} = data;

@@ -18,6 +18,10 @@ export default class TypeServices {
   // POST Création d'un type
   async createType (data) {
     try {
+      const existingTypeName = await this.typeRepo.getTypeByName(data.name);
+      if (existingTypeName) {
+        throw new Errors.ValidationError("Ce type existe déjà.");
+      }
       if (data.startUps && data.startUps.length > 0) {
         for (const id of data.startUps) {
           const existingStartUp = await this.startUpRepo.getStartUpById(id);
@@ -61,7 +65,14 @@ export default class TypeServices {
     try {
       const existingType = await this.typeRepo.getTypeById(id);
       if (!existingType) {
-        throw new Errors.NotFoundError("Type not found.");
+        throw new Errors.NotFoundError("Le type n'a pas été trouvé.");
+      }
+
+      if (data.name && data.name != existingType.name) {
+        const existingTypeName = await this.typeRepo.getTypeByName(data.name);
+        if (existingTypeName) {
+          throw new Errors.ValidationError("Ce type existe déjà.");
+        }
       }
 
       if (data.startUps && data.startUps.length > 0) {
