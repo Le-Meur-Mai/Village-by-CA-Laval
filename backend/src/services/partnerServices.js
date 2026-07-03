@@ -95,7 +95,7 @@ export default class PartnerServices {
           throw new Errors.NotFoundError("Le partenaire n'existe pas");
         }
 
-        if (data.name && data.name != existingPartner.name) {
+        if (data.name && data.name !== existingPartner.name) {
           const existingPartnerName = await this.partnerRepo.getPartnerByName(data.name, tx);
           if (existingPartnerName) {
             throw new Errors.ValidationError("Le nom de ce partenaire existe déjà.");

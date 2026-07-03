@@ -26,6 +26,12 @@ export default class PostServices {
     let uploadPicture = null;
     try {
       return await prisma.$transaction(async (tx) => {
+
+        const existingPostTitle = await this.postRepo.getPostByTitle(data.title, tx);
+        if (existingPostTitle) {
+          throw new Errors.ValidationError("Le titre de ce post existe déjà.");
+        }
+
         validFields(data, allowedFields);
         if (data.picture) {
           // Création de l'image dans Cloudinary
@@ -91,6 +97,13 @@ export default class PostServices {
         const existingPost = await this.postRepo.getPostById(id, tx);
         if (!existingPost) {
           throw new Errors.NotFoundError("The post doesn't exist.");
+        }
+
+        if (data.title && data.title !== existingPost.title) {
+          const existingPostTitle = await this.postRepo.getPostByTitle(data.title, tx);
+          if (existingPostTitle) {
+            throw new Errors.ValidationError("Le titre de ce post existe déjà.");
+          }
         }
 
         validFields(data, allowedFields);
