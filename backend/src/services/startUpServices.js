@@ -15,6 +15,7 @@ import uploadPictureToCloudinary from "../utils/uploadToCloudinary.js";
 // Importation de la config Cloudinary pour pouvoir supprimer des images
 import cloudinary from "../../config/cloudinary.js";
 
+
 const allowedFields = ["name", "description", "isAlumni", "website", "userId", "descriptionPicture", "logo", "types"];
 
 export default class StartUpServices {
@@ -35,7 +36,13 @@ export default class StartUpServices {
         // Verification de l'existence du user
         const user = await this.userRepo.getUserById(data.userId, tx);
         if (!user) {
-          throw new Errors.NotFoundError("The owner of the startup doesn't exist.");
+          throw new Errors.NotFoundError("Le propriétaire de la startup n'existe pas.");
+        }
+
+        // Vérification du nom de la startup
+        const existingStartUpName = await this.startUpRepo.getStartUpByName(data.name, tx);
+        if (existingStartUpName) {
+          throw new Errors.ValidationError("Le nom de la startup est déjà pris.");
         }
 
         validFields(data, allowedFields);
@@ -47,7 +54,7 @@ export default class StartUpServices {
           );
           for (const existingType of types) {
             if (!existingType) {
-              throw new Errors.NotFoundError("One of the types doesn't exist");
+              throw new Errors.NotFoundError("Un des types n'existe pas.");
             }
           }
         }
@@ -131,23 +138,33 @@ export default class StartUpServices {
         // On vérifie que la startup existe
         const existingStartUp = await this.startUpRepo.getStartUpById(id, tx);
         if (!existingStartUp) {
-          throw new Errors.NotFoundError("The startup doesn't exist.");
+          throw new Errors.NotFoundError("La startup n'existe pas.");
         }
 
         // On vérifie que c'est un admin ou le propriétaire qui veut modifier la startup
         if (!currentUser.isAdmin && existingStartUp.user.id !== currentUser.id) {
           throw new Errors.ForbiddenError(
-            "You have to be the owner or an admin to modify this startup.");
+            "Vous devez être le propriétaire ou un administrateur pour modifier cette startup.");
+        }
+
+        // On vérifie que le nom de la startup n'est pas déjà pris si modification
+        // Vérification du nom (uniquement si modifié)
+        if (data.name && data.name !== existingStartUp.name) {
+          const nameAlreadyUsed = await this.startUpRepo.getStartUpByName(data.name, tx);
+
+          if (nameAlreadyUsed) {
+            throw new Errors.ValidationError("Une startup avec ce nom existe déjà.");
+          }
         }
         
         // vérification du nouveau propriétaire
         if (data.userId && currentUser.isAdmin) {
           const existingUser = await this.userRepo.getUserById(data.userId, tx);
           if (!existingUser) {
-            throw new Errors.NotFoundError("The new owner is not found.");
+            throw new Errors.NotFoundError("Le nouveau propriétaire n'a pas été trouvé");
           }
         } else if (data.userId && !currentUser.isAdmin) {
-          throw new Errors.ForbiddenError('Only a admin can modify this data');
+          throw new Errors.ForbiddenError('Seul un administrateur peut modifier le propriétaire.');
         }
 
         // Verification de chaque type associé à la mise à jour de la startup
@@ -157,7 +174,7 @@ export default class StartUpServices {
           );
           for (const existingType of types) {
             if (!existingType) {
-              throw new Errors.NotFoundError("One of the types doesn't exist");
+              throw new Errors.NotFoundError("Un des types n'existe pas.");
             }
           }
         }
@@ -224,7 +241,7 @@ export default class StartUpServices {
       try {
         const existingStartUp = await this.startUpRepo.getStartUpById(id, tx);
         if (!existingStartUp) {
-          throw new Errors.NotFoundError("The startup doesn't exist.");
+          throw new Errors.NotFoundError("La startup n'existe pas.");
         }
         
         const deletedStartUp = await this.startUpRepo.deleteStartUp(id, tx);
