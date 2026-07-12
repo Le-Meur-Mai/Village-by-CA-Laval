@@ -80,6 +80,7 @@ const StartupForm = ({ initialData = {}, allTypes = [], allUsers = [], onSubmit,
             <label>
                 Propriétaire :
                  <select name="userId" value={formData.userId} onChange={handleChange} required={required}>
+                    <option value="" disabled>-- Choisir un propriétaire --</option>
                     {availableUsers.length > 0 ? (
                         availableUsers.map(user => (
                             <option key={user.id} value={user.id}>

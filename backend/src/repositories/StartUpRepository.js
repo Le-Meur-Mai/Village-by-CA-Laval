@@ -37,6 +37,13 @@ export default class StartUpRepository{
     return startUp;
   }
 
+  async getStartUpByName(startUpName, client = this.prisma) {
+    const startUp = await client.startUp.findUnique({
+      where: {name: startUpName}
+    });
+    return startUp;
+  }
+
   async getAllStartUps(client = this.prisma) {
     const allStartUps = await client.startUp.findMany({
       include: {

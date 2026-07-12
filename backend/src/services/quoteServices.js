@@ -24,6 +24,11 @@ export default class QuoteServices {
         throw new Errors.NotFoundError("L'utilisateur n'existe pas.");
       }
 
+      const existingQuoteDescription = await this.quoteRepo.getQuoteByDescription(data.description);
+      if (existingQuoteDescription) {
+        throw new Errors.ValidationError("La citation existe déjà.");
+      }
+
       validFields(data, allowedFields);
 
       new Quote(data);
@@ -74,6 +79,14 @@ export default class QuoteServices {
       const existingQuote = await this.quoteRepo.getQuoteById(id);
       if (!existingQuote) {
         throw new Errors.NotFoundError("La citation n'existe pas.");
+      }
+
+      if (data.description && data.description !== existingQuote.description) {
+        const descriptionAlreadyUsed = await this.quoteRepo.getQuoteByDescription(data.description);
+
+        if (descriptionAlreadyUsed) {
+          throw new Errors.ValidationError("La description de la citation existe déjà.");
+        }
       }
 
       validFields(data, allowedFields);

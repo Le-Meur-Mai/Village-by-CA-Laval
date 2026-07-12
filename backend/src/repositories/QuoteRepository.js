@@ -39,6 +39,13 @@ export default class QuoteRepository {
     return quote;
   }
 
+  async getQuoteByDescription(quoteDescription, client = this.prisma) {
+    const quote = await client.quote.findUnique({
+      where: {description: quoteDescription}
+    });
+    return quote;
+  }
+
   async getQuotesByUser(id, client = this.prisma) {
     const quotes = await client.quote.findMany({
       where: {userId: id},

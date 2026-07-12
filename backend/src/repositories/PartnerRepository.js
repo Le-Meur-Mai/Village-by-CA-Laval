@@ -23,6 +23,13 @@ export default class PartnerRepository {
     return partner;
   }
 
+  async getPartnerByName(partnerName, client = this.prisma) {
+    const partner = await client.partner.findUnique({
+      where: {name: partnerName}
+    });
+    return partner;
+  }
+
   async getAllPartners(client = this.prisma) {
     const partners = await client.partner.findMany({
       include: {

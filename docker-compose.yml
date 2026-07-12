@@ -20,14 +20,12 @@ services:
     env_file:
       - ./backend/.env
       # Le backend se connecte à MySQL via le nom du service Docker : db + charge le .env
-    
-    # On attends que la db est fini de chargée avant de lancer l'initialisation des données
     command: >
       sh -c "
-        npx prisma db push --accept-data-loss &&
         npx prisma db seed &&
-        npm start
+        npm run dev
       "
+    
   frontend:
     build: ./frontend
     container_name: frontend
@@ -48,21 +46,51 @@ services:
     container_name: mysql
     restart: always
     # MySQL plante (ça arrive) Docker le relance immédiatement.
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      # La base de donnée démarre avec le mot de passe
-      MYSQL_DATABASE: village_by_ca_database
-      # Le nom de la base de données
+    env_file:
+      - .env
+
     ports:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
       # Sauvegarde persistante des données MySQL, même si le conteneur est supprimé
+      # Vérifie que le service mysql est prêt à être utilisé, docker le ping jusqu'à avoir un résultat positif
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 5s
       timeout: 5s
       retries: 10
+
+  mysql-backup:
+    image: mysql:8
+    container_name: mysql-backup
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    volumes:
+      - ./backups:/backups
+    # Lance un script qui tourne en permanence, et exporte avec mysqldump la DB
+    # On les met dans un fichier compressé par gzip dans le dossier backups
+    # On supprime les fichiers de plus de 30 jours
+    # On attend ensuite 1 semaine avant de refaire une sauvegarde
+    entrypoint: >
+      sh -c "
+        while true; do
+          echo '[Backup] Dump started at ' $(date);
+          mysqldump -h db -u root -p\"$$MYSQL_ROOT_PASSWORD\" \"$$MYSQL_DATABASE\" | gzip > /backups/db_$(date +%F_%H-%M-%S).sql.gz;
+          if [ $$? -eq 0 ]; then
+            echo '[Backup] Dump finished successfully';
+          else
+            echo '[Backup] Dump FAILED';
+          fi;
+          find /backups -type f -mtime +30 -delete;
+          sleep 604800;
+        done
+      "
+
+
 
 volumes:
   mysql_data:

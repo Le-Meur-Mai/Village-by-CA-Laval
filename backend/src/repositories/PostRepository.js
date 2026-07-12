@@ -23,6 +23,13 @@ export default class PostRepository {
     return post;
   }
 
+  async getPostByTitle(postTitle, client = this.prisma) {
+    const post = await client.post.findUnique({
+      where: {title: postTitle}
+    });
+    return post;
+  }
+
   async getAllPost(client = this.prisma) { 
     const posts = await client.post.findMany({
       orderBy: {

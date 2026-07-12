@@ -30,6 +30,11 @@ export default class PartnerServices {
     try {
       return await prisma.$transaction( async (tx) => {
 
+        const existingPartnerName = await this.partnerRepo.getPartnerByName(data.name, tx);
+        if (existingPartnerName) {
+          throw new Errors.ValidationError("Le nom de ce partenaire existe déjà.");
+        }
+
         validFields(data, allowedFields);
 
         if(!data.logo) {
@@ -87,7 +92,14 @@ export default class PartnerServices {
         // Vérification de l'existence du partenaire
         const existingPartner = await this.partnerRepo.getPartnerById(id, tx);
         if (!existingPartner) {
-          throw new Errors.NotFoundError('Partner not found');
+          throw new Errors.NotFoundError("Le partenaire n'existe pas");
+        }
+
+        if (data.name && data.name !== existingPartner.name) {
+          const existingPartnerName = await this.partnerRepo.getPartnerByName(data.name, tx);
+          if (existingPartnerName) {
+            throw new Errors.ValidationError("Le nom de ce partenaire existe déjà.");
+          }
         }
 
         validFields(data, allowedFields);
