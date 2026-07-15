@@ -59,7 +59,7 @@ describe("UserRepository", () => {
   // getUserById
   // ---------------------------------------------------------
   test("getUserById should call prisma.user.findUnique with correct params", async () => {
-    const fakeUser = { id: 1, name: "Alice" };
+    const fakeUser = { id: "1", name: "Alice" };
     prismaMock.user.findUnique.mockResolvedValue(fakeUser);
 
     const result = await repo.getUserById("1");
@@ -71,7 +71,8 @@ describe("UserRepository", () => {
         startUp: {
           include: {
             logo: true,
-            descriptionPicture: true
+            descriptionPicture: true,
+            types: true
           }
         }
       }
@@ -79,6 +80,7 @@ describe("UserRepository", () => {
 
     expect(result).toEqual(fakeUser);
   });
+
 
   test("getUserById should throw if prisma throws", async () => {
     prismaMock.user.findUnique.mockRejectedValue(new Error("DB error"));

@@ -5,7 +5,7 @@ describe("Type Model", () => {
 
   const validData = {
     name: "AI",
-    color: "FFAA33",
+    color: "#FFAA33",
     startUps: [{ id: 1, name: "TechNova" }]
   };
 
@@ -47,15 +47,15 @@ describe("Type Model", () => {
       .toThrow(Errors.ValidationError);
   });
 
-  test("should throw if color does not have exactly 6 characters", () => {
+  test("should throw if color does not have exactly 7 characters", () => {
     expect(() => new Type({...validData, color: "FFF"}))
       .toThrow(Errors.ValidationError);
 
-    expect(() => new Type({...validData, color: "1234567"}))
+    expect(() => new Type({...validData, color: "12345678"}))
       .toThrow(Errors.ValidationError);
   });
 
-  test("should accept a valid 6-character color string", () => {
+  test("should accept a valid 7-character color string", () => {
     const type = new Type(validData);
     expect(type.color).toBe(validData.color);
   });

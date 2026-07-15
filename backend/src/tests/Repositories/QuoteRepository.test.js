@@ -33,7 +33,17 @@ describe("QuoteRepository", () => {
 
     expect(prismaMock.quote.create).toHaveBeenCalledWith({
       data,
-      include: { user: true }
+      include: {
+        user: {
+          include: {
+            startUp: {
+              include: {
+                logo: true
+              }
+            }
+          }
+        }
+      }
     });
 
     expect(result).toEqual(fakeQuote);
