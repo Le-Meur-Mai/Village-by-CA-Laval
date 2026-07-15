@@ -20,8 +20,8 @@ export default class UserServices {
   constructor() {
     // Création d'une instance pour utiliser les méthodes de la classe repo
     this.userRepo = new UserRepository(prisma);
-    this.startUpRepo = new StartUpServices(prisma);
-    this.quoteRepo = new QuoteServices(prisma);
+    this.startUpServices = new StartUpServices(prisma);
+    this.quoteServices = new QuoteServices(prisma);
   }
 
   // POST Création d'un user
@@ -107,10 +107,10 @@ export default class UserServices {
           throw new Errors.NotFoundError("L'utilisateur n'existe pas.");
         }
         if (user.quotes && user.quotes.length > 0) {
-          await Promise.all(user.quotes.map(quote => this.quoteRepo.deleteQuote(quote.id, currentUser)));
+          await Promise.all(user.quotes.map(quote => this.quoteServices.deleteQuote(quote.id, currentUser)));
         }
         if (user.startUp?.id) {
-          await this.startUpRepo.deleteStartUp(user.startUp.id, tx);
+          await this.startUpServices.deleteStartUp(user.startUp.id, tx);
         }
         return await this.userRepo.deleteUser(id, tx);
       })
