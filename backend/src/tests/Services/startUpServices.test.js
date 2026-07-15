@@ -1,18 +1,29 @@
 import { jest } from "@jest/globals";
-import StartUpServices from "../../services/startUpServices.js"
-import * as Errors from "../../errors/errorsClasses.js"
 
-jest.mock("../../prismaClient.js", () => ({
-  $transaction: jest.fn((callback) => callback({}))
-}))
-
-jest.mock("../../utils/uploadToCloudinary.js")
-
-jest.mock("../../../config/cloudinary.js", () => ({
-  uploader: {
-    destroy: jest.fn()
+// 1. On mocke AVANT tout import statique du module réel
+jest.unstable_mockModule("../../prismaClient.js", () => ({
+  default: {
+    $transaction: jest.fn((callback) => callback({}))
   }
-}))
+}));
+
+jest.unstable_mockModule("../../utils/uploadToCloudinary.js", () => ({
+  __esModule: true,
+  default: jest.fn()
+}));
+
+jest.unstable_mockModule("../../../config/cloudinary.js", () => ({
+  default: {
+    uploader: {
+      destroy: jest.fn()
+    }
+  }
+}));
+
+// 2. On importe dynamiquement APRÈS avoir déclaré les mocks
+const { default: StartUpServices } = await import("../../services/startUpServices.js");
+const Errors = await import("../../errors/errorsClasses.js");
+const { default: uploadToCloudinary } = await import("../../utils/uploadToCloudinary.js");
 
 describe("StartUpServices - full test suite", () => {
 
@@ -34,6 +45,7 @@ describe("StartUpServices - full test suite", () => {
       createStartUp: jest.fn(),
       getStartUpById: jest.fn(),
       getAllStartUps: jest.fn(),
+      getStartUpByName: jest.fn(),
       updateStartUp: jest.fn(),
       deleteStartUp: jest.fn()
     }
@@ -52,14 +64,16 @@ describe("StartUpServices - full test suite", () => {
       deletePicture: jest.fn()
     }
 
-    service = new StartUpServices()
+    service = new StartUpServices();
+
+    startUpRepoMock.getStartUpByName.mockResolvedValue(null);
 
     service.startUpRepo = startUpRepoMock
     service.typeRepo = typeRepoMock
     service.userRepo = userRepoMock
     service.pictureRepo = pictureRepoMock
 
-    jest.clearAllMocks()
+    jest.clearAllMocks();
   })
 
   test("createStartUp should create startup if user exists", async () => {
@@ -70,10 +84,17 @@ describe("StartUpServices - full test suite", () => {
       isAlumni: false,
       website: "https://startup.com",
       userId: USER_ID,
-      logoId: LOGO_ID,
-      descriptionPictureId: DESC_PIC_ID
+      logo: "fakeLogoFile",
+      descriptionPicture: "fakeDescFile"
     }
 
+    uploadToCloudinary
+      .mockResolvedValueOnce({ secure_url: "urlLogo", public_id: "publicLogo" })
+      .mockResolvedValueOnce({ secure_url: "urlDesc", public_id: "publicDesc" });
+
+    pictureRepoMock.createPicture
+      .mockResolvedValueOnce({ id: LOGO_ID })
+      .mockResolvedValueOnce({ id: DESC_PIC_ID });
     userRepoMock.getUserById.mockResolvedValue({ id: USER_ID })
 
     startUpRepoMock.createStartUp.mockResolvedValue({
@@ -96,8 +117,8 @@ describe("StartUpServices - full test suite", () => {
       name: "MyStartUp",
       isAlumni: false,
       userId: USER_ID,
-      logoId: LOGO_ID,
-      descriptionPictureId: DESC_PIC_ID
+      logo: "fileLogo",
+      descriptionPicture: "fileDesc"
     }
 
     userRepoMock.getUserById.mockResolvedValue(null)

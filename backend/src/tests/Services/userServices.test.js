@@ -10,6 +10,7 @@ const userRepoMock = {
   createUser: jest.fn(),
   getUserById: jest.fn(),
   getAllUsers: jest.fn(),
+  findUserByEmail: jest.fn(),
   updateUser: jest.fn(),
   deleteUser: jest.fn(),
 };
@@ -67,12 +68,13 @@ describe("UserServices - full test suite", () => {
     hashPasswordMock.mockResolvedValue("hashedPassword");
 
     userService = new UserServices();
+
+    userRepoMock.findUserByEmail.mockResolvedValue(null);
   });
 
   // CREATE
   test("createUser should hash password and create user", async () => {
     const data = {
-      id: "11111111-1111-1111-1111-111111111111",
       name: "Alice",
       email: "alice@test.com",
       password: "password123",
@@ -176,15 +178,17 @@ describe("UserServices - full test suite", () => {
       startUp: { id: "s1".repeat(9) },
     };
 
+    const currentUser = user.id;
+
     userRepoMock.getUserById.mockResolvedValue(user);
     userRepoMock.deleteUser.mockResolvedValue("deleted");
 
     quoteServiceMock.deleteQuote.mockResolvedValue(true);
     startUpServiceMock.deleteStartUp.mockResolvedValue(true);
 
-    const result = await userService.deleteUser(user.id);
+    const result = await userService.deleteUser(user.id, currentUser);
 
-    expect(quoteServiceMock.deleteQuote).toHaveBeenCalledWith(user.quotes[0].id);
+    expect(quoteServiceMock.deleteQuote).toHaveBeenCalledWith(user.quotes[0].id, currentUser);
     expect(startUpServiceMock.deleteStartUp).toHaveBeenCalledWith(
       user.startUp.id,
       expect.anything()

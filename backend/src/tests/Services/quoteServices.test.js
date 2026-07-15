@@ -8,6 +8,7 @@ const quoteRepoMock = {
   createQuote: jest.fn(),
   getQuoteById: jest.fn(),
   getQuotesByUser: jest.fn(),
+  getQuoteByDescription: jest.fn(),
   getAllQuotes: jest.fn(),
   updateQuote: jest.fn(),
   deleteQuote: jest.fn(),
@@ -42,6 +43,7 @@ describe("QuoteServices", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     quoteService = new QuoteServices();
+    quoteRepoMock.getQuoteByDescription.mockResolvedValue(null);
   });
 
   // -----------------------------

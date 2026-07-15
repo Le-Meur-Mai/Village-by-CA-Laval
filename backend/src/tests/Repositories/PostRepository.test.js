@@ -86,7 +86,8 @@ describe("PostRepository", () => {
     const result = await repo.getAllPost();
 
     expect(prismaMock.post.findMany).toHaveBeenCalledWith({
-      include: { picture: true }
+      include: { picture: true },
+      orderBy: { createdAt: "desc" }
     });
 
     expect(result).toEqual(fakePosts);

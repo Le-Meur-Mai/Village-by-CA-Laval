@@ -13,18 +13,21 @@ describe("TypeServices - full test suite", () => {
 
     typeService = new TypeServices();
 
+    
     typeService.typeRepo = {
       createType: jest.fn(),
       getTypeById: jest.fn(),
+      getTypeByName: jest.fn(),
       getAllTypes: jest.fn(),
       updateType: jest.fn(),
       deleteType: jest.fn()
     };
-
+    
     typeService.startUpRepo = {
       getStartUpById: jest.fn()
     };
-
+    
+    typeService.typeRepo.getTypeByName.mockResolvedValue(null);
   });
 
   afterEach(() => {
@@ -39,7 +42,7 @@ describe("TypeServices - full test suite", () => {
 
     const data = {
       name: "FinTech",
-      color: "FFAA00"
+      color: "#FFAA00"
     };
 
     typeService.typeRepo.createType.mockResolvedValue({
@@ -58,7 +61,7 @@ describe("TypeServices - full test suite", () => {
 
     const data = {
       name: "HealthTech",
-      color: "00FFAA",
+      color: "#00FFAA",
       startUps: [STARTUP_ID]
     };
 
@@ -83,7 +86,7 @@ describe("TypeServices - full test suite", () => {
 
     const data = {
       name: "AI",
-      color: "000000",
+      color: "#000000",
       startUps: [STARTUP_ID]
     };
 
@@ -104,7 +107,7 @@ describe("TypeServices - full test suite", () => {
     const type = {
       id: TYPE_ID,
       name: "FinTech",
-      color: "FFAA00"
+      color: "#FFAA00"
     };
 
     typeService.typeRepo.getTypeById.mockResolvedValue(type);
@@ -132,8 +135,8 @@ describe("TypeServices - full test suite", () => {
   test("getAllTypes should return all types", async () => {
 
     const types = [
-      { id: TYPE_ID, name: "FinTech", color: "FFAA00" },
-      { id: "33333333-3333-3333-3333-333333333333", name: "AI", color: "000000" }
+      { id: TYPE_ID, name: "FinTech", color: "#FFAA00" },
+      { id: "33333333-3333-3333-3333-333333333333", name: "AI", color: "#000000" }
     ];
 
     typeService.typeRepo.getAllTypes.mockResolvedValue(types);
@@ -154,7 +157,7 @@ describe("TypeServices - full test suite", () => {
     const existingType = {
       id: TYPE_ID,
       name: "FinTech",
-      color: "FFAA00"
+      color: "#FFAA00"
     };
 
     const data = {
@@ -190,7 +193,7 @@ describe("TypeServices - full test suite", () => {
     const existingType = {
       id: TYPE_ID,
       name: "FinTech",
-      color: "FFAA00"
+      color: "#FFAA00"
     };
 
     const data = {
@@ -215,7 +218,7 @@ describe("TypeServices - full test suite", () => {
     const existingType = {
       id: TYPE_ID,
       name: "FinTech",
-      color: "FFAA00"
+      color: "#FFAA00"
     };
 
     typeService.typeRepo.getTypeById.mockResolvedValue(existingType);

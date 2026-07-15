@@ -8,6 +8,7 @@ const postRepoMock = {
   createPost: jest.fn(),
   getPostById: jest.fn(),
   getAllPost: jest.fn(),
+  getPostByTitle: jest.fn(),
   updatePost: jest.fn(),
   deletePost: jest.fn()
 };
@@ -72,6 +73,8 @@ describe("PostServices", () => {
     prisma.$transaction = jest.fn(async (callback) => callback({}));
 
     postService = new PostServices();
+
+    postRepoMock.getPostByTitle.mockResolvedValue(null);
   });
 
   test("createPost with picture", async () => {

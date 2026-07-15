@@ -8,6 +8,7 @@ const partnerRepoMock = {
   createPartner: jest.fn(),
   getPartnerById: jest.fn(),
   getAllPartners: jest.fn(),
+  getPartnerByName: jest.fn(),
   updatePartner: jest.fn(),
   deletePartner: jest.fn()
 };
@@ -71,6 +72,9 @@ describe("PartnerServices", () => {
     prisma.$transaction = jest.fn(async (callback) => callback({}));
 
     partnerService = new PartnerServices();
+
+    // comportement par défaut pour éviter les erreurs
+    partnerRepoMock.getPartnerByName.mockResolvedValue(null);
   });
 
   // -----------------------------
