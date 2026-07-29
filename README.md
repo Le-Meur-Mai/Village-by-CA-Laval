@@ -72,12 +72,13 @@ We have several branches on this project, each with a different role:
 
 #### Launch the application
 
-To launch the website on your own computer, please fork this repository on your computer. Then, be sure that docker desktop is launched, then run :
+To launch the website on your own computer, you'll need to install the LTS version of Ubuntu. Then, you can clone this project, and initialize environment variables. You also must have a Cloudinary account with two default images.
+Then, be sure that docker desktop is installed and launched, then run :
 
 ```
 docker compose up --build
 ```
-The website will be available on port 5173 (frontend). The backend is running on port 3000. 
+The website will be available on port 5173. 
 
 #### See the database
 
