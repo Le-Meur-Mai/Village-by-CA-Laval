@@ -28,7 +28,7 @@ const Connexion = () => {
         try {
             const response = await fetch('http://localhost:3000/auth/login', {
                 method: 'POST',
-                credentials: "include", // Pour enregistrer les cookies crss-origin
+                credentials: "include", // Obligatoire pour que le navigateur envoie le cookie httpOnly de session
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(connexionForm)
             });
