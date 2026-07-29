@@ -13,6 +13,15 @@ const upload = multer({
   storage, // Là où on stocke le fichier avant de l'envoyer à Cloudinary
   limits: {
     fileSize: 10 * 1024 * 1024 // 10 MB max
+  },
+  fileFilter: (req, file, cb) => {
+    const allowedMimeTypes = ["image/jpeg", "image/png", "image/webp", "image/avif"];
+
+    if (!allowedMimeTypes.includes(file.mimetype)) {
+      return cb(new Error("Format de fichier non autorisé"), false);
+    }
+
+    cb(null, true);
   }
 });
 
