@@ -1,7 +1,5 @@
 import '../styles/page.css';
 
-import events from "../assets/Events.png";
-
 import PresentationPage from '../components/PresentationPage.jsx';
 import Header from '../components/Header.jsx';
 import Footer from '../components/Footer.jsx';
